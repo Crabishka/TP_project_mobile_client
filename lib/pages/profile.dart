@@ -29,17 +29,37 @@ class _ProfilePageState extends State<ProfilePage> {
     return Scaffold(
       backgroundColor: const Color(0xFFB6CFD8),
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_rounded),
+          onPressed: () => Navigator.pop(context, false),
+        ),
         backgroundColor: const Color(0xFF2280BA),
         toolbarHeight: 40,
       ),
       body: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
-            child: Text("Здравствуйте, ${user.name}"),
-          ),
+              child: Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 16, 0, 0),
+                  child: Text("Здравствуйте, ${user.name}",
+                      style: const TextStyle(
+                        color: Color(0xFF3C2C9E),
+                        fontFamily: 'PoiretOne',
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      )))),
           SliverToBoxAdapter(
-            child: Text("Номер, ${user.phoneNumber}"),
-          ),
+              child: Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 16, 0, 0),
+                  child: Text(
+                    "Ваш номер ${user.phoneNumber}",
+                    style: const TextStyle(
+                      color: Color(0xFF3C2C9E),
+                      fontFamily: 'PoiretOne',
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
+                  ))),
           SliverList(
             delegate: SliverChildBuilderDelegate(childCount: orders.length,
                 (context, index) {
