@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sportique/data/order_status.dart';
 
 import '../data/order.dart';
 
@@ -17,7 +18,7 @@ class OrderCard extends StatelessWidget {
           Container(
               padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
               child: Text(
-                "Стоимость : ${order.sum}",
+                "Стоимость : ${order.sum} ",
                 textAlign: TextAlign.left,
                 style: const TextStyle(
                   color: Color(0xFF3C2C9E),
@@ -45,7 +46,7 @@ class OrderCard extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return Padding(
                       padding:
-                          const EdgeInsets.only(right: 8, left: 8, bottom: 8),
+                          const EdgeInsets.all(8),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(20),
                         child: Image.network(
@@ -53,7 +54,26 @@ class OrderCard extends StatelessWidget {
                       ));
                 }),
           ),
+          if (order.status == OrderStatus.WAITING_FOR_RECEIVING)
+            Center(
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
 
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15))
+                ),
+                onPressed: () {},
+                child: const Text("Отменить",
+                    style: TextStyle(
+                      color: Colors.cyanAccent,
+                      fontFamily: 'PoiretOne',
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    )),
+              ),
+            ),
+          const SizedBox(
+            height: 8,
+          )
         ]));
   }
 }
