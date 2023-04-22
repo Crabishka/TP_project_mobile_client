@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sportique/data/order_status.dart';
+import 'package:sportique/widgets/bottom_navigation_bar.dart';
 import 'package:sportique/widgets/order_card.dart';
 
 import '../data/order.dart';
@@ -9,9 +10,9 @@ import '../data/productDescription.dart';
 import '../data/user.dart';
 
 class ProfilePage extends StatefulWidget {
-  final User user;
+  final User user = User("Amrit", "+79518747578");
 
-  const ProfilePage({super.key, required this.user});
+  ProfilePage({super.key});
 
   @override
   State<StatefulWidget> createState() {
@@ -37,6 +38,7 @@ class _ProfilePageState extends State<ProfilePage> {
         toolbarHeight: 40,
       ),
       body: CustomScrollView(
+        scrollDirection: Axis.vertical,
         slivers: [
           SliverToBoxAdapter(
               child: Padding(
@@ -70,24 +72,7 @@ class _ProfilePageState extends State<ProfilePage> {
           )
         ],
       ),
-      // body: Column(
-      //   children: [
-
-      //     Expanded(
-      //       child: ListView.builder(
-      //
-      //         scrollDirection: Axis.vertical,
-      //         padding: const EdgeInsets.all(16),
-      //         itemCount: orders.length,
-      //         itemBuilder: (context, index) {
-      //           return Padding(
-      //               padding: const EdgeInsets.fromLTRB(0, 8, 0, 0),
-      //               child: OrderCard(order: orders[index]));
-      //         },
-      //       ),
-      //     )
-      //   ],
-      // )
+      bottomNavigationBar: MyNavigationBar(),
     );
   }
 }

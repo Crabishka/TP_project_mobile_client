@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sportique/widgets/bottom_navigation_bar.dart';
 import '../data/productDescription.dart';
-import '../widgets/productCard.dart';
+import '../widgets/product_card.dart';
 
 class CatalogPage extends StatefulWidget {
   @override
@@ -19,8 +20,10 @@ class _CatalogPageState extends State<CatalogPage> {
       itemCount: catalog.length,
       itemBuilder: (context, index) {
         return ProductCard(product: catalog[index]);
-      },
-    ));
+      }
+    ),
+    bottomNavigationBar: MyNavigationBar(),
+    );
   }
 }
 
