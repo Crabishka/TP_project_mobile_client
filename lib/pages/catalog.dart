@@ -16,6 +16,7 @@ class _CatalogPageState extends State<CatalogPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFB6CFD8),
       body: CustomScrollView(
         slivers: [
           SliverList(
@@ -23,14 +24,16 @@ class _CatalogPageState extends State<CatalogPage> {
                 childCount: ProductDescriptionRepository.instance
                     .getAllProductDescription()
                     .length, (context, index) {
-              return ProductCard(
-                  product: ProductDescriptionRepository.instance
-                      .getProductDescription(index));
+              return Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+                  child: ProductCard(
+                      product: ProductDescriptionRepository.instance
+                          .getProductDescription(index)));
             }),
           ),
         ],
       ),
-      bottomNavigationBar: MyNavigationBar(),
+      bottomNavigationBar: const MyNavigationBar(),
     );
   }
 }

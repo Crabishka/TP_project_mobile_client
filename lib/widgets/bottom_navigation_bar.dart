@@ -3,24 +3,34 @@ import 'package:flutter/material.dart';
 import 'package:sportique/pages/catalog.dart';
 import 'package:sportique/pages/profile.dart';
 
-class MyNavigationBar extends StatelessWidget {
+class MyNavigationBar extends StatefulWidget {
   const MyNavigationBar({super.key});
+
+  onTapTapped(int index) {}
+
+  @override
+  State<StatefulWidget> createState() {
+    return _MyNavigationBar();
+  }
+}
+
+class _MyNavigationBar extends State<MyNavigationBar> {
+  int currentPageIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
+        currentIndex: currentPageIndex,
+        selectedItemColor: Colors.amber,
         onTap: (int index) {
-          if (index == 1){
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => CatalogPage()));
-          } else if (index == 2){
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => ProfilePage()));
-          } else if (index == 3){
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => ProfilePage()));
+          currentPageIndex = index;
+          if (index == 1) {
+            Navigator.pushNamed(context, '/catalog');
+          } else if (index == 2) {
+            Navigator.pushNamed(context, '/profile');
+          } else if (index == 3) {
+            Navigator.pushNamed(context, '/profile');
           }
-
         },
         items: const [
           BottomNavigationBarItem(
@@ -37,6 +47,4 @@ class MyNavigationBar extends StatelessWidget {
           ),
         ]);
   }
-
-  onTapTapped(int index) {}
 }

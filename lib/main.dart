@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: ProductPage(id: 1),
+      home: CatalogPage(),
       routes: {
         '/catalog': (BuildContext context) => CatalogPage(),
         '/profile': (BuildContext context) => ProfilePage(),
