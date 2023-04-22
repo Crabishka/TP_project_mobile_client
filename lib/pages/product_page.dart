@@ -1,23 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:sportique/data/productDescription.dart';
+import 'package:sportique/client_api/product_description_repository.dart';
+import 'package:sportique/data/product_description.dart';
 import 'package:sportique/widgets/bottom_navigation_bar.dart';
 
-class ProductPage extends StatefulWidget {
-  const ProductPage({super.key, required this.productDescription});
+class ProductPage extends StatelessWidget {
+  late int id;
 
-  final ProductDescription productDescription;
+  ProductPage({super.key, required this.id});
 
-  @override
-  State<StatefulWidget> createState() {
-    return _ProductPageState(productDescription);
-  }
-}
-
-class _ProductPageState extends State<ProductPage> {
-  final ProductDescription productDescription;
-
-  _ProductPageState(this.productDescription);
+  late ProductDescription productDescription =
+      ProductDescriptionRepository.instance.getProductDescription(id);
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +55,6 @@ class _ProductPageState extends State<ProductPage> {
               ),
             ),
           ),
-
         ],
       ),
       bottomNavigationBar: const MyNavigationBar(),

@@ -1,30 +1,25 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sportique/client_api/user_repository.dart';
 import 'package:sportique/data/order_status.dart';
 import 'package:sportique/widgets/bottom_navigation_bar.dart';
 import 'package:sportique/widgets/order_card.dart';
 
 import '../data/order.dart';
 import '../data/product.dart';
-import '../data/productDescription.dart';
+import '../data/product_description.dart';
 import '../data/user.dart';
 
 class ProfilePage extends StatefulWidget {
-  final User user = User("Amrit", "+79518747578");
-
   ProfilePage({super.key});
 
   @override
   State<StatefulWidget> createState() {
-    return _ProfilePageState(user);
+    return _ProfilePageState();
   }
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  final User user;
-
-  _ProfilePageState(this.user);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,7 +38,8 @@ class _ProfilePageState extends State<ProfilePage> {
           SliverToBoxAdapter(
               child: Padding(
                   padding: const EdgeInsets.fromLTRB(16, 16, 0, 0),
-                  child: Text("Здравствуйте, ${user.name}",
+                  child: Text(
+                      "Здравствуйте, ${UserRepository.instance.getUser().name}",
                       style: const TextStyle(
                         color: Color(0xFF3C2C9E),
                         fontFamily: 'PoiretOne',
@@ -54,7 +50,7 @@ class _ProfilePageState extends State<ProfilePage> {
               child: Padding(
                   padding: const EdgeInsets.fromLTRB(16, 16, 0, 0),
                   child: Text(
-                    "Ваш номер ${user.phoneNumber}",
+                    "Ваш номер ${UserRepository.instance.getUser().phoneNumber}",
                     style: const TextStyle(
                       color: Color(0xFF3C2C9E),
                       fontFamily: 'PoiretOne',

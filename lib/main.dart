@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sportique/data/productDescription.dart';
+import 'package:sportique/client_api/product_description_repository.dart';
+import 'package:sportique/data/product_description.dart';
 import 'package:sportique/pages/catalog.dart';
 import 'package:sportique/pages/product_page.dart';
 import 'package:sportique/pages/profile.dart';
@@ -9,17 +10,6 @@ import 'data/user.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  User user = User("Amrit", "+79518747578");
-  ProductDescription productDescription1 = ProductDescription(
-      1,
-      "Ракетки для тенниса",
-      "Очень хорошие ракетки, прям классные, прям супер, вау" +
-          "Очень хорошие ракетки, прям классные, прям супер, вау" +
-          "Очень хорошие ракетки, прям классные, прям супер, вау" +
-          "Очень хорошие ракетки, прям классные, прям супер, вау",
-      300,
-      "https://via.placeholder.com/600/eadff5");
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -27,10 +17,17 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: ProductPage(productDescription: productDescription1),
+      home: ProductPage(id: 1),
       routes: {
         '/catalog': (BuildContext context) => CatalogPage(),
-        '/profile': (BuildContext context) => CatalogPage(),
+        '/profile': (BuildContext context) => ProfilePage(),
+      },
+      onGenerateRoute: (setting) {
+        if (setting.name == '/product') {
+          final id = setting.arguments as int;
+          return MaterialPageRoute(builder: (_) => ProductPage(id: id));
+        }
+        return null;
       },
     );
   }

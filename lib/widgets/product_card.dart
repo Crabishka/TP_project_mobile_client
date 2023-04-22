@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../data/productDescription.dart';
+import '../data/product_description.dart';
 
 class ProductCard extends StatelessWidget {
   final ProductDescription product;
