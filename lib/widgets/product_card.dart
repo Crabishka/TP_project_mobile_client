@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sportique/pages/product_page.dart';
 
 import '../data/product_description.dart';
 
@@ -53,11 +54,12 @@ class ProductCard extends StatelessWidget {
                         fontSize: 16,
                       ),
                     ),
-
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, '/product',
-                            arguments: product.id - 1); // FIXME
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) =>
+                                ProductPage(id: product.id - 1))); // FIXME
+
                       },
                       child: const Text('К товару'),
                     ),

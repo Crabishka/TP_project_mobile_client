@@ -11,7 +11,7 @@ import '../data/product_description.dart';
 import '../data/user.dart';
 
 class ProfilePage extends StatefulWidget {
-  ProfilePage({super.key});
+  const ProfilePage({super.key});
 
   @override
   State<StatefulWidget> createState() {
@@ -68,7 +68,7 @@ class _ProfilePageState extends State<ProfilePage> {
           )
         ],
       ),
-      bottomNavigationBar: MyNavigationBar(),
+
     );
   }
 }

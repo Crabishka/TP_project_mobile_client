@@ -57,7 +57,7 @@ class ProductPage extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: const MyNavigationBar(),
+
     );
   }
 }

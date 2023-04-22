@@ -5,14 +5,7 @@ import 'package:sportique/widgets/bottom_navigation_bar.dart';
 import '../data/product_description.dart';
 import '../widgets/product_card.dart';
 
-class CatalogPage extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return _CatalogPageState();
-  }
-}
-
-class _CatalogPageState extends State<CatalogPage> {
+class CatalogPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,7 +26,7 @@ class _CatalogPageState extends State<CatalogPage> {
           ),
         ],
       ),
-      bottomNavigationBar: const MyNavigationBar(),
+
     );
   }
 }
