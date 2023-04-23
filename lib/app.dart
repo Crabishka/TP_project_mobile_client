@@ -14,75 +14,38 @@ class App extends StatefulWidget {
 }
 
 class AppState extends State<App> {
-  static int currentTab = 0;
+  static int _selectedIndex = 0;
 
-  final List<TabItem> tabs = [
-    TabItem(
-      tabName: "Catalog",
-      icon: Icons.list,
-      page: CatalogPage(),
-    ),
-    TabItem(
-      tabName: "Cart",
-      icon: Icons.shopping_cart,
-      page: ProductPage(id: 5),
-    ),
-    TabItem(
-      tabName: "Profile",
-      icon: Icons.person,
-      page: const ProfilePage(),
-    ),
-  ];
-
-  AppState() {
-    tabs.asMap().forEach((index, details) {
-      details.setIndex(index);
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
     });
   }
 
-  void _selectTab(int index) {
-    if (index == currentTab) {
-      // pop to first route
-      // if the user taps on the active tab
-      tabs[index].key.currentState?.popUntil((route) => route.isFirst);
-    } else {
-      // update the state
-      // in order to repaint
-      setState(() => currentTab = index);
-
-    }
-  }
+  static final List<Widget> _pages = <Widget>[
+    CatalogPage(),
+    ProductPage(id: 5),
+    const ProfilePage()
+  ];
 
   @override
   Widget build(BuildContext context) {
     // WillPopScope handle android back btn
-    return WillPopScope(
-      onWillPop: () async {
-        final isFirstRouteInCurrentTab =
-            !await tabs[currentTab].key.currentState!.maybePop();
-        if (isFirstRouteInCurrentTab) {
-          // if not on the 'main' tab
-          if (currentTab != 0) {
-            // select 'main' tab
-            _selectTab(0);
-            // back button handled by app
-            return false;
-          }
-        }
-        return isFirstRouteInCurrentTab;
-      },
-      child: Scaffold(
-        // indexed stack shows only one child
-        body: IndexedStack(
-          index: currentTab,
-          children: tabs.map((e) => e.page).toList(),
-        ),
-        // Bottom navigation
-        bottomNavigationBar: BottomNavigation(
-          onSelectTab: _selectTab,
-          tabs: tabs,
-        ),
-
+    return Scaffold(
+      body: IndexedStack(
+        index: _selectedIndex,
+        children: _pages,
+      ),
+      // Bottom navigation
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(icon: Icon(Icons.list), label: "Catalog"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.shopping_cart), label: "Cart"),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
+        ],
       ),
     );
   }

@@ -25,7 +25,7 @@ class TabItem {
 
   Widget get page {
     return Visibility(
-      visible: _index == AppState.currentTab,
+      // visible: _index == AppState.currentTab,
       maintainState: true,
       child: Navigator(
         key: key,

@@ -43,6 +43,6 @@ class BottomNavigation extends StatelessWidget {
   }
 
   Color _tabColor({required int index}) {
-    return AppState.currentTab == index ? Colors.cyan : Colors.grey;
+    return Colors.black;
   }
 }
