@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sportique/client_api/product_description_repository.dart';
 import 'package:sportique/data/product_description.dart';
-import 'package:sportique/widgets/bottom_navigation_bar.dart';
+import 'package:sportique/widgets/navigation/bottom_navigation_bar.dart';
 
 class ProductPage extends StatelessWidget {
   late int id;
@@ -28,15 +28,19 @@ class ProductPage extends StatelessWidget {
           Expanded(
             child: SingleChildScrollView(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   AspectRatio(
                       aspectRatio: 1.5,
                       child: Image.network(productDescription.image,
                           fit: BoxFit.cover)),
                   Padding(
+
                       padding: const EdgeInsets.all(16),
                       child: Text(
+
                         productDescription.description,
+
                         style: const TextStyle(fontSize: 24),
                       )),
                   Padding(

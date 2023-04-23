@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sportique/client_api/product_description_repository.dart';
-import 'package:sportique/widgets/bottom_navigation_bar.dart';
+import 'package:sportique/widgets/navigation/bottom_navigation_bar.dart';
 import '../data/product_description.dart';
 import '../widgets/product_card.dart';
 

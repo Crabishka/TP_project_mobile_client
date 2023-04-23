@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:sportique/pages/catalog.dart';
+import 'package:sportique/pages/catalog_page.dart';
 import 'package:sportique/pages/product_page.dart';
-import 'package:sportique/pages/profile.dart';
+import 'package:sportique/pages/profile_page.dart';
 import 'package:sportique/widgets/navigation/bottom_navigation.dart';
 import 'package:sportique/widgets/navigation/tab_item.dart';
 

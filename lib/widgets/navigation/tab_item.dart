@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sportique/app.dart';
 
+@deprecated
 class TabItem {
   final String tabName;
   final IconData icon;

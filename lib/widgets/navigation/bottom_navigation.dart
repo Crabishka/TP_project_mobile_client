@@ -4,6 +4,7 @@ import 'package:sportique/widgets/navigation/tab_item.dart';
 
 import '../../app.dart';
 
+@deprecated
 class BottomNavigation extends StatelessWidget {
   final ValueChanged<int> onSelectTab;
   final List<TabItem> tabs;
