@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:sportique/pages/catalog.dart';
 import 'package:sportique/pages/profile.dart';
 
+@deprecated
 class MyNavigationBar extends StatefulWidget {
   const MyNavigationBar({super.key});
 

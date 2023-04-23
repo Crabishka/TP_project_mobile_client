@@ -15,6 +15,8 @@ class BottomNavigation extends StatelessWidget {
   Widget build(BuildContext context) {
     return BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
+      selectedItemColor: Colors.red,
+      selectedLabelStyle: const TextStyle(color: Colors.red),
       items: tabs
           .map(
             (e) => _buildItem(
@@ -24,9 +26,9 @@ class BottomNavigation extends StatelessWidget {
             ),
           )
           .toList(),
-      onTap: (index) => onSelectTab(
-        index,
-      ),
+      onTap: (index) {
+        onSelectTab(index);
+      },
     );
   }
 
@@ -35,15 +37,8 @@ class BottomNavigation extends StatelessWidget {
     return BottomNavigationBarItem(
       icon: Icon(
         icon,
-        color: _tabColor(index: index),
       ),
-      label: Text(
-        tabName,
-        style: TextStyle(
-          color: _tabColor(index: index),
-          fontSize: 12,
-        ),
-      ).data,
+      label: tabName,
     );
   }
 

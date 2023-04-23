@@ -49,6 +49,7 @@ class AppState extends State<App> {
       // update the state
       // in order to repaint
       setState(() => currentTab = index);
+
     }
   }
 
