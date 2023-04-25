@@ -18,6 +18,6 @@ class UserRepository {
   late var users = [user1, user2, user3];
 
   User getUser() {
-    return users[2];
+    return users[0];
   }
 }

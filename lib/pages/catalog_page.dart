@@ -14,6 +14,11 @@ class CatalogPage extends StatelessWidget {
       backgroundColor: const Color(0xFFB6CFD8),
       body: CustomScrollView(
         slivers: [
+          const SliverToBoxAdapter(
+            child: SizedBox(
+             height: 40,
+            ),
+          ),
           SliverList(
             delegate: SliverChildBuilderDelegate(
                 childCount: ProductDescriptionRepository.instance
@@ -28,7 +33,6 @@ class CatalogPage extends StatelessWidget {
           ),
         ],
       ),
-
     );
   }
 }
