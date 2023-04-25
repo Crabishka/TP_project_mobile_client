@@ -49,7 +49,9 @@ class OrderPage extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15))),
-                onPressed: () {},
+                onPressed: () {
+                   // FIXME
+                },
                 child: const Text("Отменить",
                     style: TextStyle(
                       color: Colors.cyanAccent,
