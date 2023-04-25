@@ -78,7 +78,13 @@ class ProductPage extends StatelessWidget {
                               backgroundColor: const Color(0xFFD9D9D9),
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(15))),
-                          onPressed: () {},
+                          onPressed: () {
+                            showModalBottomSheet(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return Container();
+                                });
+                          },
                           child: Row(
                             children: const [
                               Expanded(
@@ -91,7 +97,10 @@ class ProductPage extends StatelessWidget {
                                       fontSize: 20,
                                     )),
                               ),
-                              Icon(Icons.calendar_month, color: Colors.black,)
+                              Icon(
+                                Icons.calendar_month,
+                                color: Colors.black,
+                              )
                             ],
                           ))),
                   Center(
@@ -100,7 +109,13 @@ class ProductPage extends StatelessWidget {
                         backgroundColor: const Color(0xFFD9D9D9),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15))),
-                    onPressed: () {},
+                    onPressed: () {
+                      showModalBottomSheet(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return Container();
+                          });
+                    },
                     child: Text("Ваш выбранный размер - ${size}",
                         textAlign: TextAlign.center,
                         style: const TextStyle(
