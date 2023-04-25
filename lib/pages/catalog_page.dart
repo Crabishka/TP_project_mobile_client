@@ -6,6 +6,8 @@ import '../data/product_description.dart';
 import '../widgets/product_card.dart';
 
 class CatalogPage extends StatelessWidget {
+  const CatalogPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

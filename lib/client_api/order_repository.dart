@@ -15,7 +15,7 @@ class OrderRepository {
 
   var list = [
     Product(
-        1, ProductDescriptionRepository.instance.getProductDescription(1), 34),
+        1, ProductDescriptionRepository.instance.getProductDescription(0), 34),
     Product(
         2, ProductDescriptionRepository.instance.getProductDescription(2), 35),
     Product(
@@ -42,7 +42,7 @@ class OrderRepository {
 
   var list3 = [
     Product(
-        7, ProductDescriptionRepository.instance.getProductDescription(7), 45),
+        7, ProductDescriptionRepository.instance.getProductDescription(6), 45),
   ];
 
   late Order order =
@@ -55,4 +55,8 @@ class OrderRepository {
       Order(4, list3, DateTime.now(), 7896, OrderStatus.FINISHED);
 
   late var orders = [order, order1, order2, order3];
+
+  List<Order> getOrderByUser(int id) {
+    return orders; // FIX ME
+  }
 }

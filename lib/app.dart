@@ -1,10 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sportique/pages/catalog_page.dart';
-import 'package:sportique/pages/product_page.dart';
+import 'package:sportique/pages/order_page.dart';
 import 'package:sportique/pages/profile_page.dart';
-import 'package:sportique/widgets/navigation/bottom_navigation.dart';
-import 'package:sportique/widgets/navigation/tab_item.dart';
 
 class App extends StatefulWidget {
   @override
@@ -24,7 +22,7 @@ class AppState extends State<App> {
 
   static final List<Widget> _pages = <Widget>[
     CatalogPage(),
-    ProductPage(id: 5),
+    OrderPage(),
     const ProfilePage()
   ];
 
