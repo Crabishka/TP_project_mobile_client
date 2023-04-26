@@ -46,7 +46,7 @@ class OrderRepository {
   ];
 
   late Order order =
-      Order(1, list, DateTime.now(), 100, OrderStatus.WAITING_FOR_RECEIVING);
+      Order(1, list, DateTime.now(), 100, OrderStatus.WAITING_FOR_RECEIVING); // FIXME
   late Order order1 =
       Order(2, list1, DateTime.now(), 1000, OrderStatus.FINISHED);
   late Order order2 =

@@ -12,4 +12,5 @@ class Order {
 
 
   Order(this.id, this.products, this.date, this.sum, this.status);
+
 }

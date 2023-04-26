@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sportique/pages/catalog_page.dart';
-import 'package:sportique/pages/order_page.dart';
+import 'package:sportique/pages/order_page_main.dart';
 import 'package:sportique/pages/profile_page.dart';
 
 class App extends StatefulWidget {
