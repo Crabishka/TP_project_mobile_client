@@ -9,7 +9,7 @@ import 'package:sportique/widgets/product_little_card.dart';
 
 import '../data/order.dart';
 import 'order_page_carting.dart';
-import 'order_page_wothout_order.dart';
+import 'order_page_without_order.dart';
 
 class OrderPage extends StatelessWidget {
   const OrderPage({super.key});
@@ -25,7 +25,7 @@ class OrderPage extends StatelessWidget {
   }
 
   Widget returnWidget(Order order) {
-    if (order.status == OrderStatus.CARTING) {
+    if (order.status == OrderStatus.WAITING_FOR_RECEIVING) {
       return OrderPageReadyToGet(order: order);
     }
     if (order.status == OrderStatus.CARTING) {

@@ -16,7 +16,7 @@ class CatalogPage extends StatelessWidget {
         slivers: [
           const SliverToBoxAdapter(
             child: SizedBox(
-             height: 40,
+              height: 40,
             ),
           ),
           SliverList(

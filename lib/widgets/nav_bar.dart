@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+@deprecated
 class NavBar extends StatelessWidget{
   const NavBar({super.key});
 

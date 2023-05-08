@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sportique/pages/auth_form_page.dart';
 import 'package:sportique/pages/catalog_page.dart';
 import 'package:sportique/pages/order_page_main.dart';
 import 'package:sportique/pages/profile_page.dart';
@@ -9,21 +10,25 @@ class App extends StatefulWidget {
   State<StatefulWidget> createState() {
     return AppState();
   }
+
+  static changeIndex(int index) {
+    AppState.selectedIndex = index;
+  }
 }
 
 class AppState extends State<App> {
-  static int _selectedIndex = 0;
+  static int selectedIndex = 0;
 
   void _onItemTapped(int index) {
     setState(() {
-      _selectedIndex = index;
+      selectedIndex = index;
     });
   }
 
   static final List<Widget> _pages = <Widget>[
     CatalogPage(),
     OrderPage(),
-    const ProfilePage()
+    AuthFormPage()
   ];
 
   @override
@@ -31,12 +36,12 @@ class AppState extends State<App> {
     // WillPopScope handle android back btn
     return Scaffold(
       body: IndexedStack(
-        index: _selectedIndex,
+        index: selectedIndex,
         children: _pages,
       ),
       // Bottom navigation
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
+        currentIndex: selectedIndex,
         onTap: _onItemTapped,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.list), label: "Catalog"),

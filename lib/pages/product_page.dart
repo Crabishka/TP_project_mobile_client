@@ -133,12 +133,15 @@ class ProductPage extends StatelessWidget {
                     onPressed: () {},
                     child: const Text("Добавить",
                         textAlign: TextAlign.center,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontFamily: 'PoiretOne',
                           fontWeight: FontWeight.bold,
                           fontSize: 20,
                         )),
                   )),
+                  const SizedBox(
+                    height: 20,
+                  )
                 ],
               ))
         ],
