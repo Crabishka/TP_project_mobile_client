@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class MainWelcomePage extends StatefulWidget {
   const MainWelcomePage({super.key});
@@ -12,7 +13,8 @@ class MainWelcomePage extends StatefulWidget {
 class _MainWelcomePageState extends State<MainWelcomePage> {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
+    return Scaffold(
+      backgroundColor: Colors.pink,
+    );
   }
 }

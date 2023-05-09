@@ -31,19 +31,28 @@ dependencies:
   flutter:
     sdk: flutter
 
-
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
-
-dev_dependencies:
-  flutter_test:
-    sdk: flutter
   qr_flutter: ^4.0.0
   requests: ^4.4.1
   http: ^0.13.4
   html: ^0.15.0
   shared_preferences: ^2.1.1
+
+  flutter_native_splash: ^2.2.4
+flutter_native_splash:
+  color: "70D0DD"
+  image: assets/img_2.png
+  android: true
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+
+
+
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -65,7 +74,8 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
-
+  assets:
+    - assets/images/
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg
