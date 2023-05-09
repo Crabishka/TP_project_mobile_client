@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class AuthFormPage extends StatefulWidget {
   @override
@@ -28,7 +31,6 @@ class _AuthFormPageState extends State<AuthFormPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-
                     decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(20)),
@@ -174,11 +176,10 @@ class _AuthFormPageState extends State<AuthFormPage> {
                             borderRadius: BorderRadius.circular(15))),
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        // Здесь добавьте ваш код для регистрации пользователя
-                        print('Регистрация прошла успешно!');
+                        _submitForm();
                       }
                     },
-                    child: Text(
+                    child: const Text(
                       'Зарегистрироваться',
                       style: TextStyle(
                         fontSize: 24,
@@ -191,5 +192,27 @@ class _AuthFormPageState extends State<AuthFormPage> {
             ),
           )),
     );
+  }
+
+  Future<void> _submitForm() async {
+    final url = Uri.parse('http://10.0.2.2:8080/users/registration');
+    final response = await http.post(
+      url,
+      body: jsonEncode({
+        "phoneNumber": _phoneNumber,
+        "password": _password,
+        "name": _name
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    );
+    print(response.body);
+    if (response.statusCode == 200) {
+      print("403");
+      // Обработка успешного ответа
+    } else {
+      // Обработка ошибки
+    }
   }
 }
