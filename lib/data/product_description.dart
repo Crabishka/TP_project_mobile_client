@@ -6,5 +6,20 @@ class ProductDescription {
   final String image;
 
   ProductDescription(
-      this.id, this.title, this.description, this.price, this.image);
+      {required this.id,
+      required this.title,
+      required this.description,
+      required this.price,
+      required this.image});
+
+  factory ProductDescription.fromJson(Map<String, dynamic> json) {
+    return ProductDescription(
+      id: json['id'],
+      title: json['title'],
+      description: json['description'],
+      price: json['cost'].toDouble(),
+      image: json['photo'],
+    );
+  }
+
 }

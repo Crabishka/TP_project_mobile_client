@@ -1,5 +1,6 @@
-import 'package:sportique/client_api/order_repository.dart';
-
+import 'package:flutter/material.dart';
+import 'package:sportique/client_api/dio_client.dart';
+import 'package:http/http.dart' as http;
 import '../data/user.dart';
 
 class UserRepository {
@@ -7,17 +8,29 @@ class UserRepository {
 
   static final instance = UserRepository._();
 
-  User user1 = User(1, "Amrit", "+79518747578", [
-    OrderRepository.instance.findById(1),
-    OrderRepository.instance.findById(2)
-  ]);
-  User user2 =
-      User(2, "Amala", "+79518747578", [OrderRepository.instance.findById(4)]);
-  User user3 =
-      User(3, "Amen", "+79518747578", [OrderRepository.instance.findById(3)]);
-  late var users = [user1, user2, user3];
+  var mainUrl = "http://10.0.2.2:8080/users";
 
-  User getUser() {
-    return users[0];
+  Future<User> getUser(BuildContext context) async {
+    try {
+      final response = await DioClient().dio.get(mainUrl);
+      if (response.statusCode == 200) {
+        return User.fromJson(response.data);
+      } else if (response.statusCode == 403) {
+        final snackBar = SnackBar(
+          content:
+              const Text('Доступ запрещен. Предлагаем зарегистрироваться.'),
+          action: SnackBarAction(
+            label: 'Зарегистрироваться',
+            onPressed: () {},
+          ),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        throw ('Access denied');
+      } else {
+        throw Exception('Unexpected status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Failed to fetch user');
+    }
   }
 }

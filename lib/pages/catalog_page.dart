@@ -6,32 +6,46 @@ import '../data/product_description.dart';
 import '../widgets/product_card.dart';
 
 class CatalogPage extends StatelessWidget {
-  const CatalogPage({super.key});
+  CatalogPage({super.key});
+
+  final Future<List<ProductDescription>> list =
+      ProductDescriptionRepository.instance.getAllProductDescription();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFB6CFD8),
-      body: CustomScrollView(
-        slivers: [
-          const SliverToBoxAdapter(
-            child: SizedBox(
-              height: 40,
-            ),
-          ),
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-                childCount: ProductDescriptionRepository.instance
-                    .getAllProductDescription()
-                    .length, (context, index) {
-              return Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-                  child: ProductCard(
-                      product: ProductDescriptionRepository.instance
-                          .getProductDescription(index)));
-            }),
-          ),
-        ],
+      body: FutureBuilder<List<ProductDescription>>(
+        future:
+            ProductDescriptionRepository.instance.getAllProductDescription(),
+        builder: (BuildContext context,
+            AsyncSnapshot<List<ProductDescription>> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return CircularProgressIndicator();
+          } else if (snapshot.hasError) {
+            // Обрабатываем ошибку, если она произошла
+            return Text('Ошибка загрузки данных');
+          } else {
+            // Отображаем данные, когда они загружены
+            return CustomScrollView(
+              slivers: [
+                const SliverToBoxAdapter(
+                  child: SizedBox(
+                    height: 40,
+                  ),
+                ),
+                SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                      childCount: snapshot.data!.length, (context, index) {
+                    return Padding(
+                        padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+                        child: ProductCard(product: snapshot.data![index]));
+                  }),
+                ),
+              ],
+            );
+          }
+        },
       ),
     );
   }

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sportique/pages/product_page.dart';
@@ -23,9 +24,14 @@ class ProductCard extends StatelessWidget {
                   child: Container(
                       padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
                       child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: Image.network(product.image),
-                      ))),
+                          borderRadius: BorderRadius.circular(20),
+                          child: CachedNetworkImage(
+                            imageUrl: product.image,
+                            placeholder: (context, url) =>
+                                CircularProgressIndicator(),
+                            errorWidget: (context, url, error) =>
+                                Icon(Icons.error),
+                          )))),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -58,8 +64,7 @@ class ProductCard extends StatelessWidget {
                       onPressed: () {
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) =>
-                                ProductPage(id: product.id - 1))); // FIXME
-
+                                ProductPage(productDescription:  product))); // FIXME
                       },
                       child: const Text('К товару'),
                     ),

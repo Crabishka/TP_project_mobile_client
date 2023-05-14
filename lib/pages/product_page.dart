@@ -1,17 +1,25 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:sportique/client_api/product_description_repository.dart';
 import 'package:sportique/data/product_description.dart';
-import 'package:sportique/widgets/navigation/bottom_navigation_bar.dart';
 
-class ProductPage extends StatelessWidget {
+
+class ProductPage extends StatefulWidget {
   late int id;
+  ProductDescription productDescription;
+
+  ProductPage({super.key,  required this.productDescription});
+
+  @override
+  State<ProductPage> createState() => _ProductPageState(productDescription);
+}
+
+class _ProductPageState extends State<ProductPage> {
   int size = 36;
+  ProductDescription productDescription;
 
-  ProductPage({super.key, required this.id});
 
-  late ProductDescription productDescription =
-      ProductDescriptionRepository.instance.getProductDescription(id);
+  _ProductPageState(this.productDescription);
 
   @override
   Widget build(BuildContext context) {
@@ -34,26 +42,19 @@ class ProductPage extends StatelessWidget {
                 children: [
                   AspectRatio(
                       aspectRatio: 1.5,
-                      child: Image.network(productDescription.image,
-                          fit: BoxFit.cover)),
+                      child: CachedNetworkImage(
+                        imageUrl: productDescription.image,
+                        fit: BoxFit.cover,
+                        placeholder: (context, url) =>
+                            CircularProgressIndicator(),
+                        errorWidget: (context, url, error) => Icon(Icons.error),
+                      )),
                   Padding(
-                      padding: const EdgeInsets.all(16),
+                      padding: const EdgeInsets.fromLTRB(32, 12, 20, 0),
                       child: Text(
                         productDescription.description,
                         style: const TextStyle(fontSize: 24),
                       )),
-                  Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Text(
-                        productDescription.description,
-                        style: const TextStyle(fontSize: 24),
-                      )),
-                  Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Text(
-                        productDescription.description,
-                        style: const TextStyle(fontSize: 24),
-                      ))
                 ],
               ),
             ),

@@ -24,7 +24,7 @@ class OrderPageReadyToGet extends StatelessWidget {
                     padding: const EdgeInsets.fromLTRB(50, 80, 50, 30),
                     child: QrImage(
                       padding: const EdgeInsets.all(30),
-                      data: UserRepository.instance.getUser().toString(),
+                      data: UserRepository.instance.getUser(context).toString(),
                       backgroundColor: Colors.white,
                     ),
                   )),

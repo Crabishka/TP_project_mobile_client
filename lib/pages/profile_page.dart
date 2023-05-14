@@ -2,12 +2,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sportique/client_api/order_repository.dart';
 import 'package:sportique/client_api/user_repository.dart';
-import 'package:sportique/data/order_status.dart';
+
 
 import 'package:sportique/widgets/order_card.dart';
 
+import '../data/user.dart';
+
 class ProfilePage extends StatelessWidget {
-  const ProfilePage({super.key});
+  ProfilePage({super.key, required this.user});
+
+  User user;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +32,7 @@ class ProfilePage extends StatelessWidget {
               child: Padding(
                   padding: const EdgeInsets.fromLTRB(16, 16, 0, 0),
                   child: Text(
-                      "Здравствуйте, ${UserRepository.instance.getUser().name}",
+                      "Здравствуйте, ${user.name}",
                       style: const TextStyle(
                         color: Color(0xFF3C2C9E),
                         fontFamily: 'PoiretOne',
@@ -39,7 +43,7 @@ class ProfilePage extends StatelessWidget {
               child: Padding(
                   padding: const EdgeInsets.fromLTRB(16, 16, 0, 0),
                   child: Text(
-                    "Ваш номер ${UserRepository.instance.getUser().phoneNumber}",
+                    "Ваш номер ${user.phoneNumber}",
                     style: const TextStyle(
                       color: Color(0xFF3C2C9E),
                       fontFamily: 'PoiretOne',
@@ -49,13 +53,13 @@ class ProfilePage extends StatelessWidget {
                   ))),
           SliverList(
             delegate: SliverChildBuilderDelegate(
-                childCount: OrderRepository.instance.getOrderByUser(1).length,
+                childCount: user.orders.length,
                 (context, index) {
               return Padding(
                   padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
                   child: OrderCard(
                       order:
-                          OrderRepository.instance.getOrderByUser(1)[index]));
+                      user.orders[index]));
             }),
           )
         ],
