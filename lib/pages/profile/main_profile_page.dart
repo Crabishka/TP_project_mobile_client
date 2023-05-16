@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:get_it/get_it.dart';
 import 'package:sportique/client_api/token_hepler.dart';
 import 'package:sportique/client_api/user_repository.dart';
 import 'package:sportique/pages/profile/auth_form_page.dart';
@@ -18,11 +19,12 @@ class MainProfilePage extends StatefulWidget {
 
 class _MainProfilePageState extends State<MainProfilePage> {
   User? user;
+  GetIt getIt = GetIt.instance;
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<User>(
-      future: UserRepository.instance.getUser(),
+      future: getIt<UserRepository>().getUser(),
       builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return CircularProgressIndicator();

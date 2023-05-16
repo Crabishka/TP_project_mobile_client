@@ -1,25 +1,33 @@
 import 'dart:convert';
 
+import 'package:get_it/get_it.dart';
+import 'package:intl/intl.dart';
+import 'package:sportique/data/product_size_dto.dart';
+
 import '../data/product_description.dart';
 import 'package:http/http.dart' as http;
 
+import '../internal/app_data.dart';
+
 class ProductDescriptionRepository {
-  ProductDescriptionRepository._();
+  GetIt getIt = GetIt.instance;
 
-  static final instance = ProductDescriptionRepository._();
-
-  // ProductDescription getProductDescription(int id) {
-  //   return catalog[id];
-  // }
+  ProductDescriptionRepository() {
+    mainUrl = getIt<AppData>().getUrl();
+    mainUrlForGetProducts = "$mainUrl/products_property";
+    mainUrlForGetSizes = "$mainUrl/products/size";
+  }
 
   Future<List<ProductDescription>> getAllProductDescription() {
     return getAllProductDescriptionByRequest();
   }
 
-  var mainUrl = "http://188.225.35.245:8080/products_property";
+  String mainUrl = "";
+  String mainUrlForGetProducts = "";
+  String mainUrlForGetSizes = "";
 
   Future<List<ProductDescription>> getAllProductDescriptionByRequest() async {
-    var url = Uri.parse(mainUrl);
+    var url = Uri.parse(mainUrlForGetProducts);
     var response = await http.get(url);
 
     if (response.statusCode == 200) {
@@ -36,6 +44,25 @@ class ProductDescriptionRepository {
     } else {
       print('Ошибка HTTP: ${response.statusCode}');
       return [];
+    }
+  }
+
+  Future<ProductSizeDTO> getSizeByDate(DateTime date, int id) async {
+    var baseUrl = Uri.parse(mainUrlForGetSizes);
+
+    var formatter = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+    var zonedDateTime = formatter.format(date);
+    var queryParams = {"date": zonedDateTime, "product_id": id.toString()};
+    var url = baseUrl.replace(queryParameters: queryParams);
+    var response = await http.get(url);
+    if (response.statusCode == 200) {
+      var jsonData = json.decode(response.body);
+      var productSizes = ProductSizeDTO.fromJson(jsonData['map']);
+
+      return productSizes;
+    } else {
+      print('Ошибка HTTP: ${response.statusCode}');
+      return ProductSizeDTO(map: {});
     }
   }
 }

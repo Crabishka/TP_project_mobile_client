@@ -1,15 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:sportique/client_api/product_description_repository.dart';
-import 'package:sportique/widgets/navigation/bottom_navigation_bar.dart';
 import '../../data/product_description.dart';
 import '../../widgets/product_card.dart';
 
 class CatalogPage extends StatelessWidget {
   CatalogPage({super.key});
 
-  final Future<List<ProductDescription>> list =
-      ProductDescriptionRepository.instance.getAllProductDescription();
+  GetIt getIt = GetIt.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +16,7 @@ class CatalogPage extends StatelessWidget {
       backgroundColor: const Color(0xFFB6CFD8),
       body: FutureBuilder<List<ProductDescription>>(
         future:
-            ProductDescriptionRepository.instance.getAllProductDescription(),
+            getIt<ProductDescriptionRepository>().getAllProductDescription(),
         builder: (BuildContext context,
             AsyncSnapshot<List<ProductDescription>> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {

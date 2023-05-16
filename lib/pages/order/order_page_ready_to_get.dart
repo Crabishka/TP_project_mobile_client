@@ -1,13 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import '../../client_api/user_repository.dart';
 import '../../data/order.dart';
 import '../../widgets/product_little_card.dart';
 
 class OrderPageReadyToGet extends StatelessWidget {
-  const OrderPageReadyToGet({super.key, required this.order});
-
+   OrderPageReadyToGet({super.key, required this.order});
+  final GetIt getIt = GetIt.instance;
   final Order order;
 
   @override
@@ -24,7 +25,7 @@ class OrderPageReadyToGet extends StatelessWidget {
                     padding: const EdgeInsets.fromLTRB(50, 80, 50, 30),
                     child: QrImage(
                       padding: const EdgeInsets.all(30),
-                      data: UserRepository.instance.getUser().toString(),
+                      data:  getIt<UserRepository>().getUser().toString(),
                       backgroundColor: Colors.white,
                     ),
                   )),

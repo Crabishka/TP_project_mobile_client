@@ -10,7 +10,7 @@ class Product {
   factory Product.fromJson(Map<String, dynamic> json) {
     return Product(
       id: json['id'],
-      description: ProductDescription.fromJson(json['description']),
+      description: ProductDescription.fromJson(json['productProperty']),
       size: json['size'].toDouble(),
     );
   }

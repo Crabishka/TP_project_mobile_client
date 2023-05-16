@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:sportique/client_api/order_repository.dart';
 import 'package:sportique/client_api/user_repository.dart';
 
@@ -18,6 +19,8 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  GetIt getIt = GetIt.instance;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +37,7 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
           onPressed: () {
             setState(() {
-              UserRepository.instance.logout();
+              getIt<UserRepository>().logout();
             });
             App.changeIndex(2);
             Navigator.push(

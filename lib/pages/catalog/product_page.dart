@@ -1,9 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:sportique/client_api/product_description_repository.dart';
+import 'package:sportique/client_api/user_repository.dart';
+import 'package:sportique/internal/app_data.dart';
 import 'package:sportique/data/product_description.dart';
-import 'package:sportique/widgets/product_calendar.dart';
-
+import 'package:sportique/data/product_size_dto.dart';
+import 'package:get_it/get_it.dart';
 
 class ProductPage extends StatefulWidget {
   late int id;
@@ -16,10 +20,9 @@ class ProductPage extends StatefulWidget {
 }
 
 class _ProductPageState extends State<ProductPage> {
-  int? size;
+  double? size;
   ProductDescription productDescription;
-  DateTime? _selectedDate;
-  DateTime? _focusedDate = DateTime.now();
+  final getIt = GetIt.instance;
 
   _ProductPageState(this.productDescription);
 
@@ -82,48 +85,58 @@ class _ProductPageState extends State<ProductPage> {
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(15))),
                           onPressed: () {
-                            showModalBottomSheet(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return ProductCalendar();
-                                });
+                            _selectDate(context);
                           },
                           child: Row(
-                            children: const [
+                            children: [
                               Expanded(
-                                child: Text("Выберите удобную дату",
+                                flex: 4,
+                                child: Text(
+                                    getIt<AppData>().getDate() == null
+                                        ? "Выберите удобную дату"
+                                        : "Выбранная дата: "
+                                            " ${DateFormat('dd-MMM').format(getIt<AppData>().getDate()!)}",
                                     textAlign: TextAlign.center,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontFamily: 'PoiretOne',
                                       color: Colors.black,
                                       fontWeight: FontWeight.bold,
                                       fontSize: 20,
                                     )),
                               ),
-                              Icon(
-                                Icons.calendar_month,
-                                color: Colors.black,
+                              const Expanded(
+                                flex: 1,
+                                child: Icon(
+                                  Icons.calendar_month,
+                                  color: Colors.black,
+                                ),
                               )
                             ],
                           ))),
                   Center(
                       child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFFD9D9D9),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15))),
-                    onPressed: () {
-                      showModalBottomSheet(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return Container();
-                          });
-                    },
-                    child: Text("Ваш выбранный размер - ${size}",
+                    onPressed: getIt<AppData>().getDate() == null
+                        ? null
+                        : () {
+                            showModalBottomSheet(
+                                shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.vertical(
+                                        top: Radius.circular(25))),
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return Container(child: _showSelectedSizes());
+                                });
+                          },
+                    child: Text(
+                        size == null
+                            ? "Выберите размер"
+                            : "Ваш выбранный размер - ${size}",
                         textAlign: TextAlign.center,
                         style: const TextStyle(
                           fontFamily: 'PoiretOne',
-                          color: Colors.black,
                           fontWeight: FontWeight.bold,
                           fontSize: 20,
                         )),
@@ -133,7 +146,16 @@ class _ProductPageState extends State<ProductPage> {
                     style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15))),
-                    onPressed: () {},
+                    onPressed:
+                        getIt<AppData>().getDate() == null || size == null
+                            ? null
+                            : () {
+                              setState(() {
+                                getIt<UserRepository>()
+                                    .addProduct(productDescription.id, size!);
+                              });
+
+                              },
                     child: const Text("Добавить",
                         textAlign: TextAlign.center,
                         style: TextStyle(
@@ -152,5 +174,74 @@ class _ProductPageState extends State<ProductPage> {
     );
   }
 
+  StatefulWidget _showSelectedSizes() {
+    return FutureBuilder(
+      future: getIt<ProductDescriptionRepository>()
+          .getSizeByDate(getIt<AppData>().getDate()!, productDescription.id),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return Container();
+        } else {
+          return Padding(
+            padding: const EdgeInsets.all(16),
+            child: GridView.builder(
+              itemCount: snapshot.data?.map.length,
+              itemBuilder: (context, index) {
+                double? key = snapshot.data?.map.keys.elementAt(index);
+                return InkWell(
+                  onTap: () {
+                    setState(() {
+                      size = snapshot.data?.map.keys.elementAt(index);
+                      Navigator.of(context).pop();
+                    });
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: snapshot.data?.map[key] as bool
+                            ? (snapshot.data?.map.keys.elementAt(index) == size
+                                ? const Color(0xFF6831C0)
+                                : const Color(0xFF5FE367))
+                            : const Color(0xFFA89DB9),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10))),
+                    child: Center(
+                      child: Text(
+                        '$key',
+                        style: const TextStyle(
+                            fontFamily: 'PoiretOne',
+                            fontWeight: FontWeight.bold,
+                            fontSize: 24),
+                      ),
+                    ),
+                  ),
+                );
+              },
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 4,
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
+              ),
+            ),
+          );
+        }
+      },
+    );
+  }
 
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime.now().add(const Duration(days: 7)),
+    );
+
+    if (pickedDate != null) {
+      setState(() {
+        getIt<AppData>().setDate(pickedDate);
+      });
+    }
+  }
 }
