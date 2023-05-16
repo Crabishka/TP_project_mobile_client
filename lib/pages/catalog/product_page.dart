@@ -2,22 +2,24 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sportique/data/product_description.dart';
+import 'package:sportique/widgets/product_calendar.dart';
 
 
 class ProductPage extends StatefulWidget {
   late int id;
   ProductDescription productDescription;
 
-  ProductPage({super.key,  required this.productDescription});
+  ProductPage({super.key, required this.productDescription});
 
   @override
   State<ProductPage> createState() => _ProductPageState(productDescription);
 }
 
 class _ProductPageState extends State<ProductPage> {
-  int size = 36;
+  int? size;
   ProductDescription productDescription;
-
+  DateTime? _selectedDate;
+  DateTime? _focusedDate = DateTime.now();
 
   _ProductPageState(this.productDescription);
 
@@ -46,7 +48,7 @@ class _ProductPageState extends State<ProductPage> {
                         imageUrl: productDescription.image,
                         fit: BoxFit.cover,
                         placeholder: (context, url) =>
-                            CircularProgressIndicator(),
+                            const CircularProgressIndicator(),
                         errorWidget: (context, url, error) => Icon(Icons.error),
                       )),
                   Padding(
@@ -60,7 +62,7 @@ class _ProductPageState extends State<ProductPage> {
             ),
           ),
           Padding(
-              padding: EdgeInsets.fromLTRB(30, 0, 30, 0),
+              padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -83,7 +85,7 @@ class _ProductPageState extends State<ProductPage> {
                             showModalBottomSheet(
                                 context: context,
                                 builder: (BuildContext context) {
-                                  return Container();
+                                  return ProductCalendar();
                                 });
                           },
                           child: Row(
@@ -149,4 +151,6 @@ class _ProductPageState extends State<ProductPage> {
       ),
     );
   }
+
+
 }

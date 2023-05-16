@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -22,9 +23,11 @@ class ProductLittleCard extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20),
-                child: Image.network(
-                  product.description.image,
-                  fit: BoxFit.cover,
+                child: CachedNetworkImage(
+                  imageUrl: product.description.image,
+                  placeholder: (context, url) =>
+                      Center(child: CircularProgressIndicator()),
+                  errorWidget: (context, url, error) => Icon(Icons.error),
                 ),
               )),
           Expanded(

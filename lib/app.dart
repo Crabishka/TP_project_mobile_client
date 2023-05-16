@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:sportique/pages/main_profile_page.dart';
-import 'package:sportique/pages/reg_form_page.dart';
-import 'package:sportique/pages/catalog_page.dart';
-import 'package:sportique/pages/order_page_main.dart';
-import 'package:sportique/pages/profile_page.dart';
+import 'package:sportique/pages/profile/main_profile_page.dart';
+import 'package:sportique/pages/profile/reg_form_page.dart';
+import 'package:sportique/pages/catalog/catalog_page.dart';
+import 'package:sportique/pages/order/order_page_main.dart';
+import 'package:sportique/pages/profile/profile_page.dart';
 
 class App extends StatefulWidget {
   @override
@@ -35,7 +35,6 @@ class AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-    // WillPopScope handle android back btn
     return WillPopScope(
       onWillPop: () async {
         if (selectedIndex == 0) {

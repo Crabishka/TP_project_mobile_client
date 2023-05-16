@@ -16,7 +16,7 @@ class ProductDescriptionRepository {
     return getAllProductDescriptionByRequest();
   }
 
-  var mainUrl = "http://10.0.2.2:8080/products_property";
+  var mainUrl = "http://188.225.35.245:8080/products_property";
 
   Future<List<ProductDescription>> getAllProductDescriptionByRequest() async {
     var url = Uri.parse(mainUrl);

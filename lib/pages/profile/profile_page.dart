@@ -3,24 +3,43 @@ import 'package:flutter/material.dart';
 import 'package:sportique/client_api/order_repository.dart';
 import 'package:sportique/client_api/user_repository.dart';
 
-
 import 'package:sportique/widgets/order_card.dart';
 
-import '../data/user.dart';
+import '../../app.dart';
+import '../../data/user.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
   ProfilePage({super.key, required this.user});
 
-  User user;
+  User? user;
 
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFB6CFD8),
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_rounded),
-          onPressed: () => Navigator.pop(context, false),
+        leadingWidth: 80,
+        leading: TextButton(
+          child: const Text(
+            "Выйти",
+            style: TextStyle(
+                fontFamily: 'PoiretOne',
+                color: Colors.white,
+                fontWeight: FontWeight.bold),
+          ),
+          onPressed: () {
+            setState(() {
+              UserRepository.instance.logout();
+            });
+            App.changeIndex(2);
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => App()));
+          },
         ),
         backgroundColor: const Color(0xFF2280BA),
         toolbarHeight: 40,
@@ -31,8 +50,7 @@ class ProfilePage extends StatelessWidget {
           SliverToBoxAdapter(
               child: Padding(
                   padding: const EdgeInsets.fromLTRB(16, 16, 0, 0),
-                  child: Text(
-                      "Здравствуйте, ${user.name}",
+                  child: Text("Здравствуйте, ${widget.user!.name}",
                       style: const TextStyle(
                         color: Color(0xFF3C2C9E),
                         fontFamily: 'PoiretOne',
@@ -43,7 +61,7 @@ class ProfilePage extends StatelessWidget {
               child: Padding(
                   padding: const EdgeInsets.fromLTRB(16, 16, 0, 0),
                   child: Text(
-                    "Ваш номер ${user.phoneNumber}",
+                    "Ваш номер ${widget.user!.phoneNumber}",
                     style: const TextStyle(
                       color: Color(0xFF3C2C9E),
                       fontFamily: 'PoiretOne',
@@ -53,13 +71,10 @@ class ProfilePage extends StatelessWidget {
                   ))),
           SliverList(
             delegate: SliverChildBuilderDelegate(
-                childCount: user.orders.length,
-                (context, index) {
+                childCount: widget.user!.orders.length, (context, index) {
               return Padding(
                   padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
-                  child: OrderCard(
-                      order:
-                      user.orders[index]));
+                  child: OrderCard(order: widget.user!.orders[index]));
             }),
           )
         ],

@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:sportique/pages/product_page.dart';
+import 'package:sportique/pages/catalog/product_page.dart';
 
 import '../data/product_description.dart';
 
@@ -28,7 +28,7 @@ class ProductCard extends StatelessWidget {
                           child: CachedNetworkImage(
                             imageUrl: product.image,
                             placeholder: (context, url) =>
-                                CircularProgressIndicator(),
+                                Center(child: CircularProgressIndicator()),
                             errorWidget: (context, url, error) =>
                                 Icon(Icons.error),
                           )))),
@@ -63,8 +63,8 @@ class ProductCard extends StatelessWidget {
                     ElevatedButton(
                       onPressed: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) =>
-                                ProductPage(productDescription:  product))); // FIXME
+                            builder: (context) => ProductPage(
+                                productDescription: product))); // FIXME
                       },
                       child: const Text('К товару'),
                     ),

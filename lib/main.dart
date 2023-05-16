@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:sportique/app.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sportique/pages/main_profile_page.dart';
-import 'package:sportique/pages/main_welcome_page.dart';
+
 import 'package:sportique/pages/onboarding_screen.dart';
-import 'package:sportique/pages/profile_page.dart';
-import 'package:sportique/pages/splash_screen.dart';
+import 'package:sportique/pages/profile/profile_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -31,6 +29,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+
     _initIsFirst();
   }
 

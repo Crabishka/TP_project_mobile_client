@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sportique/widgets/order_product_cart.dart';
 
-import '../client_api/user_repository.dart';
-import '../data/order.dart';
-import '../widgets/product_little_card.dart';
+import '../../client_api/user_repository.dart';
+import '../../data/order.dart';
+import '../../widgets/product_little_card.dart';
 
 class OrderPageCarting extends StatelessWidget {
   final Order order;
