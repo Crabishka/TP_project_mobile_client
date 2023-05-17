@@ -20,10 +20,12 @@ class Order {
         products: (json['products'] as List<dynamic>)
             .map((productJson) => Product.fromJson(productJson))
             .toList(),
-        date: DateTime.parse(json['orderTime']),
+        date: json['orderTime'] == null
+            ? DateTime.now()
+            : DateTime.parse(json['orderTime']),
         sum: json['totalCost'].toDouble(),
-        status: OrderStatus.values.firstWhere(
-            (element) => element.toString().split('.').last == json['orderStatus']));
+        status: OrderStatus.values.firstWhere((element) =>
+            element.toString().split('.').last == json['orderStatus']));
   }
 }
 

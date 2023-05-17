@@ -2,8 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
+import 'package:provider/provider.dart';
 import 'package:sportique/client_api/token_hepler.dart';
 import 'package:sportique/client_api/user_repository.dart';
+import 'package:sportique/model/user_model.dart';
 import 'package:sportique/pages/profile/auth_form_page.dart';
 import 'package:sportique/pages/profile/reg_form_page.dart';
 import 'package:sportique/pages/profile/profile_page.dart';
@@ -24,14 +26,14 @@ class _MainProfilePageState extends State<MainProfilePage> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<User>(
-      future: getIt<UserRepository>().getUser(),
+      future: Provider.of<UserModel>(context).getUser(),
       builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return CircularProgressIndicator();
         } else if (snapshot.data == null) {
           return AuthFormPage();
         } else {
-          return ProfilePage(user: snapshot.data);
+          return ProfilePage();
         }
       },
     );

@@ -1,13 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sportique/model/user_model.dart';
 
 import '../data/product.dart';
 
-class OrderProductCard extends StatelessWidget {
+class OrderProductCard extends StatefulWidget {
   Product product;
 
   OrderProductCard({super.key, required this.product});
 
+  @override
+  State<OrderProductCard> createState() => _OrderProductCardState();
+}
+
+class _OrderProductCardState extends State<OrderProductCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -23,7 +30,7 @@ class OrderProductCard extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20),
                 child: Image.network(
-                  product.description.image,
+                  widget.product.description.image,
                   fit: BoxFit.cover,
                 ),
               )),
@@ -35,7 +42,7 @@ class OrderProductCard extends StatelessWidget {
                 height: 10,
               ),
               Text(
-                product.description.title,
+                widget.product.description.title,
                 style: const TextStyle(
                   fontFamily: 'PoiretOne',
                   fontWeight: FontWeight.bold,
@@ -43,7 +50,7 @@ class OrderProductCard extends StatelessWidget {
                 ),
               ),
               Text(
-                'Размер: ${product.size}',
+                'Размер: ${widget.product.size}',
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
                   fontFamily: 'PoiretOne',
@@ -51,26 +58,57 @@ class OrderProductCard extends StatelessWidget {
                 ),
               ),
               Text(
-                'Стоимость: ${product.description.price} руб/ч',
+                'Стоимость: ${widget.product.description.price} руб/ч',
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
                   fontFamily: 'PoiretOne',
                   fontSize: 18,
                 ),
               ),
-              ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15))),
-                child: const Text(
-                  'Изменить размер',
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontFamily: 'PoiretOne',
-                    fontSize: 18,
+              Row(
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+
+
+                    },
+                    style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15))),
+                    child: const Text(
+                      'Изменить размер',
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontFamily: 'PoiretOne',
+                        fontSize: 14,
+                      ),
+                    ),
                   ),
-                ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        Provider.of<UserModel>(context, listen: false)
+                            .removeProduct(widget.product.description.id,
+                                widget.product.size);
+                      });
+                    },
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.red,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15))),
+                    child: const Text(
+                      'Убрать',
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontFamily: 'PoiretOne',
+                        fontSize: 14,
+                      ),
+                    ),
+                  ),
+                ],
               ),
               const SizedBox(
                 height: 10,

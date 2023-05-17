@@ -21,7 +21,4 @@ class User {
     );
   }
 
-  Order getUserActiveOrder() {
-    return orders[0];
-  }
 }

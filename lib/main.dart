@@ -5,14 +5,20 @@ import 'package:get_it/get_it.dart';
 import 'package:sportique/client_api/product_description_repository.dart';
 import 'package:sportique/client_api/user_repository.dart';
 import 'package:sportique/internal/app_data.dart';
+import 'package:sportique/model/user_model.dart';
 import 'package:sportique/pages/onboarding_screen.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   GetIt getIt = GetIt.instance;
   getIt.registerSingleton<AppData>(AppData());
   getIt.registerSingleton<UserRepository>(UserRepository());
-  getIt.registerSingleton<ProductDescriptionRepository>(ProductDescriptionRepository());
-  runApp(MyApp());
+  getIt.registerSingleton<ProductDescriptionRepository>(
+      ProductDescriptionRepository());
+  runApp(ChangeNotifierProvider(
+    create: (context) => UserModel(),
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatefulWidget {

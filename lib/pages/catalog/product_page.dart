@@ -2,12 +2,16 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:sportique/client_api/product_description_repository.dart';
 import 'package:sportique/client_api/user_repository.dart';
 import 'package:sportique/internal/app_data.dart';
 import 'package:sportique/data/product_description.dart';
 import 'package:sportique/data/product_size_dto.dart';
 import 'package:get_it/get_it.dart';
+import 'package:sportique/model/user_model.dart';
+
+import '../../app.dart';
 
 class ProductPage extends StatefulWidget {
   late int id;
@@ -150,11 +154,22 @@ class _ProductPageState extends State<ProductPage> {
                         getIt<AppData>().getDate() == null || size == null
                             ? null
                             : () {
-                              setState(() {
-                                getIt<UserRepository>()
-                                    .addProduct(productDescription.id, size!);
-                              });
-
+                                setState(() {
+                                  Provider.of<UserModel>(context, listen: false)
+                                      .addProduct(productDescription.id, size!)
+                                      .then((_) => ScaffoldMessenger.of(context)
+                                          .showSnackBar(_addProductSnackBar(
+                                              productDescription.title, size!)))
+                                      .catchError((e) {
+                                    if (e == 'access denied') {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(_errorSnackBar());
+                                    } else if (e == '403'){
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(_maxCountSnackBar());
+                                    }
+                                  });
+                                });
                               },
                     child: const Text("Добавить",
                         textAlign: TextAlign.center,
@@ -170,6 +185,45 @@ class _ProductPageState extends State<ProductPage> {
                 ],
               ))
         ],
+      ),
+    );
+  }
+
+  SnackBar _maxCountSnackBar() {
+    return SnackBar(
+      content: Text('Вы не можете добавить больше 4 товаров :('),
+      action: SnackBarAction(
+        label: 'Грустно...',
+        onPressed: () {
+          // Some code to undo the change.
+        },
+      ),
+    );
+  }
+
+  SnackBar _errorSnackBar() {
+    return SnackBar(
+      content: const Text(
+          'Войдите или зарегистрируйте перед тем, как добавить товар в корзину'),
+      action: SnackBarAction(
+        label: 'Войти',
+        onPressed: () {
+          App.changeIndex(2);
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => App()));
+        },
+      ),
+    );
+  }
+
+  SnackBar _addProductSnackBar(String title, double size) {
+    return SnackBar(
+      content: Text('Вы добавили $title $size размера'),
+      action: SnackBarAction(
+        label: 'Круто!',
+        onPressed: () {
+          // Some code to undo the change.
+        },
       ),
     );
   }

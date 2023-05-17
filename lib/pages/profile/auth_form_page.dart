@@ -1,14 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import 'package:sportique/client_api/jwtDTO.dart';
 import 'package:sportique/client_api/token_hepler.dart';
+import 'package:sportique/client_api/user_repository.dart';
+import 'package:sportique/model/user_model.dart';
 import 'dart:convert';
 
 import 'package:sportique/pages/profile/reg_form_page.dart';
 
 import '../../app.dart';
-
 
 class AuthFormPage extends StatefulWidget {
   const AuthFormPage({super.key});
@@ -120,7 +122,15 @@ class _AuthFormPageState extends State<AuthFormPage> {
                                       borderRadius: BorderRadius.circular(15))),
                               onPressed: () {
                                 if (_formKey.currentState!.validate()) {
-                                  _submitForm();
+                                  Provider.of<UserModel>(context, listen: false)
+                                      .authUser(_phoneNumber, _password)
+                                      .then((value) {
+                                    App.changeIndex(2);
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => App()));
+                                  });
                                 }
                               },
                               child: const Text(
@@ -160,29 +170,5 @@ class _AuthFormPageState extends State<AuthFormPage> {
         ),
       ),
     );
-  }
-
-  var mainUrl = 'http://10.0.2.2:8080/users/login';
-
-  Future<void> _submitForm() async {
-    String? token = await TokenHelper().getUserToken();
-    final response = await http.post(Uri.parse(mainUrl),
-        headers: token != null && token.isNotEmpty
-            ? {'Content-Type': 'application/json', 'Authorization': token}
-            : {'Content-Type': 'application/json'},
-        body: jsonEncode({
-          "username": _phoneNumber,
-          "password": _password,
-        }));
-    if (response.statusCode == 200) {
-      final Map<String, dynamic> decodedJson = jsonDecode(response.body);
-      JwtDTO jwtDTO = JwtDTO.fromJson(decodedJson);
-      TokenHelper().setUserToken(userToken: jwtDTO.accessToken);
-      App.changeIndex(2);
-      Navigator.push(context, MaterialPageRoute(builder: (context) => App()));
-      print(jwtDTO.accessToken);
-    } else {
-      // Обработка ошибки
-    }
   }
 }
