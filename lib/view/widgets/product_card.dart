@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:sportique/pages/catalog/product_page.dart';
 
-import '../data/product_description.dart';
+import '../../model/data/product_description.dart';
+import '../pages/catalog/product_page.dart';
 
 class ProductCard extends StatelessWidget {
   final ProductDescription product;
@@ -64,7 +64,7 @@ class ProductCard extends StatelessWidget {
                       onPressed: () {
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => ProductPage(
-                                productDescription: product))); // FIXME
+                                productDescription: product)));
                       },
                       child: const Text('К товару'),
                     ),

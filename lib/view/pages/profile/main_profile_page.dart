@@ -3,24 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
-import 'package:sportique/client_api/token_hepler.dart';
-import 'package:sportique/client_api/user_repository.dart';
-import 'package:sportique/model/user_model.dart';
-import 'package:sportique/pages/profile/auth_form_page.dart';
-import 'package:sportique/pages/profile/reg_form_page.dart';
-import 'package:sportique/pages/profile/profile_page.dart';
+import 'package:sportique/view/pages/profile/profile_page.dart';
 
-import '../../data/user.dart';
+import '../../../model/data/user.dart';
+import '../../../viewmodel/user_model.dart';
+import 'auth_form_page.dart';
+
+
 
 class MainProfilePage extends StatefulWidget {
-  MainProfilePage({super.key});
+  const MainProfilePage({super.key});
 
   @override
   State<MainProfilePage> createState() => _MainProfilePageState();
 }
 
 class _MainProfilePageState extends State<MainProfilePage> {
-  User? user;
+
   GetIt getIt = GetIt.instance;
 
   @override

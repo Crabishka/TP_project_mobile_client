@@ -2,12 +2,14 @@ import 'dart:convert';
 
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
-import 'package:sportique/data/product_size_dto.dart';
 
+
+import '../../viewmodel/internal/app_data.dart';
 import '../data/product_description.dart';
 import 'package:http/http.dart' as http;
 
-import '../internal/app_data.dart';
+import '../data/product_size_dto.dart';
+
 
 class ProductDescriptionRepository {
   GetIt getIt = GetIt.instance;

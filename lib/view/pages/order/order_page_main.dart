@@ -3,14 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
-import 'package:sportique/client_api/order_repository.dart';
-import 'package:sportique/client_api/user_repository.dart';
-import 'package:sportique/pages/order/order_page_ready_to_get.dart';
 
-import '../../data/order.dart';
-import '../../data/user.dart';
-import '../../model/user_model.dart';
+
+import '../../../model/data/order.dart';
+import '../../../viewmodel/user_model.dart';
 import 'order_page_carting.dart';
+import 'order_page_ready_to_get.dart';
 import 'order_page_without_order.dart';
 
 class OrderPage extends StatefulWidget {

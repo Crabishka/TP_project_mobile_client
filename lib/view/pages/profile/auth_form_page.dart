@@ -1,16 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
-import 'package:sportique/client_api/jwtDTO.dart';
-import 'package:sportique/client_api/token_hepler.dart';
-import 'package:sportique/client_api/user_repository.dart';
-import 'package:sportique/model/user_model.dart';
-import 'dart:convert';
+import 'package:sportique/view/pages/profile/reg_form_page.dart';
 
-import 'package:sportique/pages/profile/reg_form_page.dart';
+import '../../../app.dart';
+import '../../../viewmodel/user_model.dart';
 
-import '../../app.dart';
 
 class AuthFormPage extends StatefulWidget {
   const AuthFormPage({super.key});

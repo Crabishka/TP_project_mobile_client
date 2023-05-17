@@ -2,14 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
-import 'package:sportique/client_api/order_repository.dart';
-import 'package:sportique/client_api/user_repository.dart';
 
-import 'package:sportique/widgets/order_card.dart';
+import '../../../app.dart';
+import '../../../model/client_api/user_repository.dart';
+import '../../../model/data/user.dart';
+import '../../../viewmodel/user_model.dart';
+import '../../widgets/order_card.dart';
 
-import '../../app.dart';
-import '../../data/user.dart';
-import '../../model/user_model.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -53,6 +52,11 @@ class _ProfilePageState extends State<ProfilePage> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           } else {
+            if (snapshot.data == null){
+                return Container(
+                  color: const Color(0xFF2280BA),
+                );
+            }
             return CustomScrollView(
               scrollDirection: Axis.vertical,
               slivers: [

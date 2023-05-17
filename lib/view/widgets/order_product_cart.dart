@@ -4,11 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
-import 'package:sportique/model/user_model.dart';
-
-import '../client_api/product_description_repository.dart';
-import '../data/product.dart';
-import '../internal/app_data.dart';
+import '../../model/client_api/product_description_repository.dart';
+import '../../model/data/product.dart';
+import '../../viewmodel/internal/app_data.dart';
+import '../../viewmodel/user_model.dart';
 
 class OrderProductCard extends StatefulWidget {
   Product product;

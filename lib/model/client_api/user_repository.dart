@@ -1,15 +1,16 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
-import 'package:sportique/client_api/token_hepler.dart';
-import 'package:sportique/internal/app_data.dart';
-import '../app.dart';
+import 'package:intl/intl.dart';
+import 'package:sportique/model/client_api/token_hepler.dart';
+
+
+import '../../viewmodel/internal/app_data.dart';
 import '../data/order.dart';
 import '../data/product.dart';
 import '../data/user.dart';
-import 'jwtDTO.dart';
+import 'dto/jwtDTO.dart';
 
 class UserRepository {
   GetIt getIt = GetIt.instance;
@@ -23,6 +24,8 @@ class UserRepository {
     urlForRegUser = "$mainUrl/users/registration";
     urlForAuthUser = "$mainUrl/users/login";
     urlForChangeProduct = "$mainUrl/users/change";
+    urlForMakeOrder = "$mainUrl/users/active";
+    urlForCancelOrder = "$mainUrl/users/cancel";
   }
 
   String mainUrl = "";
@@ -33,6 +36,8 @@ class UserRepository {
   String urlForRegUser = "";
   String urlForAuthUser = "";
   String urlForChangeProduct = "";
+  String urlForMakeOrder = "";
+  String urlForCancelOrder = "";
 
   Future<User> getUser() async {
     try {
@@ -98,13 +103,15 @@ class UserRepository {
     }
   }
 
-  Future<void> addProduct(int productId, double size) async {
+  Future<void> addProduct(int productId, double size, DateTime date) async {
     String? token = await TokenHelper().getUserToken();
     if (token == null || token.isEmpty) {
       throw ('access denied');
     }
     var baseUrl = Uri.parse('$urlForAddProduct/$productId');
-    var queryParams = {"size": size.toString()};
+    var formatter = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+    var zonedDateTime = formatter.format(date);
+    var queryParams = {"size": size.toString(), "date": zonedDateTime};
     var url = baseUrl.replace(queryParameters: queryParams);
     var response = await http.post(url,
         headers: {'Content-Type': 'application/json', 'Authorization': token});
@@ -160,6 +167,39 @@ class UserRepository {
     if (response.statusCode == 200) {
       final Map<String, dynamic> decodedJson = jsonDecode(response.body);
       return Product.fromJson(decodedJson);
+    } else {
+      print('Ошибка HTTP: ${response.statusCode}');
+      throw ('${response.statusCode}');
+    }
+  }
+
+  Future<void> makeOrder(DateTime date) async {
+    String? token = await TokenHelper().getUserToken();
+    if (token == null || token.isEmpty) {
+      throw ('access denied');
+    }
+    var baseUrl = Uri.parse(urlForMakeOrder);
+    var formatter = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+    var zonedDateTime = formatter.format(date);
+    var queryParams = {"date": zonedDateTime};
+    var url = baseUrl.replace(queryParameters: queryParams);
+    var response = await http.post(url,
+        headers: {'Content-Type': 'application/json', 'Authorization': token});
+    if (response.statusCode == 200) {
+    } else {
+      print('Ошибка HTTP: ${response.statusCode}');
+    }
+  }
+
+  Future<void> cancelActiveOrder() async {
+    String? token = await TokenHelper().getUserToken();
+    if (token == null || token.isEmpty) {
+      throw ('access denied');
+    }
+    var url = Uri.parse(urlForCancelOrder);
+    var response = await http.put(url,
+        headers: {'Content-Type': 'application/json', 'Authorization': token});
+    if (response.statusCode == 200) {
     } else {
       print('Ошибка HTTP: ${response.statusCode}');
       throw ('${response.statusCode}');

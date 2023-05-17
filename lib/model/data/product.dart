@@ -1,4 +1,6 @@
-import 'package:sportique/data/product_description.dart';
+
+
+import 'package:sportique/model/data/product_description.dart';
 
 class Product {
   final int id;

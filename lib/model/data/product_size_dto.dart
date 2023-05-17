@@ -1,4 +1,4 @@
-import 'dart:ffi';
+
 
 class ProductSizeDTO {
   Map<double, bool> map;

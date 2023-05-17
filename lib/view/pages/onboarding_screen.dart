@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:sportique/main.dart';
 
-import '../app.dart';
+import '../../app.dart';
+
 
 class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({super.key});
@@ -85,7 +85,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               ),
             ),
           if (_pageIndex != datas.length - 1)
-            SizedBox(
+            const SizedBox(
               height: 80,
             )
         ],

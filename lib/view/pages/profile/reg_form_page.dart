@@ -1,16 +1,12 @@
-import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+
 import 'package:provider/provider.dart';
-import 'package:sportique/client_api/user_repository.dart';
 
-import '../../app.dart';
 
-import '../../client_api/jwtDTO.dart';
-import '../../client_api/token_hepler.dart';
-import '../../model/user_model.dart';
+import '../../../app.dart';
+import '../../../viewmodel/user_model.dart';
 
 class RegFormPage extends StatefulWidget {
   @override
@@ -216,27 +212,5 @@ class _RegFormPageState extends State<RegFormPage> {
     );
   }
 
-  var mainUrl = 'http://10.0.2.2:8080/users/registration';
 
-  Future<void> _submitForm() async {
-    String? token = await TokenHelper().getUserToken();
-    final response = await http.post(Uri.parse(mainUrl),
-        headers: token != null && token.isNotEmpty
-            ? {'Content-Type': 'application/json', 'Authorization': token}
-            : {'Content-Type': 'application/json'},
-        body: jsonEncode({
-          "phoneNumber": _phoneNumber,
-          "password": _password,
-          "name": _name
-        }));
-
-    if (response.statusCode == 200) {
-      final Map<String, dynamic> decodedJson = jsonDecode(response.body);
-      JwtDTO jwtDTO = JwtDTO.fromJson(decodedJson);
-      TokenHelper().setUserToken(userToken: jwtDTO.accessToken);
-      App.changeIndex(2);
-      Navigator.push(context, MaterialPageRoute(builder: (context) => App()));
-      print(jwtDTO.accessToken);
-    } else {}
-  }
 }

@@ -2,18 +2,27 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
-import 'package:sportique/widgets/order_product_cart.dart';
+import 'package:provider/provider.dart';
 
-import '../../client_api/user_repository.dart';
-import '../../data/order.dart';
-import '../../internal/app_data.dart';
-import '../../widgets/product_little_card.dart';
 
-class OrderPageCarting extends StatelessWidget {
+import '../../../model/data/order.dart';
+import '../../../viewmodel/internal/app_data.dart';
+import '../../../viewmodel/user_model.dart';
+import '../../widgets/order_product_cart.dart';
+
+
+class OrderPageCarting extends StatefulWidget {
   final Order order;
 
   OrderPageCarting({super.key, required this.order});
+
+  @override
+  State<OrderPageCarting> createState() => _OrderPageCartingState();
+}
+
+class _OrderPageCartingState extends State<OrderPageCarting> {
   GetIt getIt = GetIt.instance;
+  bool shouldRefresh = false;
 
   @override
   Widget build(BuildContext context) {
@@ -28,11 +37,11 @@ class OrderPageCarting extends StatelessWidget {
               slivers: [
                 SliverList(
                   delegate: SliverChildBuilderDelegate(
-                      childCount: order.products.length, (context, index) {
+                      childCount: widget.order.products.length, (context, index) {
                     return Padding(
                         padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
                         child: OrderProductCard(
-                          product: order.products[index],
+                          product: widget.order.products[index],
                         ));
                   }),
                 ),
@@ -44,17 +53,17 @@ class OrderPageCarting extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                // Text(
+                //   "Количество товаров в корзине ${order.products.length}",
+                //   style: const TextStyle(
+                //     color: Colors.black,
+                //     fontFamily: 'PoiretOne',
+                //     fontWeight: FontWeight.bold,
+                //     fontSize: 20,
+                //   ),
+                // ),
                 Text(
-                  "Количество товаров в корзине ${order.products.length}",
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontFamily: 'PoiretOne',
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                  ),
-                ),
-                Text(
-                  "Общая стоимость ${order.sum} руб/час",
+                  "Общая стоимость ${widget.order.sum} руб/час",
                   style: const TextStyle(
                     color: Colors.black,
                     fontFamily: 'PoiretOne',
@@ -75,7 +84,7 @@ class OrderPageCarting extends StatelessWidget {
                   getIt<AppData>().getDate() == null
                       ? "Выберите удобную дату"
                       : "Выбранная дата: "
-                      " ${DateFormat('dd-MMM').format(getIt<AppData>().getDate()!)}",
+                      " ${DateFormat('dd-MMM').format(widget.order.date)}",
                   textAlign: TextAlign.center,
                   style: const TextStyle(
                     fontFamily: 'PoiretOne',
@@ -91,7 +100,7 @@ class OrderPageCarting extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15))),
               onPressed: () {
-                // FIXME
+                Provider.of<UserModel>(context, listen: false).makeOrder();
               },
               child: const Text("Заказать",
                   style: TextStyle(

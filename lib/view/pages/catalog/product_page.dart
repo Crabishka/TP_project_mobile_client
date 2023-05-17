@@ -3,15 +3,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:sportique/client_api/product_description_repository.dart';
-import 'package:sportique/client_api/user_repository.dart';
-import 'package:sportique/internal/app_data.dart';
-import 'package:sportique/data/product_description.dart';
-import 'package:sportique/data/product_size_dto.dart';
-import 'package:get_it/get_it.dart';
-import 'package:sportique/model/user_model.dart';
 
-import '../../app.dart';
+import 'package:get_it/get_it.dart';
+
+import '../../../app.dart';
+import '../../../model/client_api/product_description_repository.dart';
+import '../../../model/data/product_description.dart';
+import '../../../viewmodel/internal/app_data.dart';
+import '../../../viewmodel/user_model.dart';
 
 class ProductPage extends StatefulWidget {
   late int id;
@@ -166,7 +165,8 @@ class _ProductPageState extends State<ProductPage> {
                             : () {
                                 setState(() {
                                   Provider.of<UserModel>(context, listen: false)
-                                      .addProduct(productDescription.id, size!)
+                                      .addProduct(productDescription.id, size!,
+                                          getIt.get<AppData>().getDate()!)
                                       .then((_) => ScaffoldMessenger.of(context)
                                           .showSnackBar(_addProductSnackBar(
                                               productDescription.title, size!)))
@@ -201,8 +201,9 @@ class _ProductPageState extends State<ProductPage> {
 
   SnackBar _cantChangeData() {
     return SnackBar(
+      duration: const Duration(seconds: 3),
       content:
-          Text('Вы уже выбрали дату! Очистите корзину или продолжайте покупки'),
+          Text('Вы уже выбрали дату! Очистите корзину и продолжайте покупки'),
       action: SnackBarAction(
         label: 'Хорошо',
         onPressed: () {
@@ -214,6 +215,7 @@ class _ProductPageState extends State<ProductPage> {
 
   SnackBar _maxCountSnackBar() {
     return SnackBar(
+      duration: const Duration(seconds: 3),
       content: Text('Вы не можете добавить больше 4 товаров :('),
       action: SnackBarAction(
         label: 'Грустно...',
@@ -226,6 +228,7 @@ class _ProductPageState extends State<ProductPage> {
 
   SnackBar _errorSnackBar() {
     return SnackBar(
+      duration: const Duration(seconds: 3),
       content: const Text(
           'Войдите или зарегистрируйте перед тем, как добавить товар в корзину'),
       action: SnackBarAction(
@@ -241,6 +244,7 @@ class _ProductPageState extends State<ProductPage> {
 
   SnackBar _addProductSnackBar(String title, double size) {
     return SnackBar(
+      duration: const Duration(seconds: 3),
       content: Text('Вы добавили $title $size размера'),
       action: SnackBarAction(
         label: 'Круто!',
