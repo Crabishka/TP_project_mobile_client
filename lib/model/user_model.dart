@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:sportique/client_api/user_repository.dart';
 
 import '../data/order.dart';
+import '../data/product.dart';
 import '../data/user.dart';
 
 class UserModel extends ChangeNotifier {
@@ -35,12 +36,20 @@ class UserModel extends ChangeNotifier {
     return _user;
   }
 
-  Future<void> authUser(String phoneNumber, String password)async {
+  Future<void> authUser(String phoneNumber, String password) async {
     await getIt.get<UserRepository>().authUser(phoneNumber, password);
   }
 
-  Future<void> regUser(String phoneNumber, String password, String name)async {
+  Future<void> regUser(String phoneNumber, String password, String name) async {
     await getIt.get<UserRepository>().regUser(phoneNumber, password, name);
   }
 
+  Future<Product> changeProduct(
+      int productId, double size, double newSize) async {
+    Product product = await getIt
+        .get<UserRepository>()
+        .changeProductSize(productId, size, newSize);
+    notifyListeners();
+    return product;
+  }
 }

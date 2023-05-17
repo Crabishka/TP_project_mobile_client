@@ -89,7 +89,17 @@ class _ProductPageState extends State<ProductPage> {
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(15))),
                           onPressed: () {
-                            _selectDate(context);
+                            Provider.of<UserModel>(context, listen: false)
+                                .getActiveOrder()
+                                .then((value) {
+                              if (value.products.length > 0) {
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(_cantChangeData());
+                              }
+                            }).catchError((_) {
+                              // если нет активного
+                              _selectDate(context);
+                            });
                           },
                           child: Row(
                             children: [
@@ -164,7 +174,7 @@ class _ProductPageState extends State<ProductPage> {
                                     if (e == 'access denied') {
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(_errorSnackBar());
-                                    } else if (e == '403'){
+                                    } else if (e == '403') {
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(_maxCountSnackBar());
                                     }
@@ -185,6 +195,19 @@ class _ProductPageState extends State<ProductPage> {
                 ],
               ))
         ],
+      ),
+    );
+  }
+
+  SnackBar _cantChangeData() {
+    return SnackBar(
+      content:
+          Text('Вы уже выбрали дату! Очистите корзину или продолжайте покупки'),
+      action: SnackBarAction(
+        label: 'Хорошо',
+        onPressed: () {
+          // Some code to undo the change.
+        },
       ),
     );
   }

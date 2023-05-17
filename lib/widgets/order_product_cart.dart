@@ -1,9 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
+
 import 'package:sportique/model/user_model.dart';
 
+import '../client_api/product_description_repository.dart';
 import '../data/product.dart';
+import '../internal/app_data.dart';
 
 class OrderProductCard extends StatefulWidget {
   Product product;
@@ -69,8 +74,16 @@ class _OrderProductCardState extends State<OrderProductCard> {
                 children: [
                   ElevatedButton(
                     onPressed: () {
-
-
+                      setState(() {
+                        showModalBottomSheet(
+                            shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.vertical(
+                                    top: Radius.circular(25))),
+                            context: context,
+                            builder: (BuildContext context) {
+                              return Container(child: _showSelectedSizes());
+                            });
+                      });
                     },
                     style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
@@ -116,6 +129,84 @@ class _OrderProductCardState extends State<OrderProductCard> {
             ],
           ))
         ],
+      ),
+    );
+  }
+
+  GetIt getIt = GetIt.instance;
+
+  StatefulWidget _showSelectedSizes() {
+    return FutureBuilder(
+      future: getIt<ProductDescriptionRepository>().getSizeByDate(
+          getIt<AppData>().getDate()!, widget.product.description.id),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return Container();
+        } else {
+          return Padding(
+            padding: const EdgeInsets.all(16),
+            child: GridView.builder(
+              itemCount: snapshot.data?.map.length,
+              itemBuilder: (context, index) {
+                double? key = snapshot.data?.map.keys.elementAt(index);
+                return InkWell(
+                  onTap: () {
+                    setState(() {
+                      Provider.of<UserModel>(context, listen: false)
+                          .changeProduct(
+                              widget.product.description.id,
+                              widget.product.size,
+                              snapshot.data?.map.keys.elementAt(index) ??
+                                  widget.product.size);
+                      Navigator.of(context).pop();
+                      ScaffoldMessenger.of(context)
+                          .showSnackBar(_changeSizeSnackBar());
+                    });
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: snapshot.data?.map[key] as bool
+                            ? (snapshot.data?.map.keys.elementAt(index) ==
+                                    widget.product.size
+                                ? const Color(0xFF6831C0)
+                                : const Color(0xFF5FE367))
+                            : const Color(0xFFA89DB9),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10))),
+                    child: Center(
+                      child: Text(
+                        '$key',
+                        style: const TextStyle(
+                            fontFamily: 'PoiretOne',
+                            fontWeight: FontWeight.bold,
+                            fontSize: 24),
+                      ),
+                    ),
+                  ),
+                );
+              },
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 4,
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
+              ),
+            ),
+          );
+        }
+      },
+    );
+  }
+
+  SnackBar _changeSizeSnackBar() {
+    return SnackBar(
+      content: const Text('Вы изменили размер!'),
+      action: SnackBarAction(
+        label: 'Хорошо',
+        onPressed: () {
+          // Some code to undo the change.
+        },
       ),
     );
   }

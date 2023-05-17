@@ -7,6 +7,7 @@ import 'package:sportique/client_api/token_hepler.dart';
 import 'package:sportique/internal/app_data.dart';
 import '../app.dart';
 import '../data/order.dart';
+import '../data/product.dart';
 import '../data/user.dart';
 import 'jwtDTO.dart';
 
@@ -21,6 +22,7 @@ class UserRepository {
     urlForDeleteProduct = "$mainUrl/users/delete";
     urlForRegUser = "$mainUrl/users/registration";
     urlForAuthUser = "$mainUrl/users/login";
+    urlForChangeProduct = "$mainUrl/users/change";
   }
 
   String mainUrl = "";
@@ -30,6 +32,7 @@ class UserRepository {
   String urlForDeleteProduct = "";
   String urlForRegUser = "";
   String urlForAuthUser = "";
+  String urlForChangeProduct = "";
 
   Future<User> getUser() async {
     try {
@@ -72,9 +75,7 @@ class UserRepository {
       TokenHelper().setUserToken(userToken: jwtDTO.accessToken);
 
       print(jwtDTO.accessToken);
-    } else {
-
-    }
+    } else {}
   }
 
   Future<Order> getActiveOrder() async {
@@ -83,9 +84,13 @@ class UserRepository {
     final response = await http.get(Uri.parse(urlForGetActiveOrder),
         headers: {'Content-Type': 'application/json', 'Authorization': token!});
     if (response.statusCode == 200) {
-      final Map<String, dynamic> decodedJson = jsonDecode(response.body);
-      Order order = Order.fromJson(decodedJson);
-      return order;
+      try {
+        final Map<String, dynamic> decodedJson = jsonDecode(response.body);
+        Order order = Order.fromJson(decodedJson);
+        return order;
+      } catch (e) {
+        throw ('Cant get active order');
+      }
     } else if (response.statusCode == 403) {
       throw ('Access denied');
     } else {
@@ -139,5 +144,25 @@ class UserRepository {
       JwtDTO jwtDTO = JwtDTO.fromJson(decodedJson);
       TokenHelper().setUserToken(userToken: jwtDTO.accessToken);
     } else {}
+  }
+
+  Future<Product> changeProductSize(
+      int productId, double size, double newSize) async {
+    String? token = await TokenHelper().getUserToken();
+    if (token == null || token.isEmpty) {
+      throw ('access denied');
+    }
+    var baseUrl = Uri.parse('$urlForChangeProduct/$productId');
+    var queryParams = {"size": size.toString(), "new_size": newSize.toString()};
+    var url = baseUrl.replace(queryParameters: queryParams);
+    var response = await http.put(url,
+        headers: {'Content-Type': 'application/json', 'Authorization': token});
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> decodedJson = jsonDecode(response.body);
+      return Product.fromJson(decodedJson);
+    } else {
+      print('Ошибка HTTP: ${response.statusCode}');
+      throw ('${response.statusCode}');
+    }
   }
 }
