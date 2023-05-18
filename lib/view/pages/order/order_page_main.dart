@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 
 
 import '../../../model/data/order.dart';
+import '../../../viewmodel/internal/app_data.dart';
 import '../../../viewmodel/user_model.dart';
 import 'order_page_carting.dart';
 import 'order_page_ready_to_get.dart';
@@ -33,6 +34,9 @@ class _OrderPageState extends State<OrderPage> {
           } else if (snapshot.hasError) {
             return const OrderPageWithoutOrder();
           } else {
+            if (snapshot.hasData){
+              getIt.get<AppData>().setDate(snapshot.data!.date);
+            }
             return returnWidget(snapshot.data);
           }
         },

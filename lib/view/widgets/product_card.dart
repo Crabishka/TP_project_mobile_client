@@ -28,9 +28,9 @@ class ProductCard extends StatelessWidget {
                           child: CachedNetworkImage(
                             imageUrl: product.image,
                             placeholder: (context, url) =>
-                                Center(child: CircularProgressIndicator()),
+                                const Center(child: CircularProgressIndicator()),
                             errorWidget: (context, url, error) =>
-                                Icon(Icons.error),
+                                const Icon(Icons.error),
                           )))),
               Expanded(
                 child: Column(

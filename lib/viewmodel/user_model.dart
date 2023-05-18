@@ -7,7 +7,6 @@ import '../model/data/product.dart';
 import '../model/data/user.dart';
 import 'internal/app_data.dart';
 
-
 class UserModel extends ChangeNotifier {
   GetIt getIt = GetIt.instance;
 
@@ -18,8 +17,8 @@ class UserModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void removeProduct(int productId, double size) {
-    getIt.get<UserRepository>().deleteProduct(productId, size);
+  Future<void> removeProduct(int productId, double size) async {
+    await getIt.get<UserRepository>().deleteProduct(productId, size);
     notifyListeners();
   }
 
@@ -28,18 +27,20 @@ class UserModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> cancelOrder() async{
+  Future<void> cancelOrder() async {
     await getIt.get<UserRepository>().cancelActiveOrder();
     notifyListeners();
   }
 
   Future<Order> getActiveOrder() async {
     Future<Order> order = getIt.get<UserRepository>().getActiveOrder();
+
     return order;
   }
 
   Future<User> getUser() async {
     _user = await getIt.get<UserRepository>().getUser();
+
     return _user;
   }
 
