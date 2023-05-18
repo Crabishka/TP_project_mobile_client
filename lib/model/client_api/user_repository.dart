@@ -76,14 +76,16 @@ class UserRepository {
       final Map<String, dynamic> decodedJson = jsonDecode(response.body);
       JwtDTO jwtDTO = JwtDTO.fromJson(decodedJson);
       TokenHelper().setUserToken(userToken: jwtDTO.accessToken);
-
-      print(jwtDTO.accessToken);
     } else {}
   }
 
   Future<Order> getActiveOrder() async {
     String? token = await TokenHelper().getUserToken();
-
+    if (token == null ||
+        token.isEmpty ||
+        getIt.get<TokenHelper>().isTokenExpired(token)) {
+      throw ('access denied');
+    }
     final response = await http.get(Uri.parse(urlForGetActiveOrder),
         headers: {'Content-Type': 'application/json', 'Authorization': token!});
     if (response.statusCode == 200) {
@@ -103,7 +105,9 @@ class UserRepository {
 
   Future<void> addProduct(int productId, double size, DateTime date) async {
     String? token = await TokenHelper().getUserToken();
-    if (token == null || token.isEmpty) {
+    if (token == null ||
+        token.isEmpty ||
+        getIt.get<TokenHelper>().isTokenExpired(token)) {
       throw ('access denied');
     }
     var baseUrl = Uri.parse('$urlForAddProduct/$productId');
@@ -122,6 +126,11 @@ class UserRepository {
 
   Future<void> deleteProduct(int productId, double size) async {
     String? token = await TokenHelper().getUserToken();
+    if (token == null ||
+        token.isEmpty ||
+        getIt.get<TokenHelper>().isTokenExpired(token)) {
+      throw ('access denied');
+    }
     var baseUrl = Uri.parse('$urlForDeleteProduct/$productId');
     var queryParams = {"size": size.toString()};
     var url = baseUrl.replace(queryParameters: queryParams);
@@ -154,7 +163,9 @@ class UserRepository {
   Future<Product> changeProductSize(
       int productId, double size, double newSize) async {
     String? token = await TokenHelper().getUserToken();
-    if (token == null || token.isEmpty) {
+    if (token == null ||
+        token.isEmpty ||
+        getIt.get<TokenHelper>().isTokenExpired(token)) {
       throw ('access denied');
     }
     var baseUrl = Uri.parse('$urlForChangeProduct/$productId');
@@ -173,7 +184,9 @@ class UserRepository {
 
   Future<void> makeOrder(DateTime date) async {
     String? token = await TokenHelper().getUserToken();
-    if (token == null || token.isEmpty) {
+    if (token == null ||
+        token.isEmpty ||
+        getIt.get<TokenHelper>().isTokenExpired(token)) {
       throw ('access denied');
     }
     var baseUrl = Uri.parse(urlForMakeOrder);
@@ -191,7 +204,9 @@ class UserRepository {
 
   Future<void> cancelActiveOrder() async {
     String? token = await TokenHelper().getUserToken();
-    if (token == null || token.isEmpty) {
+    if (token == null ||
+        token.isEmpty ||
+        getIt.get<TokenHelper>().isTokenExpired(token)) {
       throw ('access denied');
     }
     var url = Uri.parse(urlForCancelOrder);
