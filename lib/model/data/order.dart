@@ -42,7 +42,8 @@ enum OrderStatus {
   FINISHED,
   CANCELED_BY_USER,
   CANCELED_BY_EMPLOYEE,
-  CARTING
+  CARTING,
+  WAITING_FOR_PAYMENT
 
 }
 
@@ -63,6 +64,8 @@ extension OrderStatusExtension on OrderStatus {
         return "Отменен системой";
       case OrderStatus.CARTING:
         return "Выбираются товары";
+      case OrderStatus.WAITING_FOR_PAYMENT:
+        return "Ожидает оплаты";
       default:
         return "Unknown status";
     }

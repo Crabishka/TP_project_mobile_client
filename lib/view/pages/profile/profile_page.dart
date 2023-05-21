@@ -9,7 +9,6 @@ import '../../../model/data/user.dart';
 import '../../../viewmodel/user_model.dart';
 import '../../widgets/order_card.dart';
 
-
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
 
@@ -52,10 +51,10 @@ class _ProfilePageState extends State<ProfilePage> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           } else {
-            if (snapshot.data == null){
-                return Container(
-                  color: const Color(0xFF2280BA),
-                );
+            if (snapshot.data == null) {
+              return Container(
+                color: const Color(0xFF2280BA),
+              );
             }
             return CustomScrollView(
               scrollDirection: Axis.vertical,
@@ -84,10 +83,12 @@ class _ProfilePageState extends State<ProfilePage> {
                         ))),
                 SliverList(
                   delegate: SliverChildBuilderDelegate(
-                      childCount:snapshot.data!.orders.length, (context, index) {
+                      childCount: snapshot.data!.orders.length,
+                      (context, index) {
+                        int reversedIndex = snapshot.data!.orders.length - 1 - index;
                     return Padding(
                         padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
-                        child: OrderCard(order: snapshot.data!.orders[index]));
+                        child: OrderCard(order: snapshot.data!.orders[reversedIndex]));
                   }),
                 )
               ],

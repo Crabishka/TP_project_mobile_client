@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import 'package:get_it/get_it.dart';
+import 'package:sportique/model/data/order.dart';
 
 import '../../../app.dart';
 import '../../../model/client_api/product_description_repository.dart';
@@ -91,7 +92,10 @@ class _ProductPageState extends State<ProductPage> {
                             Provider.of<UserModel>(context, listen: false)
                                 .getActiveOrder()
                                 .then((value) {
-                              if (value.products.length > 0) {
+                              if (value.status != OrderStatus.CARTING) {
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(_haveActiveOrderSnackBar());
+                              } else if (value.products.length > 0){
                                 ScaffoldMessenger.of(context)
                                     .showSnackBar(_cantChangeData());
                               }
@@ -177,6 +181,11 @@ class _ProductPageState extends State<ProductPage> {
                                     } else if (e == '403') {
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(_maxCountSnackBar());
+                                    } else if (e == 'have active'){
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(_haveActiveOrderSnackBar());
+                                    } else {
+                                      print (e);
                                     }
                                   });
                                 });
@@ -198,6 +207,21 @@ class _ProductPageState extends State<ProductPage> {
       ),
     );
   }
+
+  SnackBar _haveActiveOrderSnackBar() {
+    return SnackBar(
+      duration: const Duration(seconds: 3),
+      content:
+      Text('У вас уже есть активный заказ!'),
+      action: SnackBarAction(
+        label: 'Хорошо',
+        onPressed: () {
+          // Some code to undo the change.
+        },
+      ),
+    );
+  }
+
 
   SnackBar _cantChangeData() {
     return SnackBar(

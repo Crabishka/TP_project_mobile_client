@@ -5,6 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:sportique/view/pages/onboarding_screen.dart';
 import 'package:sportique/viewmodel/internal/app_data.dart';
+import 'package:sportique/viewmodel/token_hepler.dart';
 import 'package:sportique/viewmodel/user_model.dart';
 
 import 'model/client_api/product_description_repository.dart';
@@ -13,6 +14,7 @@ import 'model/client_api/user_repository.dart';
 void main() {
   GetIt getIt = GetIt.instance;
   getIt.registerSingleton<AppData>(AppData());
+  getIt.registerSingleton<TokenHelper>(TokenHelper());
   getIt.registerSingleton<UserRepository>(UserRepository());
   getIt.registerSingleton<ProductDescriptionRepository>(
       ProductDescriptionRepository());

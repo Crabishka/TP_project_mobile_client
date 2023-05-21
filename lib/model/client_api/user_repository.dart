@@ -40,10 +40,15 @@ class UserRepository {
   Future<User> getUser() async {
     try {
       String? token = await TokenHelper().getUserToken();
-      final response = await http.get(Uri.parse(urlForGetUser),
-          headers: token != null && token.isNotEmpty
-              ? {'Content-Type': 'application/json', 'Authorization': token}
-              : {'Content-Type': 'application/json'});
+      if (token == null ||
+          token.isEmpty ||
+          getIt.get<TokenHelper>().isTokenExpired(token)) {
+        throw ('access denied');
+      }
+      final response = await http.get(Uri.parse(urlForGetUser), headers: {
+        'Content-Type': 'application/json',
+        'Authorization': token
+      });
       if (response.statusCode == 200) {
         final Map<String, dynamic> decodedJson = jsonDecode(response.body);
         User user = User.fromJson(decodedJson);
@@ -64,11 +69,8 @@ class UserRepository {
   }
 
   Future<void> regUser(String phoneNumber, String password, String name) async {
-    String? token = await TokenHelper().getUserToken();
     final response = await http.post(Uri.parse(urlForRegUser),
-        headers: token != null && token.isNotEmpty
-            ? {'Content-Type': 'application/json', 'Authorization': token}
-            : {'Content-Type': 'application/json'},
+        headers: {'Content-Type': 'application/json'},
         body: jsonEncode(
             {"phoneNumber": phoneNumber, "password": password, "name": name}));
 
@@ -94,6 +96,7 @@ class UserRepository {
         Order order = Order.fromJson(decodedJson);
         return order;
       } catch (e) {
+
         throw ('Cant get active order');
       }
     } else if (response.statusCode == 403) {
@@ -144,11 +147,9 @@ class UserRepository {
   }
 
   Future<void> authUser(String phoneNumber, String password) async {
-    String? token = await TokenHelper().getUserToken();
+
     final response = await http.post(Uri.parse(urlForAuthUser),
-        headers: token != null && token.isNotEmpty
-            ? {'Content-Type': 'application/json', 'Authorization': token}
-            : {'Content-Type': 'application/json'},
+        headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
           "username": phoneNumber,
           "password": password,

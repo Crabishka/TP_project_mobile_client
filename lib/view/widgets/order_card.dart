@@ -24,7 +24,7 @@ class OrderCard extends StatelessWidget {
             Container(
                 padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
                 child: Text(
-                  "Стоимость : ${order.sum} ",
+                  "Стоимость : ${order.sum.truncate()} руб/час",
                   textAlign: TextAlign.left,
                   style: const TextStyle(
                     color: Color(0xFF3C2C9E),
@@ -36,7 +36,7 @@ class OrderCard extends StatelessWidget {
             Container(
                 padding: const EdgeInsets.fromLTRB(8, 8, 0, 0),
                 child: Text(
-                    "Время :  ${order.date.day}-${order.date.month}-${order.date.year}",
+                    "Дата :  ${order.date.day}-${order.date.month}-${order.date.year}",
                     textAlign: TextAlign.left,
                     style: const TextStyle(
                       color: Color(0xFF3C2C9E),
@@ -47,7 +47,7 @@ class OrderCard extends StatelessWidget {
             Container(
                 padding: const EdgeInsets.fromLTRB(8, 8, 0, 0),
                 child: Text(
-                    "В статусе ${order.status.getStatusText()}",
+                    order.status.getStatusText(),
                     textAlign: TextAlign.left,
                     style: const TextStyle(
                       color: Color(0xFF3C2C9E),

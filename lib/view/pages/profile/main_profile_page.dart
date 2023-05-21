@@ -9,8 +9,6 @@ import '../../../model/data/user.dart';
 import '../../../viewmodel/user_model.dart';
 import 'auth_form_page.dart';
 
-
-
 class MainProfilePage extends StatefulWidget {
   const MainProfilePage({super.key});
 
@@ -19,20 +17,23 @@ class MainProfilePage extends StatefulWidget {
 }
 
 class _MainProfilePageState extends State<MainProfilePage> {
-
   GetIt getIt = GetIt.instance;
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<User>(
-      future: Provider.of<UserModel>(context).getUser(),
+      future: Provider.of<UserModel>(context, listen: false).getUser(),
       builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
+          return Center(child: const CircularProgressIndicator());
         } else if (snapshot.data == null) {
           return AuthFormPage();
         } else {
-          return ProfilePage();
+          return RefreshIndicator(
+              onRefresh: () async {
+                Provider.of<UserModel>(context, listen: false).notify();
+              },
+              child: ProfilePage());
         }
       },
     );

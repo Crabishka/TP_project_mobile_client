@@ -53,15 +53,6 @@ class _OrderPageCartingState extends State<OrderPageCarting> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Text(
-                //   "Количество товаров в корзине ${order.products.length}",
-                //   style: const TextStyle(
-                //     color: Colors.black,
-                //     fontFamily: 'PoiretOne',
-                //     fontWeight: FontWeight.bold,
-                //     fontSize: 20,
-                //   ),
-                // ),
                 Text(
                   "Общая стоимость ${widget.order.sum} руб/час",
                   style: const TextStyle(

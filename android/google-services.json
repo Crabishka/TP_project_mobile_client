@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "818994805071",
+    "project_id": "sportique-cb229",
+    "storage_bucket": "sportique-cb229.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:818994805071:android:e884a589636cbcf9502d3a",
+        "android_client_info": {
+          "package_name": "com.example.sportique"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "818994805071-nsvbsld28g93lvhqmaor82394rkdihu3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDtekNkFuOc04aACk8fICAzbeIDqd82Upo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "818994805071-nsvbsld28g93lvhqmaor82394rkdihu3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

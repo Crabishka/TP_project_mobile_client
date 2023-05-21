@@ -23,7 +23,7 @@ class TokenHelper {
 
     String payloadBase64 = tokenParts[1];
 
-    String decodedPayload = utf8.decode(base64Url.decode(payloadBase64));
+    String decodedPayload = utf8.decode(base64Url.decode(base64.normalize(payloadBase64)));
     Map<String, dynamic> payload = json.decode(decodedPayload);
 
     if (payload.containsKey('exp')) {
@@ -37,4 +37,6 @@ class TokenHelper {
 
     return false;
   }
+
+
 }
