@@ -102,7 +102,7 @@ class _OrderProductCardState extends State<OrderProductCard> {
                   ElevatedButton(
                     onPressed: () {
                       setState(() {
-                         Provider.of<UserModel>(context, listen: false)
+                        Provider.of<UserModel>(context, listen: false)
                             .removeProduct(widget.product.description.id,
                                 widget.product.size);
                       });

@@ -216,7 +216,7 @@ class _ProductPageState extends State<ProductPage> {
       action: SnackBarAction(
         label: 'Хорошо',
         onPressed: () {
-          // Some code to undo the change.
+
         },
       ),
     );
@@ -231,8 +231,7 @@ class _ProductPageState extends State<ProductPage> {
       action: SnackBarAction(
         label: 'Хорошо',
         onPressed: () {
-          // Some code to undo the change.
-        },
+             },
       ),
     );
   }
@@ -244,7 +243,7 @@ class _ProductPageState extends State<ProductPage> {
       action: SnackBarAction(
         label: 'Грустно...',
         onPressed: () {
-          // Some code to undo the change.
+
         },
       ),
     );
@@ -273,7 +272,7 @@ class _ProductPageState extends State<ProductPage> {
       action: SnackBarAction(
         label: 'Круто!',
         onPressed: () {
-          // Some code to undo the change.
+
         },
       ),
     );
