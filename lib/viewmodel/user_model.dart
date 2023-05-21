@@ -13,20 +13,11 @@ class UserModel extends ChangeNotifier {
   late User _user;
 
   Future<void> addProduct(int productId, double size, DateTime dateTime) async {
-    try {
-      Order order = await getActiveOrder();
-      if (order.status == OrderStatus.CARTING) {
-        await getIt.get<UserRepository>().addProduct(productId, size, dateTime);
-        notifyListeners();
-      }
-    } catch (e){
-      await getIt.get<UserRepository>().addProduct(productId, size, dateTime);
-      notifyListeners();
-    }
-
+    await getIt.get<UserRepository>().addProduct(productId, size, dateTime);
+    notifyListeners();
   }
 
-  Future<void> notify() async{
+  Future<void> notify() async {
     notifyListeners();
   }
 
@@ -50,7 +41,6 @@ class UserModel extends ChangeNotifier {
 
     return order;
   }
-
 
   Future<User> getUser() async {
     _user = await getIt.get<UserRepository>().getUser();

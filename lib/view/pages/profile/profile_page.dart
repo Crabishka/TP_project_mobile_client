@@ -85,10 +85,10 @@ class _ProfilePageState extends State<ProfilePage> {
                   delegate: SliverChildBuilderDelegate(
                       childCount: snapshot.data!.orders.length,
                       (context, index) {
-                        int reversedIndex = snapshot.data!.orders.length - 1 - index;
+
                     return Padding(
                         padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
-                        child: OrderCard(order: snapshot.data!.orders[reversedIndex]));
+                        child: OrderCard(order: snapshot.data!.orders[index]));
                   }),
                 )
               ],
