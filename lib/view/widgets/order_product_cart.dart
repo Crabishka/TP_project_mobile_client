@@ -88,7 +88,7 @@ class _OrderProductCardState extends State<OrderProductCard> {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15))),
                     child: const Text(
-                      'Изменить размер',
+                      'Размер',
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         fontFamily: 'PoiretOne',
