@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
+import 'package:sportique/firebase/analytics_service.dart';
 
 import '../../model/client_api/product_description_repository.dart';
 import '../../model/data/product.dart';
@@ -19,6 +20,8 @@ class OrderProductCard extends StatefulWidget {
 }
 
 class _OrderProductCardState extends State<OrderProductCard> {
+  GetIt getIt = GetIt.instance;
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -71,9 +74,11 @@ class _OrderProductCardState extends State<OrderProductCard> {
               ),
               Row(
                 children: [
+                  if (getIt.get<AppData>().isChange)
                   ElevatedButton(
                     onPressed: () {
                       setState(() {
+                        getIt.get<AnalyticsService>().setChangeButton();
                         showModalBottomSheet(
                             shape: const RoundedRectangleBorder(
                                 borderRadius: BorderRadius.vertical(
@@ -99,9 +104,11 @@ class _OrderProductCardState extends State<OrderProductCard> {
                   const SizedBox(
                     width: 10,
                   ),
+
                   ElevatedButton(
                     onPressed: () {
                       setState(() {
+                        getIt.get<AnalyticsService>().cancelProduct();
                         Provider.of<UserModel>(context, listen: false)
                             .removeProduct(widget.product.description.id,
                                 widget.product.size);
@@ -132,7 +139,7 @@ class _OrderProductCardState extends State<OrderProductCard> {
     );
   }
 
-  GetIt getIt = GetIt.instance;
+
 
   StatefulWidget _showSelectedSizes() {
     return FutureBuilder(

@@ -1,8 +1,13 @@
 class AppData {
   DateTime? _selectedDate;
   String url = "http://188.225.35.245:8080";
+  late bool isChange;
 
-  String getUrl(){
+  void setIsChange(bool expr) {
+    isChange = expr;
+  }
+
+  String getUrl() {
     return url;
   }
 
@@ -10,13 +15,7 @@ class AppData {
     return _selectedDate;
   }
 
-
   void setDate(DateTime data) {
     _selectedDate = data;
   }
-
-
-
-
-
 }

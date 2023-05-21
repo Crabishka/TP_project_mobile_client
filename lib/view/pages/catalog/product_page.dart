@@ -8,6 +8,7 @@ import 'package:get_it/get_it.dart';
 import 'package:sportique/model/data/order.dart';
 
 import '../../../app.dart';
+import '../../../firebase/analytics_service.dart';
 import '../../../model/client_api/product_description_repository.dart';
 import '../../../model/data/product_description.dart';
 import '../../../viewmodel/internal/app_data.dart';
@@ -168,6 +169,7 @@ class _ProductPageState extends State<ProductPage> {
                             ? null
                             : () {
                                 setState(() {
+                                  getIt.get<AnalyticsService>().addProduct();
                                   Provider.of<UserModel>(context, listen: false)
                                       .addProduct(productDescription.id, size!,
                                           getIt.get<AppData>().getDate()!)

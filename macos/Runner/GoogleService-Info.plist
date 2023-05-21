@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>818994805071-m9cn668d8ic7mrvd38u369098ruila41.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.818994805071-m9cn668d8ic7mrvd38u369098ruila41</string>
+	<key>API_KEY</key>
+	<string>AIzaSyD-4B49YFXqrhvMklacdZPvtWnCAtAJ-yE</string>
+	<key>GCM_SENDER_ID</key>
+	<string>818994805071</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.sportique</string>
+	<key>PROJECT_ID</key>
+	<string>sportique-cb229</string>
+	<key>STORAGE_BUCKET</key>
+	<string>sportique-cb229.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:818994805071:ios:d62a91345ed7e3c6502d3a</string>
+</dict>
+</plist>

@@ -95,7 +95,7 @@ class _CatalogPageState extends State<CatalogPage> {
                                   const SizedBox(
                                     height: 20,
                                   ),
-                                  QrImage(
+                                  QrImageView(
                                     padding: const EdgeInsets.all(30),
                                     data: snapshot.data!.id.toString(),
                                     backgroundColor: Colors.white,
