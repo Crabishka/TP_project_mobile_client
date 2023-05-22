@@ -1,11 +1,11 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 import 'package:provider/provider.dart';
 
-
 import '../../../app.dart';
+import '../../../firebase/analytics_service.dart';
 import '../../../viewmodel/user_model.dart';
 
 class RegFormPage extends StatefulWidget {
@@ -22,6 +22,7 @@ class _RegFormPageState extends State<RegFormPage> {
   String _name = "";
   String _password = '';
   String _confirmPassword = '';
+  GetIt getIt = GetIt.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -185,6 +186,7 @@ class _RegFormPageState extends State<RegFormPage> {
                             Provider.of<UserModel>(context, listen: false)
                                 .regUser(_phoneNumber, _password, _name)
                                 .then((value) {
+                              getIt.get<AnalyticsService>().reg();
                               App.changeIndex(2);
                               Navigator.push(
                                   context,
@@ -211,6 +213,4 @@ class _RegFormPageState extends State<RegFormPage> {
       ),
     );
   }
-
-
 }

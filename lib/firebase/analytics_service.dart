@@ -15,8 +15,12 @@ class AnalyticsService {
     await analytics.logEvent(name: 'change');
   }
 
+  Future<void> auth() async {
+    await analytics.logEvent(name: 'login');
+  }
+
   Future<void> reg() async {
-    await analytics.logEvent(name: 'change');
+    await analytics.logEvent(name: 'sign_up');
   }
 
   Future<void> doOrder() async {

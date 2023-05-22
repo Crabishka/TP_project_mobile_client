@@ -96,7 +96,7 @@ class _ProductPageState extends State<ProductPage> {
                               if (value.status != OrderStatus.CARTING) {
                                 ScaffoldMessenger.of(context)
                                     .showSnackBar(_haveActiveOrderSnackBar());
-                              } else if (value.products.length > 0){
+                              } else if (value.products.length > 0) {
                                 ScaffoldMessenger.of(context)
                                     .showSnackBar(_cantChangeData());
                               }
@@ -164,34 +164,36 @@ class _ProductPageState extends State<ProductPage> {
                     style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15))),
-                    onPressed:
-                        getIt<AppData>().getDate() == null || size == null
-                            ? null
-                            : () {
-                                setState(() {
-                                  getIt.get<AnalyticsService>().addProduct(productDescription.id);
-                                  Provider.of<UserModel>(context, listen: false)
-                                      .addProduct(productDescription.id, size!,
-                                          getIt.get<AppData>().getDate()!)
-                                      .then((_) => ScaffoldMessenger.of(context)
-                                          .showSnackBar(_addProductSnackBar(
-                                              productDescription.title, size!)))
-                                      .catchError((e) {
-                                    if (e == 'access denied') {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(_errorSnackBar());
-                                    } else if (e == '403') {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(_maxCountSnackBar());
-                                    } else if (e == 'have active'){
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(_haveActiveOrderSnackBar());
-                                    } else {
-                                      print (e);
-                                    }
-                                  });
-                                });
-                              },
+                    onPressed: getIt<AppData>().getDate() == null ||
+                            size == null
+                        ? null
+                        : () {
+                            setState(() {
+                              Provider.of<UserModel>(context, listen: false)
+                                  .addProduct(productDescription.id, size!,
+                                      getIt.get<AppData>().getDate()!)
+                                  .then((_) {
+                                Provider.of<AnalyticsService>(context, listen: false)
+                                    .addProduct(productDescription.id);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    _addProductSnackBar(
+                                        productDescription.title, size!));
+                              }).catchError((e) {
+                                if (e == 'access denied') {
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(_errorSnackBar());
+                                } else if (e == '403') {
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(_maxCountSnackBar());
+                                } else if (e == 'have active') {
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(_haveActiveOrderSnackBar());
+                                } else {
+                                  print(e);
+                                }
+                              });
+                            });
+                          },
                     child: const Text("Добавить",
                         textAlign: TextAlign.center,
                         style: TextStyle(
@@ -213,17 +215,13 @@ class _ProductPageState extends State<ProductPage> {
   SnackBar _haveActiveOrderSnackBar() {
     return SnackBar(
       duration: const Duration(seconds: 3),
-      content:
-      Text('У вас уже есть активный заказ!'),
+      content: Text('У вас уже есть активный заказ!'),
       action: SnackBarAction(
         label: 'Хорошо',
-        onPressed: () {
-
-        },
+        onPressed: () {},
       ),
     );
   }
-
 
   SnackBar _cantChangeData() {
     return SnackBar(
@@ -232,8 +230,7 @@ class _ProductPageState extends State<ProductPage> {
           Text('Вы уже выбрали дату! Очистите корзину и продолжайте покупки'),
       action: SnackBarAction(
         label: 'Хорошо',
-        onPressed: () {
-             },
+        onPressed: () {},
       ),
     );
   }
@@ -244,9 +241,7 @@ class _ProductPageState extends State<ProductPage> {
       content: Text('Вы не можете добавить больше 4 товаров :('),
       action: SnackBarAction(
         label: 'Грустно...',
-        onPressed: () {
-
-        },
+        onPressed: () {},
       ),
     );
   }
@@ -273,9 +268,7 @@ class _ProductPageState extends State<ProductPage> {
       content: Text('Вы добавили $title $size размера'),
       action: SnackBarAction(
         label: 'Круто!',
-        onPressed: () {
-
-        },
+        onPressed: () {},
       ),
     );
   }
