@@ -62,6 +62,7 @@ class ProductCard extends StatelessWidget {
                     ),
                     ElevatedButton(
                       onPressed: () {
+
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => ProductPage(
                                 productDescription: product)));

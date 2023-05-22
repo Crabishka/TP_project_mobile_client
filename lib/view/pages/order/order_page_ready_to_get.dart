@@ -46,6 +46,16 @@ class _OrderPageReadyToGetState extends State<OrderPageReadyToGet> {
                     ),
                   ),
                   SliverToBoxAdapter(
+                    child: Text(
+                      "${widget.order.status.getStatusText()}",
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                          fontFamily: 'PoiretOne',
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20),
+                    ),
+                  ),
+                  SliverToBoxAdapter(
                       child: Padding(
                     padding: const EdgeInsets.fromLTRB(50, 20, 50, 30),
                     child: QrImageView(

@@ -181,7 +181,7 @@ class _AuthFormPageState extends State<AuthFormPage> {
       action: SnackBarAction(
         label: 'Хорошо :(',
         onPressed: () {
-          // Some code to undo the change.
+
         },
       ),
     );

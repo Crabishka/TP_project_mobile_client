@@ -182,20 +182,19 @@ class _RegFormPageState extends State<RegFormPage> {
                               borderRadius: BorderRadius.circular(15))),
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
-                          try {
-                            Provider.of<UserModel>(context, listen: false)
-                                .regUser(_phoneNumber, _password, _name)
-                                .then((value) {
-                              getIt.get<AnalyticsService>().reg();
-                              App.changeIndex(2);
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => App()));
-                            });
-                          } catch (e) {
-                            print(e.toString());
-                          }
+                          Provider.of<UserModel>(context, listen: false)
+                              .regUser(_phoneNumber, _password, _name)
+                              .then((value) {
+                            getIt.get<AnalyticsService>().reg();
+                            App.changeIndex(2);
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) => App()));
+                          }).catchError((e) {
+                            if (e == 'user exist') {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(_userExistSnackBar());
+                            }
+                          });
                         }
                       },
                       child: const Text(
@@ -210,6 +209,23 @@ class _RegFormPageState extends State<RegFormPage> {
                 ],
               ),
             )),
+      ),
+    );
+  }
+
+  SnackBar _userExistSnackBar() {
+    return SnackBar(
+      duration: const Duration(seconds: 3),
+      content: const Text(
+          'Такой пользователь уже существует. Попробуйте войти!'),
+      action: SnackBarAction(
+        label: 'Войти!',
+        onPressed: () {
+
+          App.changeIndex(2);
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => App()));
+        },
       ),
     );
   }
