@@ -48,7 +48,7 @@ class PlainOrderPage extends StatelessWidget {
                   SliverToBoxAdapter(
                       child: Padding(
                     padding: const EdgeInsets.fromLTRB(50, 20, 50, 30),
-                    child: QrImage(
+                    child: QrImageView(
                       padding: const EdgeInsets.all(30),
                       data: order.id.toString(),
                       backgroundColor: Colors.white,

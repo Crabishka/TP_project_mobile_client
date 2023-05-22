@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "77473100804",
+    "project_id": "sportique-65f9f",
+    "storage_bucket": "sportique-65f9f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:77473100804:android:3837e521ae8df2286ff151",
+        "android_client_info": {
+          "package_name": "com.example.sportique"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "77473100804-77r0np5adrbn085jc08tmr9457tf9cqf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCcm7FzSotMEHJT8Ac8qIp_e_UTeBlpldg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "77473100804-77r0np5adrbn085jc08tmr9457tf9cqf.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "77473100804-3r2ar9v6p3k4j6a1io5nidka0g9jdfmu.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.sportique"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 
+import '../../../firebase/analytics_service.dart';
 import '../../../model/data/order.dart';
 import '../../../viewmodel/internal/app_data.dart';
 import '../../../viewmodel/user_model.dart';
@@ -91,6 +92,7 @@ class _OrderPageCartingState extends State<OrderPageCarting> {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15))),
               onPressed: () {
+                getIt.get<AnalyticsService>().doOrder();
                 Provider.of<UserModel>(context, listen: false).makeOrder();
               },
               child: const Text("Заказать",

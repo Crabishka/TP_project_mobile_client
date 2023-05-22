@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:sportique/view/pages/profile/reg_form_page.dart';
 
 import '../../../app.dart';
+import '../../../firebase/analytics_service.dart';
 import '../../../viewmodel/user_model.dart';
 
 class AuthFormPage extends StatefulWidget {
@@ -18,6 +20,7 @@ class _AuthFormPageState extends State<AuthFormPage> {
 
   String _phoneNumber = '';
   String _password = '';
+  GetIt getIt = GetIt.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -119,6 +122,7 @@ class _AuthFormPageState extends State<AuthFormPage> {
                                   Provider.of<UserModel>(context, listen: false)
                                       .authUser(_phoneNumber, _password)
                                       .then((value) {
+                                    getIt.get<AnalyticsService>()                                        .auth();
                                     App.changeIndex(2);
                                     Navigator.push(
                                         context,
@@ -172,8 +176,8 @@ class _AuthFormPageState extends State<AuthFormPage> {
   SnackBar _errorAuthBar() {
     return SnackBar(
       duration: const Duration(seconds: 3),
-      content:
-      const Text('Такой пользователь не найден или пароль не верен. Проверьте еще раз.'),
+      content: const Text(
+          'Такой пользователь не найден или пароль не верен. Проверьте еще раз.'),
       action: SnackBarAction(
         label: 'Хорошо :(',
         onPressed: () {

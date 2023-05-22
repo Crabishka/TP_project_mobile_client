@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import '../../../firebase/analytics_service.dart';
 import '../../../model/data/order.dart';
 import '../../../viewmodel/user_model.dart';
 import '../../widgets/product_little_card.dart';
@@ -47,7 +48,7 @@ class _OrderPageReadyToGetState extends State<OrderPageReadyToGet> {
                   SliverToBoxAdapter(
                       child: Padding(
                     padding: const EdgeInsets.fromLTRB(50, 20, 50, 30),
-                    child: QrImage(
+                    child: QrImageView(
                       padding: const EdgeInsets.all(30),
                       data: widget.order.id.toString(),
                       backgroundColor: Colors.white,
@@ -73,6 +74,7 @@ class _OrderPageReadyToGetState extends State<OrderPageReadyToGet> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15))),
                 onPressed: () {
+                  getIt.get<AnalyticsService>().cancelOrder();
                   Provider.of<UserModel>(context, listen: false).cancelOrder();
                 },
                 child: const Text("Отменить",

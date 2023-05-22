@@ -50,7 +50,8 @@ class UserRepository {
         'Authorization': token
       });
       if (response.statusCode == 200) {
-        final Map<String, dynamic> decodedJson = jsonDecode(response.body);
+        final Map<String, dynamic> decodedJson =
+            jsonDecode(utf8.decode(response.bodyBytes));
         User user = User.fromJson(decodedJson);
         return user;
       } else if (response.statusCode == 403) {
@@ -78,7 +79,9 @@ class UserRepository {
       final Map<String, dynamic> decodedJson = jsonDecode(response.body);
       JwtDTO jwtDTO = JwtDTO.fromJson(decodedJson);
       TokenHelper().setUserToken(userToken: jwtDTO.accessToken);
-    } else {}
+    } else {
+      throw ('user exist');
+    }
   }
 
   Future<Order> getActiveOrder() async {
@@ -92,7 +95,8 @@ class UserRepository {
         headers: {'Content-Type': 'application/json', 'Authorization': token!});
     if (response.statusCode == 200) {
       try {
-        final Map<String, dynamic> decodedJson = jsonDecode(response.body);
+        final Map<String, dynamic> decodedJson =
+            jsonDecode(utf8.decode(response.bodyBytes));
         Order order = Order.fromJson(decodedJson);
         return order;
       } catch (e) {
@@ -110,12 +114,10 @@ class UserRepository {
       Order order = await getActiveOrder();
       if (order.status != OrderStatus.CARTING) throw ('have active');
     } catch (e) {
-      if (e != 'Cant get active order'){
+      if (e != 'Cant get active order') {
         rethrow;
       }
-
     }
-
 
     String? token = await TokenHelper().getUserToken();
     if (token == null ||
@@ -131,7 +133,8 @@ class UserRepository {
     var url = baseUrl.replace(queryParameters: queryParams);
     var response = await http.post(url,
         headers: {'Content-Type': 'application/json', 'Authorization': token});
-    if (response.statusCode == 200) {} else {
+    if (response.statusCode == 200) {
+    } else {
       print('Ошибка HTTP: ${response.statusCode}');
       throw ('${response.statusCode}');
     }
@@ -149,7 +152,8 @@ class UserRepository {
     var url = baseUrl.replace(queryParameters: queryParams);
     var response = await http.put(url,
         headers: {'Content-Type': 'application/json', 'Authorization': token!});
-    if (response.statusCode == 200) {} else {
+    if (response.statusCode == 200) {
+    } else {
       print('Ошибка HTTP: ${response.statusCode}');
       throw ('${response.statusCode}');
     }
@@ -171,8 +175,8 @@ class UserRepository {
     }
   }
 
-  Future<Product> changeProductSize(int productId, double size,
-      double newSize) async {
+  Future<Product> changeProductSize(
+      int productId, double size, double newSize) async {
     String? token = await TokenHelper().getUserToken();
     if (token == null ||
         token.isEmpty ||
@@ -207,7 +211,8 @@ class UserRepository {
     var url = baseUrl.replace(queryParameters: queryParams);
     var response = await http.post(url,
         headers: {'Content-Type': 'application/json', 'Authorization': token});
-    if (response.statusCode == 200) {} else {
+    if (response.statusCode == 200) {
+    } else {
       print('Ошибка HTTP: ${response.statusCode}');
     }
   }
@@ -222,7 +227,8 @@ class UserRepository {
     var url = Uri.parse(urlForCancelOrder);
     var response = await http.put(url,
         headers: {'Content-Type': 'application/json', 'Authorization': token});
-    if (response.statusCode == 200) {} else {
+    if (response.statusCode == 200) {
+    } else {
       print('Ошибка HTTP: ${response.statusCode}');
       throw ('${response.statusCode}');
     }
