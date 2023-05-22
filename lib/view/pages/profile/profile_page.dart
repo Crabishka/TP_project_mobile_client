@@ -18,6 +18,20 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   GetIt getIt = GetIt.instance;
+  late Future<User> data;
+
+  @override
+  void initState() {
+    super.initState();
+    data = getIt<UserRepository>().getUser();
+  }
+
+  Future<void> fetchData() async {
+    var newUser = await getIt<UserRepository>().getUser();
+    setState(() {
+      data = Future.value(newUser);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,56 +59,61 @@ class _ProfilePageState extends State<ProfilePage> {
         backgroundColor: const Color(0xFF2280BA),
         toolbarHeight: 40,
       ),
-      body: FutureBuilder<User>(
-        future: Provider.of<UserModel>(context).getUser(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          } else {
-            if (snapshot.data == null) {
-              return Container(
-                color: const Color(0xFF2280BA),
-              );
-            }
-            return CustomScrollView(
-              scrollDirection: Axis.vertical,
-              slivers: [
-                SliverToBoxAdapter(
-                    child: Padding(
-                        padding: const EdgeInsets.fromLTRB(16, 16, 0, 0),
-                        child: Text("Здравствуйте, ${snapshot.data!.name}",
+      body: RefreshIndicator(
+        onRefresh: () async {
+          await fetchData();
+        },
+        child: FutureBuilder<User>(
+          future: data,
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return const Center(child: CircularProgressIndicator());
+            } else {
+              if (snapshot.data == null) {
+                return Container(
+                  color: const Color(0xFF2280BA),
+                );
+              }
+              return CustomScrollView(
+                scrollDirection: Axis.vertical,
+                slivers: [
+                  SliverToBoxAdapter(
+                      child: Padding(
+                          padding: const EdgeInsets.fromLTRB(16, 16, 0, 0),
+                          child: Text("Здравствуйте, ${snapshot.data!.name}",
+                              style: const TextStyle(
+                                color: Color(0xFF3C2C9E),
+                                fontFamily: 'PoiretOne',
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                              )))),
+                  SliverToBoxAdapter(
+                      child: Padding(
+                          padding: const EdgeInsets.fromLTRB(16, 16, 0, 0),
+                          child: Text(
+                            "Ваш номер ${snapshot.data!.phoneNumber}",
                             style: const TextStyle(
                               color: Color(0xFF3C2C9E),
                               fontFamily: 'PoiretOne',
                               fontWeight: FontWeight.bold,
                               fontSize: 20,
-                            )))),
-                SliverToBoxAdapter(
-                    child: Padding(
-                        padding: const EdgeInsets.fromLTRB(16, 16, 0, 0),
-                        child: Text(
-                          "Ваш номер ${snapshot.data!.phoneNumber}",
-                          style: const TextStyle(
-                            color: Color(0xFF3C2C9E),
-                            fontFamily: 'PoiretOne',
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                          ),
-                        ))),
-                SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                      childCount: snapshot.data!.orders.length,
-                      (context, index) {
-
-                    return Padding(
-                        padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
-                        child: OrderCard(order: snapshot.data!.orders[index]));
-                  }),
-                )
-              ],
-            );
-          }
-        },
+                            ),
+                          ))),
+                  SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                        childCount: snapshot.data!.orders.length,
+                        (context, index) {
+                      return Padding(
+                          padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
+                          child:
+                              OrderCard(order: snapshot.data!.orders[index]));
+                    }),
+                  )
+                ],
+              );
+            }
+          },
+        ),
       ),
     );
   }

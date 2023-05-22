@@ -29,10 +29,11 @@ class _OrderPageState extends State<OrderPage> {
       body: FutureBuilder<Order>(
         future: Provider.of<UserModel>(context).getActiveOrder(),
         builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
+          if (!snapshot.hasData) {
             return const OrderPageWithoutOrder();
+          } else if (snapshot.hasError) {
+
+            return const Center(child: CircularProgressIndicator());
           } else {
             if (snapshot.hasData) {
               getIt.get<AppData>().setDate(snapshot.data!.date);

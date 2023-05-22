@@ -25,15 +25,11 @@ class _MainProfilePageState extends State<MainProfilePage> {
       future: Provider.of<UserModel>(context, listen: false).getUser(),
       builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: const CircularProgressIndicator());
-        } else if (snapshot.data == null) {
-          return AuthFormPage();
+          return const Center(child: CircularProgressIndicator());
+        } else if (!snapshot.hasData || snapshot.data == null) {
+          return const AuthFormPage();
         } else {
-          return RefreshIndicator(
-              onRefresh: () async {
-                Provider.of<UserModel>(context, listen: false).notify();
-              },
-              child: ProfilePage());
+          return ProfilePage();
         }
       },
     );

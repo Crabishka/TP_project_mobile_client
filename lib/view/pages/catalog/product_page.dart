@@ -101,7 +101,6 @@ class _ProductPageState extends State<ProductPage> {
                                     .showSnackBar(_cantChangeData());
                               }
                             }).catchError((_) {
-                              // если нет активного
                               _selectDate(context);
                             });
                           },
@@ -173,7 +172,8 @@ class _ProductPageState extends State<ProductPage> {
                                   .addProduct(productDescription.id, size!,
                                       getIt.get<AppData>().getDate()!)
                                   .then((_) {
-                                Provider.of<AnalyticsService>(context, listen: false)
+                                getIt
+                                    .get<AnalyticsService>()
                                     .addProduct(productDescription.id);
                                 ScaffoldMessenger.of(context).showSnackBar(
                                     _addProductSnackBar(
