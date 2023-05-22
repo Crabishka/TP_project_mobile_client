@@ -12,26 +12,33 @@ class AnalyticsService {
   final FirebaseRemoteConfigService firebaseRemoteConfigService;
 
   Future<void> setChangeButton() async {
-    await FirebaseAnalytics.instance.logEvent(name: 'change');
+    await analytics.logEvent(name: 'change');
+  }
+
+  Future<void> reg() async {
+    await analytics.logEvent(name: 'change');
   }
 
   Future<void> doOrder() async {
-    await  FirebaseAnalytics.instance.logEvent(name: 'order');
+    await  analytics.logEvent(name: 'order');
   }
 
   Future<void> cancelProduct() async {
-    await   FirebaseAnalytics.instance.logEvent(name: 'cancel_product');
+    await   analytics.logEvent(name: 'cancel_product');
   }
 
   Future<void> cancelOrder() async {
-    await  FirebaseAnalytics.instance.logEvent(name: 'cancel_order');
+    await  analytics.logEvent(name: 'cancel_order');
   }
 
   Future<void> init() async {
-    await   FirebaseAnalytics.instance.logEvent(name: 'view');
+    await   analytics.logEvent(name: 'view');
   }
 
-  Future<void> addProduct() async {
-    await   FirebaseAnalytics.instance.logEvent(name: 'add_product');
+  Future<void> addProduct(int id) async {
+    await   analytics.logEvent(name: 'add_to_cart', parameters: {
+      "content_type": 'add_to_cart',
+      "item_id": id,
+    });
   }
 }

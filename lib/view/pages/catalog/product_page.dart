@@ -169,7 +169,7 @@ class _ProductPageState extends State<ProductPage> {
                             ? null
                             : () {
                                 setState(() {
-                                  getIt.get<AnalyticsService>().addProduct();
+                                  getIt.get<AnalyticsService>().addProduct(productDescription.id);
                                   Provider.of<UserModel>(context, listen: false)
                                       .addProduct(productDescription.id, size!,
                                           getIt.get<AppData>().getDate()!)

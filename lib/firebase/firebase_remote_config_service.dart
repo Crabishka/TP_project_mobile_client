@@ -23,8 +23,8 @@ class FirebaseRemoteConfigService {
           minimumFetchInterval: Duration.zero,
         ),
       );
-      await firebaseRemoteConfig.fetchAndActivate();
       getIsChange();
+      await firebaseRemoteConfig.fetchAndActivate();
     } on FirebaseException catch (e, st) {
       developer.log(
         'Unable to initialize Firebase Remote Config',

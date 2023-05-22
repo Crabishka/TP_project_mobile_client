@@ -26,10 +26,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for ios - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return ios;
       case TargetPlatform.macOS:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for macos - '
@@ -53,10 +50,20 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDtekNkFuOc04aACk8fICAzbeIDqd82Upo',
-    appId: '1:818994805071:android:e884a589636cbcf9502d3a',
-    messagingSenderId: '818994805071',
-    projectId: 'sportique-cb229',
-    storageBucket: 'sportique-cb229.appspot.com',
+    apiKey: 'AIzaSyCcm7FzSotMEHJT8Ac8qIp_e_UTeBlpldg',
+    appId: '1:77473100804:android:3837e521ae8df2286ff151',
+    messagingSenderId: '77473100804',
+    projectId: 'sportique-65f9f',
+    storageBucket: 'sportique-65f9f.appspot.com',
+  );
+
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyD6AP4-IE_e913eq2VveX0gWKIEQHfbFM4',
+    appId: '1:77473100804:ios:f4769ee83342f5246ff151',
+    messagingSenderId: '77473100804',
+    projectId: 'sportique-65f9f',
+    storageBucket: 'sportique-65f9f.appspot.com',
+    iosClientId: '77473100804-3r2ar9v6p3k4j6a1io5nidka0g9jdfmu.apps.googleusercontent.com',
+    iosBundleId: 'com.example.sportique',
   );
 }

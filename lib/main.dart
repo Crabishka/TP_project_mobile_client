@@ -71,7 +71,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    getIt.get<AnalyticsService>().cancelOrder();
+    getIt.get<AnalyticsService>().init();
     _initIsFirst();
   }
 
