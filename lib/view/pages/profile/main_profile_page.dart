@@ -29,12 +29,7 @@ class _MainProfilePageState extends State<MainProfilePage> {
         } else if (!snapshot.hasData || snapshot.data == null) {
           return const AuthFormPage();
         } else {
-          return RefreshIndicator(
-              onRefresh: () async {
-                Provider.of<UserModel>(context, listen: false).notify();
-              },
-              child: ProfilePage()
-          );
+          return ProfilePage();
         }
       },
     );
