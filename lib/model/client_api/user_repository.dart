@@ -112,6 +112,7 @@ class UserRepository {
   Future<void> addProduct(int productId, double size, DateTime date) async {
     try {
       Order order = await getActiveOrder();
+      if (order.products.length == 4)  throw ('max count');
       if (order.status != OrderStatus.CARTING) throw ('have active');
     } catch (e) {
       if (e != 'Cant get active order') {
@@ -136,7 +137,7 @@ class UserRepository {
     if (response.statusCode == 200) {
     } else {
       print('Ошибка HTTP: ${response.statusCode}');
-      throw ('${response.statusCode}');
+      throw ('access denied');
     }
   }
 

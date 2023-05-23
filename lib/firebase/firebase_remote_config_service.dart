@@ -37,7 +37,8 @@ class FirebaseRemoteConfigService {
   bool getIsChange() {
     bool isChange = firebaseRemoteConfig.getBool("isChange");
     getIt.get<AppData>().setIsChange(isChange);
-    print(isChange);
     return isChange;
   }
+
+
 }

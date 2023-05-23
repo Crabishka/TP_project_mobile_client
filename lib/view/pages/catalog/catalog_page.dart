@@ -50,7 +50,7 @@ class _CatalogPageState extends State<CatalogPage> {
             builder: (BuildContext context,
                 AsyncSnapshot<List<ProductDescription>> snapshot) {
               if (!snapshot.hasData) {
-                return const Text('Ошибка загрузки данных');
+                return Container();
               } else if (snapshot.hasError) {
                 return const Center(child: CircularProgressIndicator());
               } else {

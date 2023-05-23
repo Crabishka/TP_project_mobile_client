@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 import '../../app.dart';
 
-
 class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({super.key});
 
@@ -74,8 +73,8 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 width: 60,
                 child: ElevatedButton(
                   onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder:
-                      (context) => App()));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => App()));
                   },
                   style: ElevatedButton.styleFrom(
                     shape: CircleBorder(),
@@ -125,11 +124,11 @@ final List<Data> datas = [
   Data(
       image: "./assets/images/img_4.png",
       text:
-          "Получите QR код и покажите его работяге для получения спорт инвентаря"),
+          "Получите QR код и покажите его работнику для получения спорт инвентаря"),
   Data(
       image: "./assets/images/img_5.png",
       text:
-          "После прогулки покажите QR код работяге и оплатите наличными или отсканируйте QR для получения чека"),
+          "После прогулки покажите QR код работнику и оплатите наличными или отсканируйте QR для получения чека"),
 ];
 
 class OnBoardContent extends StatelessWidget {
