@@ -22,7 +22,7 @@ class _MainProfilePageState extends State<MainProfilePage> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<User>(
-      future: Provider.of<UserModel>(context, listen: false).getUser(),
+      future: Provider.of<UserModel>(context).getUser(),
       builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());

@@ -182,12 +182,12 @@ class _ProductPageState extends State<ProductPage> {
                                 if (e == 'access denied') {
                                   ScaffoldMessenger.of(context)
                                       .showSnackBar(_errorSnackBar());
-                                } else if (e == '403') {
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(_maxCountSnackBar());
                                 } else if (e == 'have active') {
                                   ScaffoldMessenger.of(context)
                                       .showSnackBar(_haveActiveOrderSnackBar());
+                                } else if (e == 'max count') {
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(_maxCountSnackBar());
                                 } else {
                                   print(e);
                                 }
