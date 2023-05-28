@@ -328,6 +328,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "7.6.0"
+  google_language_fonts:
+    dependency: "direct main"
+    description:
+      name: google_language_fonts
+      sha256: bfe9bd85eb5b0a5fd6f0224ac60992db50ec2c5a4bca3a4126503ebff7daa963
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.0"
   hex:
     dependency: transitive
     description:

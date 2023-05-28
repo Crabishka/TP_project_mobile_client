@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sportique/app.dart';
 
-
 class OrderPageWithoutOrder extends StatelessWidget {
   const OrderPageWithoutOrder({super.key});
 
@@ -10,44 +9,59 @@ class OrderPageWithoutOrder extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Center(
-      child: Container(
-        color: const Color(0xFFEFFBFD),
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 40,
-            ),
-            const Padding(
-                padding: EdgeInsets.all(30),
+      child: SafeArea(
+        child: Container(
+          color: const Color(0xFFEFFBFD),
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 8,
+              ),
+              const Center(
                 child: Text(
-                  "Вы пока не выбрали ни одного товара. Перейдите на страницу каталога",
-                  textAlign: TextAlign.center,
+                  "Корзина",
                   style: TextStyle(
-                      fontSize: 36,
-                      fontFamily: 'PoiretOne',
-                      fontWeight: FontWeight.bold),
-                )),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15))),
-              onPressed: () {
-                App.changeIndex(0);
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => App()));
-              },
-              child: const Padding(
-                padding: EdgeInsets.all(10),
-                child: Text("В каталог",
-                    style: TextStyle(
-                      color: Colors.cyanAccent,
                       fontFamily: 'PoiretOne',
                       fontWeight: FontWeight.bold,
-                      fontSize: 32,
-                    )),
+                      fontSize: 32),
+                ),
               ),
-            ),
-          ],
+              const Spacer(),
+              Image.asset("./assets/images/bike.png"),
+              const Text(
+                "Вы пока не выбрали ни одного товара. \n"
+                " Перейдите на страницу каталога.",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontSize: 20,
+                    fontFamily: 'PoiretOne',
+                    fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF3EB489)),
+                onPressed: () {
+                  App.changeIndex(0);
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (context) => App()));
+                },
+                child: const Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Text("В каталог",
+                      style: TextStyle(
+                        color: Colors.cyanAccent,
+                        fontFamily: 'PoiretOne',
+                        fontWeight: FontWeight.bold,
+                        fontSize: 32,
+                      )),
+                ),
+              ),
+              const Spacer()
+            ],
+          ),
         ),
       ),
     ));

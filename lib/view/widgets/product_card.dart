@@ -13,26 +13,28 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-        elevation: 4,
+        elevation: 2,
         color: const Color(0xFFEFFBFD),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        child: Container(
-          padding: EdgeInsets.all(20),
-          child: Row(
+        child: InkWell(
+          onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) =>
+                    ProductPage(productDescription: product)));
+          },
+          child: Column(
             children: [
-              Expanded(
-                  child: Container(
-                      padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
-                      child: ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
-                          child: CachedNetworkImage(
-                            imageUrl: product.image,
-                            placeholder: (context, url) =>
-                                const Center(child: CircularProgressIndicator()),
-                            errorWidget: (context, url, error) =>
-                                const Icon(Icons.error),
-                          )))),
-              Expanded(
+              ClipRRect(
+                  child: AspectRatio(
+                aspectRatio: 1,
+                child: CachedNetworkImage(
+                  imageUrl: product.image,
+                  placeholder: (context, url) =>
+                      const Center(child: CircularProgressIndicator()),
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                ),
+              )),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -40,40 +42,46 @@ class ProductCard extends StatelessWidget {
                       product.title,
                       style: const TextStyle(
                         fontFamily: 'PoiretOne',
+                        overflow: TextOverflow.ellipsis,
                         fontWeight: FontWeight.bold,
-                        fontSize: 32,
+                        fontSize: 28,
                       ),
+                    ),
+                    const SizedBox(
+                      height: 16,
                     ),
                     Text(
                       product.description,
+                      maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
                         fontFamily: 'PoiretOne',
-                        fontSize: 16,
+                        fontWeight: FontWeight.normal,
+                        color: Color(0xBB000000),
+                        fontSize: 14,
                       ),
+                    ),
+                    const SizedBox(
+                      height: 16,
                     ),
                     Text(
-                      '${product.price} руб./час',
+                      '${product.price.truncate().toString()} руб/ч',
                       style: const TextStyle(
                         fontFamily: 'PoiretOne',
+                        overflow: TextOverflow.ellipsis,
                         fontWeight: FontWeight.bold,
-                        fontSize: 16,
+                        fontSize: 20,
                       ),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => ProductPage(
-                                productDescription: product)));
-                      },
-                      child: const Text('К товару'),
                     ),
                   ],
                 ),
-              ),
+              )
             ],
           ),
         ));
   }
 }
+
+// Navigator.of(context).push(MaterialPageRoute(
+// builder: (context) =>
+// ProductPage(productDescription: product)));

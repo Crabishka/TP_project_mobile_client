@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:google_language_fonts/google_language_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -39,7 +40,6 @@ class _CatalogPageState extends State<CatalogPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFB6CFD8),
       body: SafeArea(
         child: RefreshIndicator(
           onRefresh: () async {
@@ -56,7 +56,27 @@ class _CatalogPageState extends State<CatalogPage> {
               } else {
                 return CustomScrollView(
                   slivers: [
-                    const SliverToBoxAdapter(),
+                    const SliverToBoxAdapter(
+                      child: SizedBox(
+                        height: 8,
+                      ),
+                    ),
+                    const SliverToBoxAdapter(
+                      child: Center(
+                        child: Text(
+                          "Каталог",
+                          style: TextStyle(
+                              fontFamily: 'PoiretOne',
+                              fontWeight: FontWeight.bold,
+                              fontSize: 32),
+                        ),
+                      ),
+                    ),
+                    const SliverToBoxAdapter(
+                      child: SizedBox(
+                        height: 8,
+                      ),
+                    ),
                     SliverToBoxAdapter(
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(50, 0, 50, 0),
@@ -109,14 +129,24 @@ class _CatalogPageState extends State<CatalogPage> {
                         ),
                       ),
                     ),
-                    SliverList(
-                      delegate: SliverChildBuilderDelegate(
-                          childCount: snapshot.data!.length, (context, index) {
-                        return Padding(
-                            padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-                            child: ProductCard(product: snapshot.data![index]));
-                      }),
-                    ),
+                    SliverPadding(
+                      padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+                      sliver: SliverGrid(
+                        gridDelegate:
+                            const SliverGridDelegateWithMaxCrossAxisExtent(
+                          maxCrossAxisExtent: 300,
+                          crossAxisSpacing: 8,
+                          mainAxisSpacing: 8,
+                          childAspectRatio: 0.54,
+                        ),
+                        delegate: SliverChildBuilderDelegate(
+                          (BuildContext context, int index) {
+                            return ProductCard(product: snapshot.data![index]);
+                          },
+                          childCount: snapshot.data!.length,
+                        ),
+                      ),
+                    )
                   ],
                 );
               }
