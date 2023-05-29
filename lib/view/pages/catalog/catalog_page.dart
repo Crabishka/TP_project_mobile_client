@@ -132,12 +132,11 @@ class _CatalogPageState extends State<CatalogPage> {
                     SliverPadding(
                       padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
                       sliver: SliverGrid(
-                        gridDelegate:
-                            const SliverGridDelegateWithMaxCrossAxisExtent(
+                        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                           maxCrossAxisExtent: 300,
                           crossAxisSpacing: 8,
                           mainAxisSpacing: 8,
-                          childAspectRatio: 0.54,
+                          childAspectRatio: 0.5,
                         ),
                         delegate: SliverChildBuilderDelegate(
                           (BuildContext context, int index) {

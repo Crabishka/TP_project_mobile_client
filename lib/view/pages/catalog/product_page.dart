@@ -28,6 +28,7 @@ class _ProductPageState extends State<ProductPage> {
   double? size;
   ProductDescription productDescription;
   final getIt = GetIt.instance;
+  var _controller = ScrollController(keepScrollOffset: true);
 
   _ProductPageState(this.productDescription);
 
@@ -42,179 +43,193 @@ class _ProductPageState extends State<ProductPage> {
           backgroundColor: const Color(0xFFFFFFFF),
           toolbarHeight: 50,
         ),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        body: Stack(
           children: [
-            Expanded(
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        productDescription.title,
+            SingleChildScrollView(
+              controller: _controller,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+                    child: Text(
+                      productDescription.title,
+                      style: const TextStyle(
+                          fontSize: 36,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'PoiretOne'),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  AspectRatio(
+                      aspectRatio: 1.5,
+                      child: CachedNetworkImage(
+                        imageUrl: productDescription.image,
+                        fit: BoxFit.cover,
+                        placeholder: (context, url) =>
+                            const CircularProgressIndicator(),
+                        errorWidget: (context, url, error) => Icon(Icons.error),
+                      )),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 0, 0, 0),
+                    child: Text(
+                        "${productDescription.price.truncate().toString()} руб/час",
+                        textAlign: TextAlign.center,
                         style: const TextStyle(
-                            fontSize: 36,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'PoiretOne'),
-                      ),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      AspectRatio(
-                          aspectRatio: 1.5,
-                          child: CachedNetworkImage(
-                            imageUrl: productDescription.image,
-                            fit: BoxFit.cover,
-                            placeholder: (context, url) =>
-                                const CircularProgressIndicator(),
-                            errorWidget: (context, url, error) =>
-                                Icon(Icons.error),
-                          )),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      Text("${productDescription.price} руб/час",
+                          fontFamily: 'PoiretOne',
+                          fontWeight: FontWeight.bold,
+                          fontSize: 24,
+                        )),
+                  ),
+                  const Divider(
+                    color: Color(0xFFb43e69),
+                    thickness: 1,
+                    indent: 16,
+                    endIndent: 16,
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
+                    child: Text(
+                      "Размеры",
+                      style: TextStyle(
+                          fontSize: 24,
+                          fontFamily: 'PoiretOne',
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+                    child: _buildSizes(
+                        Provider.of<AppData>(context).getDate() == null),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
+                    child: Text(
+                      "О товаре",
+                      style: TextStyle(
+                          fontSize: 24,
+                          fontFamily: 'PoiretOne',
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+                    child: Text(
+                      productDescription.description,
+                      style: const TextStyle(
+                          fontSize: 20, fontFamily: 'PoiretOne'),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 200,
+                  )
+                ],
+              ),
+            ),
+            Positioned(
+              bottom: 16,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+                child: Row(
+                  children: [
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          fixedSize: Size(
+                              (MediaQuery.of(context).size.width - 48) / 2, 40),
+                          backgroundColor: const Color(0xFF3EB489),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5))),
+                      onPressed: () {
+                        Provider.of<UserModel>(context, listen: false)
+                            .getActiveOrder()
+                            .then((value) {
+                          if (value.status != OrderStatus.CARTING) {
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(_haveActiveOrderSnackBar());
+                          } else if (value.products.isNotEmpty) {
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(_cantChangeData());
+                          }
+                        }).catchError((_) {
+                          _selectDate(context);
+                        });
+                      },
+                      child: Text(
+                          Provider.of<AppData>(context).getDate() == null
+                              ? "Выбрать дату"
+                              : " ${DateFormat('dd-MMM').format(Provider.of<AppData>(context).getDate()!)}",
                           textAlign: TextAlign.center,
                           style: const TextStyle(
                             fontFamily: 'PoiretOne',
                             fontWeight: FontWeight.bold,
-                            fontSize: 24,
+                            fontSize: 20,
                           )),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      Text(
-                        productDescription.description,
-                        style: const TextStyle(
-                            fontSize: 28, fontFamily: 'PoiretOne'),
-                      )
-                    ],
-                  ),
+                    ),
+                    const SizedBox(
+                      width: 16,
+                    ),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          fixedSize: Size(
+                              (MediaQuery.of(context).size.width - 48) / 2, 40),
+                          backgroundColor: const Color(0xFFb43e69),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5))),
+                      onPressed: Provider.of<AppData>(context).getDate() ==
+                                  null ||
+                              size == null
+                          ? () {}
+                          : () {
+                              setState(() {
+                                Provider.of<UserModel>(context, listen: false)
+                                    .addProduct(
+                                        productDescription.id,
+                                        size!,
+                                        Provider.of<AppData>(context,
+                                                listen: false)
+                                            .getDate()!)
+                                    .then((_) {
+                                  getIt
+                                      .get<AnalyticsService>()
+                                      .addProduct(productDescription.id);
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      _addProductSnackBar(
+                                          productDescription.title, size!));
+                                }).catchError((e) {
+                                  if (e == 'access denied') {
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(_errorSnackBar());
+                                  } else if (e == 'have active') {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        _haveActiveOrderSnackBar());
+                                  } else if (e == 'max count') {
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(_maxCountSnackBar());
+                                  } else {
+                                    print(e);
+                                  }
+                                });
+                              });
+                            },
+                      child: const Text("Заказать",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontFamily: 'PoiretOne',
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          )),
+                    ),
+                  ],
                 ),
               ),
-            ),
-            Center(
-                child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFFD9D9D9),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15))),
-                    onPressed: () {
-                      Provider.of<UserModel>(context, listen: false)
-                          .getActiveOrder()
-                          .then((value) {
-                        if (value.status != OrderStatus.CARTING) {
-                          ScaffoldMessenger.of(context)
-                              .showSnackBar(_haveActiveOrderSnackBar());
-                        } else if (value.products.length > 0) {
-                          ScaffoldMessenger.of(context)
-                              .showSnackBar(_cantChangeData());
-                        }
-                      }).catchError((_) {
-                        _selectDate(context);
-                      });
-                    },
-                    child: Row(
-                      children: [
-                        Expanded(
-                          flex: 4,
-                          child: Text(
-                              getIt<AppData>().getDate() == null
-                                  ? "Выберите удобную дату"
-                                  : "Выбранная дата: "
-                                      " ${DateFormat('dd-MMM').format(getIt<AppData>().getDate()!)}",
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                fontFamily: 'PoiretOne',
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
-                              )),
-                        ),
-                        const Expanded(
-                          flex: 1,
-                          child: Icon(
-                            Icons.calendar_month,
-                            color: Colors.black,
-                          ),
-                        )
-                      ],
-                    ))),
-            Center(
-                child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15))),
-              onPressed: getIt<AppData>().getDate() == null
-                  ? null
-                  : () {
-                      showModalBottomSheet(
-                          shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.vertical(
-                                  top: Radius.circular(25))),
-                          context: context,
-                          builder: (BuildContext context) {
-                            return Container(child: _showSelectedSizes());
-                          });
-                    },
-              child: Text(
-                  size == null
-                      ? "Выберите размер"
-                      : "Ваш выбранный размер - ${size}",
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    fontFamily: 'PoiretOne',
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                  )),
-            )),
-            Center(
-                child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15))),
-              onPressed: getIt<AppData>().getDate() == null || size == null
-                  ? null
-                  : () {
-                      setState(() {
-                        Provider.of<UserModel>(context, listen: false)
-                            .addProduct(productDescription.id, size!,
-                                getIt.get<AppData>().getDate()!)
-                            .then((_) {
-                          getIt
-                              .get<AnalyticsService>()
-                              .addProduct(productDescription.id);
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              _addProductSnackBar(
-                                  productDescription.title, size!));
-                        }).catchError((e) {
-                          if (e == 'access denied') {
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(_errorSnackBar());
-                          } else if (e == 'have active') {
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(_haveActiveOrderSnackBar());
-                          } else if (e == 'max count') {
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(_maxCountSnackBar());
-                          } else {
-                            print(e);
-                          }
-                        });
-                      });
-                    },
-              child: const Text("Добавить",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontFamily: 'PoiretOne',
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                  )),
-            )),
-            const SizedBox(
-              height: 20,
             )
           ],
         ));
@@ -281,62 +296,6 @@ class _ProductPageState extends State<ProductPage> {
     );
   }
 
-  StatefulWidget _showSelectedSizes() {
-    return FutureBuilder(
-      future: getIt<ProductDescriptionRepository>()
-          .getSizeByDate(getIt<AppData>().getDate()!, productDescription.id),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
-        } else if (snapshot.hasError) {
-          return Container();
-        } else {
-          return Padding(
-            padding: const EdgeInsets.all(16),
-            child: GridView.builder(
-              itemCount: snapshot.data?.map.length,
-              itemBuilder: (context, index) {
-                double? key = snapshot.data?.map.keys.elementAt(index);
-                return InkWell(
-                  onTap: () {
-                    setState(() {
-                      size = snapshot.data?.map.keys.elementAt(index);
-                      Navigator.of(context).pop();
-                    });
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: snapshot.data?.map[key] as bool
-                            ? (snapshot.data?.map.keys.elementAt(index) == size
-                                ? const Color(0xFF6831C0)
-                                : const Color(0xFF5FE367))
-                            : const Color(0xFFA89DB9),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(10))),
-                    child: Center(
-                      child: Text(
-                        '$key',
-                        style: const TextStyle(
-                            fontFamily: 'PoiretOne',
-                            fontWeight: FontWeight.bold,
-                            fontSize: 24),
-                      ),
-                    ),
-                  ),
-                );
-              },
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 4,
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 10,
-              ),
-            ),
-          );
-        }
-      },
-    );
-  }
-
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? pickedDate = await showDatePicker(
       context: context,
@@ -347,8 +306,72 @@ class _ProductPageState extends State<ProductPage> {
 
     if (pickedDate != null) {
       setState(() {
-        getIt<AppData>().setDate(pickedDate);
+        Provider.of<AppData>(context, listen: false).setDate(pickedDate);
       });
     }
+  }
+
+  Widget _buildSizes(bool haveDate) {
+    if (!haveDate) {
+      return Container(
+        child: FutureBuilder(
+          future: getIt<ProductDescriptionRepository>().getSizeByDate(
+              Provider.of<AppData>(context).getDate()!, productDescription.id),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return const SizedBox(
+                height: 200,
+                child: Center(child: CircularProgressIndicator()),
+              );
+            } else if (snapshot.hasError) {
+              return Container();
+            } else {
+              return Container(
+                child: GridView.builder(
+                    itemCount: snapshot.data?.map.length,
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    gridDelegate:
+                        const SliverGridDelegateWithMaxCrossAxisExtent(
+                            maxCrossAxisExtent: 80,
+                            childAspectRatio: 1,
+                            crossAxisSpacing: 8,
+                            mainAxisSpacing: 8),
+                    itemBuilder: (context, index) {
+                      double? key = snapshot.data?.map.keys.elementAt(index);
+                      return InkWell(
+                        onTap: () {
+                          setState(() {
+                            size = snapshot.data?.map.keys.elementAt(index);
+                          });
+                        },
+                        child: Card(
+                          elevation: 1,
+                          color: snapshot.data?.map[key] as bool
+                              ? (snapshot.data?.map.keys.elementAt(index) ==
+                                      size
+                                  ? const Color(0xFF3EB489)
+                                  : const Color(0xFFFFFFFF))
+                              : const Color(0xFFA89DB9),
+                          child: Center(
+                            child: Text(
+                              '${key}',
+                              style: const TextStyle(
+                                  fontFamily: 'PoiretOne',
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16),
+                            ),
+                          ),
+                        ),
+                      );
+                    }),
+              );
+            }
+          },
+        ),
+      );
+    }
+    return const Text("Выберите дату для получения размеров на этот день",
+        style: TextStyle(fontFamily: 'PoiretOne', fontSize: 20));
   }
 }

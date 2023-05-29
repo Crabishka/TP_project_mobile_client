@@ -13,7 +13,7 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-        elevation: 2,
+        elevation: 1,
         color: const Color(0xFFEFFBFD),
         child: InkWell(
           onTap: () {

@@ -43,8 +43,11 @@ void main() async {
       analytics: FirebaseAnalytics.instance,
       firebaseRemoteConfigService: firebaseRemoteConfigService));
 
-  runApp(ChangeNotifierProvider(
-    create: (context) => UserModel(),
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider<UserModel>(create: (_) => UserModel()),
+      ChangeNotifierProvider<AppData>(create: (_) => AppData()),
+    ],
     child: MyApp(),
   ));
 }
