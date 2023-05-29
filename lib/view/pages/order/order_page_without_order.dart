@@ -42,6 +42,7 @@ class OrderPageWithoutOrder extends StatelessWidget {
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
+                    elevation: 0,
                     backgroundColor: const Color(0xFF3EB489)),
                 onPressed: () {
                   App.changeIndex(0);
@@ -55,11 +56,15 @@ class OrderPageWithoutOrder extends StatelessWidget {
                         color: Colors.cyanAccent,
                         fontFamily: 'PoiretOne',
                         fontWeight: FontWeight.bold,
-                        fontSize: 32,
+                        fontSize: 28,
                       )),
                 ),
               ),
-              const Spacer()
+              const Spacer(),
+              const Spacer(),
+              const SizedBox(
+                height: 8,
+              ),
             ],
           ),
         ),

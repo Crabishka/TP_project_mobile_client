@@ -18,6 +18,8 @@ class RegFormPage extends StatefulWidget {
 class _RegFormPageState extends State<RegFormPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  bool showPassword = false;
+  bool showRepeatPassword = false;
   String _phoneNumber = '';
   String _name = "";
   String _password = '';
@@ -27,159 +29,203 @@ class _RegFormPageState extends State<RegFormPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFB6CFD8),
       body: SingleChildScrollView(
         child: Form(
             key: _formKey,
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(32, 60, 32, 0),
+              padding: const EdgeInsets.fromLTRB(32, 0, 32, 0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  const SizedBox(
+                    height: 40,
+                  ),
+                  Center(
+                    child: Image.asset(
+                      "./assets/images/ball.png",
+                      color: const Color(0xFF3EB489),
+                      height: 80,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  const Center(
+                    child: Text(
+                      "Всего несколько секунд до покупок",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontFamily: 'PoiretOne',
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
                   Container(
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(20)),
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(16, 8, 0, 8),
-                        child: TextFormField(
-                          decoration: const InputDecoration(
-                              labelStyle: TextStyle(
-                                  fontFamily: 'PoiretOne',
-                                  color: Color(0xFF342789),
-                                  fontSize: 24),
-                              labelText: 'Teлефон',
-                              border: InputBorder.none),
-                          keyboardType: TextInputType.phone,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Пожалуйста, введите ваш телефон';
-                            }
-                            String pattern = r'^\+?\d{10,11}$';
-                            RegExp regex = RegExp(pattern);
-                            if (!regex.hasMatch(value)) {
-                              return 'Введите корректный телефонный номер';
-                            }
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20)),
+                    child: TextFormField(
+                      decoration: const InputDecoration(
+                          prefixIcon: Icon(Icons.phone_iphone_sharp),
+                          labelStyle: TextStyle(
+                              fontFamily: 'PoiretOne',
+                              color: Color(0xFF3EB489),
+                              fontSize: 20),
+                          labelText: 'Телефон',
+                          border: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10.0)),
+                          )),
+                      keyboardType: TextInputType.phone,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Пожалуйста, введите ваш телефон';
+                        }
+                        String pattern = r'^\+?\d{10,11}$';
+                        RegExp regex = RegExp(pattern);
+                        if (!regex.hasMatch(value)) {
+                          return 'Введите корректный телефонный номер';
+                        }
 
-                            return null;
-                          },
-                          onChanged: (value) {
-                            setState(() {
-                              _phoneNumber = value;
-                            });
-                          },
-                        ),
-                      )),
+                        return null;
+                      },
+                      onChanged: (value) {
+                        setState(() {
+                          _phoneNumber = value;
+                        });
+                      },
+                    ),
+                  ),
                   const SizedBox(
                     height: 20,
                   ),
                   Container(
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(20)),
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(16, 8, 0, 8),
-                        child: TextFormField(
-                          textCapitalization: TextCapitalization.sentences,
-                          decoration: const InputDecoration(
-                              errorStyle: TextStyle(),
-                              labelStyle: TextStyle(
-                                  fontFamily: 'PoiretOne',
-                                  color: Color(0xFF342789),
-                                  fontSize: 24),
-                              labelText: 'Имя',
-                              border: InputBorder.none),
-                          keyboardType: TextInputType.name,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Пожалуйста, введите ваше имя';
-                            }
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20)),
+                    child: TextFormField(
+                      textCapitalization: TextCapitalization.sentences,
+                      decoration: const InputDecoration(
+                          prefixIcon: Icon(Icons.person),
+                          labelStyle: TextStyle(
+                              fontFamily: 'PoiretOne',
+                              color: Color(0xFF3EB489),
+                              fontSize: 20),
+                          labelText: 'Имя',
+                          border: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10.0)),
+                          )),
+                      keyboardType: TextInputType.name,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Пожалуйста, введите ваше имя';
+                        }
 
-                            return null;
-                          },
-                          onChanged: (value) {
-                            setState(() {
-                              _name = value;
-                            });
-                          },
-                        ),
-                      )),
+                        return null;
+                      },
+                      onChanged: (value) {
+                        setState(() {
+                          _name = value;
+                        });
+                      },
+                    ),
+                  ),
                   const SizedBox(
                     height: 20,
                   ),
                   Container(
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(20)),
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(16, 8, 0, 8),
-                        child: TextFormField(
-                          decoration: const InputDecoration(
-                              errorStyle: TextStyle(),
-                              labelStyle: TextStyle(
-                                  fontFamily: 'PoiretOne',
-                                  color: Color(0xFF342789),
-                                  fontSize: 24),
-                              labelText: 'Пароль',
-                              border: InputBorder.none),
-                          obscureText: true,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Пожалуйста, введите ваш пароль';
-                            }
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20)),
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.password),
+                          suffixIcon: IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  showPassword = !showPassword;
+                                });
+                              },
+                              icon: Icon(Icons.remove_red_eye_outlined)),
+                          labelStyle: const TextStyle(
+                              fontFamily: 'PoiretOne',
+                              color: const Color(0xFF3EB489),
+                              fontSize: 20),
+                          labelText: 'Пароль',
+                          border: const OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10.0)),
+                          )),
+                      obscureText: !showPassword,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Пожалуйста, введите ваш пароль';
+                        }
 
-                            return null;
-                          },
-                          onChanged: (value) {
-                            setState(() {
-                              _password = value;
-                            });
-                          },
-                        ),
-                      )),
+                        return null;
+                      },
+                      onChanged: (value) {
+                        setState(() {
+                          _password = value;
+                        });
+                      },
+                    ),
+                  ),
                   const SizedBox(
                     height: 20,
                   ),
                   Container(
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(20)),
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(16, 8, 0, 8),
-                        child: TextFormField(
-                          decoration: const InputDecoration(
-                              errorStyle: TextStyle(),
-                              labelStyle: TextStyle(
-                                  fontFamily: 'PoiretOne',
-                                  color: Color(0xFF342789),
-                                  fontSize: 24),
-                              labelText: 'Повторите пароль',
-                              border: InputBorder.none),
-                          obscureText: true,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Пожалуйста, повторите пароль';
-                            }
-                            if (value != _password) {
-                              print(value);
-                              print(_password);
-                              return 'Пароли не совпадают';
-                            }
-                            return null;
-                          },
-                          onChanged: (value) {
-                            setState(() {
-                              _confirmPassword = value;
-                            });
-                          },
-                        ),
-                      )),
-                  SizedBox(height: 16.0),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20)),
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.password),
+                          suffixIcon: IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  showRepeatPassword = !showRepeatPassword;
+                                });
+                              },
+                              icon: Icon(Icons.remove_red_eye_outlined)),
+                          labelStyle: const TextStyle(
+                              fontFamily: 'PoiretOne',
+                              color: const Color(0xFF3EB489),
+                              fontSize: 20),
+                          labelText: 'Повторите Пароль',
+                          border: const OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10.0)),
+                          )),
+                      obscureText: !showRepeatPassword,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Пожалуйста, повторите пароль';
+                        }
+                        if (value != _password) {
+                          return 'Пароли не совпадают';
+                        }
+                        return null;
+                      },
+                      onChanged: (value) {
+                        setState(() {
+                          _confirmPassword = value;
+                        });
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 16.0),
                   Center(
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
+                          elevation: 0,
+                          backgroundColor: const Color(0xFF3EB489),
                           shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15))),
+                              borderRadius: BorderRadius.circular(5))),
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
                           Provider.of<UserModel>(context, listen: false)
@@ -216,12 +262,11 @@ class _RegFormPageState extends State<RegFormPage> {
   SnackBar _userExistSnackBar() {
     return SnackBar(
       duration: const Duration(seconds: 3),
-      content: const Text(
-          'Такой пользователь уже существует. Попробуйте войти!'),
+      content:
+          const Text('Такой пользователь уже существует. Попробуйте войти!'),
       action: SnackBarAction(
         label: 'Войти!',
         onPressed: () {
-
           App.changeIndex(2);
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => App()));
