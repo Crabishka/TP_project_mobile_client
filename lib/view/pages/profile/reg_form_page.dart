@@ -166,6 +166,10 @@ class _RegFormPageState extends State<RegFormPage> {
                           return 'Пожалуйста, введите ваш пароль';
                         }
 
+                        if (value.length < 4) {
+                          return 'Пароль должен быть длинее 4 символов';
+                        }
+
                         return null;
                       },
                       onChanged: (value) {

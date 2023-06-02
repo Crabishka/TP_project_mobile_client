@@ -198,7 +198,7 @@ class _AuthFormPageState extends State<AuthFormPage> {
                               ElevatedButton(
                                 style: ElevatedButton.styleFrom(
                                     elevation: 0,
-                                    backgroundColor: const Color(0xFFb43e69),
+                                    backgroundColor: const Color(0xFF3EB489),
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
                                             BorderRadius.circular(5))),

@@ -3,13 +3,11 @@ import 'dart:convert';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 
-
 import '../../viewmodel/internal/app_data.dart';
 import '../data/product_description.dart';
 import 'package:http/http.dart' as http;
 
 import '../data/product_size_dto.dart';
-
 
 class ProductDescriptionRepository {
   GetIt getIt = GetIt.instance;
@@ -29,23 +27,27 @@ class ProductDescriptionRepository {
   String mainUrlForGetSizes = "";
 
   Future<List<ProductDescription>> getAllProductDescriptionByRequest() async {
-    var url = Uri.parse(mainUrlForGetProducts);
-    var response = await http.get(url);
+    try {
+      var url = Uri.parse(mainUrlForGetProducts);
+      var response = await http.get(url);
+      if (response.statusCode == 200) {
+        var jsonData = jsonDecode(utf8.decode(response.bodyBytes));
 
-    if (response.statusCode == 200) {
-      var jsonData = jsonDecode(utf8.decode(response.bodyBytes));
+        List<ProductDescription> productList = [];
 
-      List<ProductDescription> productList = [];
+        for (var item in jsonData) {
+          var product = ProductDescription.fromJson(item);
+          productList.add(product);
+        }
 
-      for (var item in jsonData) {
-        var product = ProductDescription.fromJson(item);
-        productList.add(product);
+        return productList;
+      } else {
+        print('Ошибка HTTP: ${response.statusCode}');
+        return [];
       }
-
-      return productList;
-    } else {
-      print('Ошибка HTTP: ${response.statusCode}');
-      return [];
+    } catch (e) {
+      print(e);
+      throw e;
     }
   }
 

@@ -5,6 +5,9 @@ import 'package:google_language_fonts/google_language_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:sportique/model/data/user.dart';
+import 'package:sportique/viewmodel/custom/ColorCustom.dart';
+import 'package:sportique/viewmodel/internal/app_data.dart';
 
 import '../../../model/client_api/product_description_repository.dart';
 import '../../../model/data/order.dart';
@@ -26,6 +29,7 @@ class _CatalogPageState extends State<CatalogPage> {
   @override
   void initState() {
     super.initState();
+
     data = getIt<ProductDescriptionRepository>().getAllProductDescription();
   }
 
@@ -61,12 +65,13 @@ class _CatalogPageState extends State<CatalogPage> {
                         height: 8,
                       ),
                     ),
-                    const SliverToBoxAdapter(
+                    SliverToBoxAdapter(
                       child: Center(
                         child: Text(
                           "Каталог",
                           style: TextStyle(
                               fontFamily: 'PoiretOne',
+                              color: ColorCustom().titleColor,
                               fontWeight: FontWeight.bold,
                               fontSize: 32),
                         ),
@@ -122,6 +127,8 @@ class _CatalogPageState extends State<CatalogPage> {
                                   ],
                                 );
                               } else {
+                                Provider.of<AppData>(context, listen: false)
+                                    .setDate(snapshot.data!.date);
                                 return Container();
                               }
                             }
@@ -132,11 +139,12 @@ class _CatalogPageState extends State<CatalogPage> {
                     SliverPadding(
                       padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
                       sliver: SliverGrid(
-                        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                        gridDelegate:
+                            const SliverGridDelegateWithMaxCrossAxisExtent(
                           maxCrossAxisExtent: 300,
                           crossAxisSpacing: 8,
                           mainAxisSpacing: 8,
-                          childAspectRatio: 0.5,
+                          childAspectRatio: 0.7,
                         ),
                         delegate: SliverChildBuilderDelegate(
                           (BuildContext context, int index) {

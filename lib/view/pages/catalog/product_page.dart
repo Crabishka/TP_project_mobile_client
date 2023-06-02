@@ -28,7 +28,7 @@ class _ProductPageState extends State<ProductPage> {
   double? size;
   ProductDescription productDescription;
   final getIt = GetIt.instance;
-  var _controller = ScrollController(keepScrollOffset: true);
+  final _controller = ScrollController(keepScrollOffset: true);
 
   _ProductPageState(this.productDescription);
 
@@ -64,13 +64,14 @@ class _ProductPageState extends State<ProductPage> {
                     height: 8,
                   ),
                   AspectRatio(
-                      aspectRatio: 1.5,
+                      aspectRatio: 1,
                       child: CachedNetworkImage(
                         imageUrl: productDescription.image,
                         fit: BoxFit.cover,
                         placeholder: (context, url) =>
                             const CircularProgressIndicator(),
-                        errorWidget: (context, url, error) => Icon(Icons.error),
+                        errorWidget: (context, url, error) =>
+                            const Icon(Icons.error),
                       )),
                   const SizedBox(
                     height: 8,
@@ -186,7 +187,17 @@ class _ProductPageState extends State<ProductPage> {
                       onPressed: Provider.of<AppData>(context).getDate() ==
                                   null ||
                               size == null
-                          ? () {}
+                          ? () {
+                              if (Provider.of<AppData>(context, listen: false)
+                                      .getDate() ==
+                                  null) {
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(_chooseDateError());
+                              } else if (size == null) {
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(_chooseSizeError());
+                              }
+                            }
                           : () {
                               setState(() {
                                 Provider.of<UserModel>(context, listen: false)
@@ -197,12 +208,14 @@ class _ProductPageState extends State<ProductPage> {
                                                 listen: false)
                                             .getDate()!)
                                     .then((_) {
-                                  getIt
-                                      .get<AnalyticsService>()
-                                      .addProduct(productDescription.id);
                                   ScaffoldMessenger.of(context).showSnackBar(
                                       _addProductSnackBar(
                                           productDescription.title, size!));
+                                  Provider.of<AppData>(context, listen: false)
+                                      .notify();
+                                  getIt
+                                      .get<AnalyticsService>()
+                                      .addProduct(productDescription.id);
                                 }).catchError((e) {
                                   if (e == 'access denied') {
                                     ScaffoldMessenger.of(context)
@@ -210,6 +223,12 @@ class _ProductPageState extends State<ProductPage> {
                                   } else if (e == 'have active') {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                         _haveActiveOrderSnackBar());
+                                  } else if (e == 'no free') {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        _getSnackBar(
+                                            "К сожалению, товар закончился :(",
+                                            "Грустно...",
+                                            () {}));
                                   } else if (e == 'max count') {
                                     ScaffoldMessenger.of(context)
                                         .showSnackBar(_maxCountSnackBar());
@@ -235,65 +254,52 @@ class _ProductPageState extends State<ProductPage> {
         ));
   }
 
-  SnackBar _haveActiveOrderSnackBar() {
+  SnackBar _getSnackBar(String content, String label, VoidCallback callback) {
     return SnackBar(
       duration: const Duration(seconds: 3),
-      content: Text('У вас уже есть активный заказ!'),
+      content: Text(content),
       action: SnackBarAction(
-        label: 'Хорошо',
-        onPressed: () {},
+        label: label,
+        onPressed: callback,
       ),
     );
+  }
+
+  SnackBar _chooseDateError() {
+    return _getSnackBar("Выберите дату!", "Хорошо", () {});
+  }
+
+  SnackBar _chooseSizeError() {
+    return _getSnackBar('Выберите размер!', "Хорошо", () {});
+  }
+
+  SnackBar _haveActiveOrderSnackBar() {
+    return _getSnackBar('У вас уже есть активный заказ!', "Хорошо", () {});
   }
 
   SnackBar _cantChangeData() {
-    return SnackBar(
-      duration: const Duration(seconds: 3),
-      content:
-          Text('Вы уже выбрали дату! Очистите корзину и продолжайте покупки'),
-      action: SnackBarAction(
-        label: 'Хорошо',
-        onPressed: () {},
-      ),
-    );
+    return _getSnackBar(
+        'Вы уже выбрали дату! Очистите корзину и продолжайте покупки',
+        "Хорошо",
+        () {});
   }
 
   SnackBar _maxCountSnackBar() {
-    return SnackBar(
-      duration: const Duration(seconds: 3),
-      content: Text('Вы не можете добавить больше 4 товаров :('),
-      action: SnackBarAction(
-        label: 'Грустно...',
-        onPressed: () {},
-      ),
-    );
+    return _getSnackBar(
+        'Вы не можете добавить больше 4 товаров :(', "Грустно...", () {});
   }
 
   SnackBar _errorSnackBar() {
-    return SnackBar(
-      duration: const Duration(seconds: 3),
-      content: const Text(
-          'Войдите или зарегистрируйте перед тем, как добавить товар в корзину'),
-      action: SnackBarAction(
-        label: 'Войти',
-        onPressed: () {
-          App.changeIndex(2);
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => App()));
-        },
-      ),
-    );
+    return _getSnackBar(
+        'Войдите или зарегистрируйте перед тем, как добавить товар в корзину',
+        "Войти", () {
+      App.changeIndex(2);
+      Navigator.push(context, MaterialPageRoute(builder: (context) => App()));
+    });
   }
 
   SnackBar _addProductSnackBar(String title, double size) {
-    return SnackBar(
-      duration: const Duration(seconds: 3),
-      content: Text('Вы добавили $title $size размера'),
-      action: SnackBarAction(
-        label: 'Круто!',
-        onPressed: () {},
-      ),
-    );
+    return _getSnackBar('Вы добавили $title $size размера', "Круто!", () {});
   }
 
   Future<void> _selectDate(BuildContext context) async {

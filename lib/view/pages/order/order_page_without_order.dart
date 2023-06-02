@@ -2,9 +2,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sportique/app.dart';
 
-class OrderPageWithoutOrder extends StatelessWidget {
+import '../../../viewmodel/custom/ColorCustom.dart';
+
+class OrderPageWithoutOrder extends StatefulWidget {
   const OrderPageWithoutOrder({super.key});
 
+  @override
+  State<OrderPageWithoutOrder> createState() => _OrderPageWithoutOrderState();
+}
+
+class _OrderPageWithoutOrderState extends State<OrderPageWithoutOrder> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,10 +24,11 @@ class OrderPageWithoutOrder extends StatelessWidget {
               const SizedBox(
                 height: 8,
               ),
-              const Center(
+              Center(
                 child: Text(
                   "Корзина",
                   style: TextStyle(
+                      color: ColorCustom().titleColor,
                       fontFamily: 'PoiretOne',
                       fontWeight: FontWeight.bold,
                       fontSize: 32),
@@ -42,8 +50,7 @@ class OrderPageWithoutOrder extends StatelessWidget {
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                    elevation: 0,
-                    backgroundColor: const Color(0xFF3EB489)),
+                    elevation: 0, backgroundColor: const Color(0xFF3EB489)),
                 onPressed: () {
                   App.changeIndex(0);
                   Navigator.push(

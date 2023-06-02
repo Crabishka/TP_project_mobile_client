@@ -13,7 +13,7 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-        elevation: 1,
+        elevation: 0,
         color: const Color(0xFFEFFBFD),
         child: InkWell(
           onTap: () {
@@ -22,66 +22,62 @@ class ProductCard extends StatelessWidget {
                     ProductPage(productDescription: product)));
           },
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
                   child: AspectRatio(
-                aspectRatio: 1,
-                child: CachedNetworkImage(
-                  imageUrl: product.image,
-                  placeholder: (context, url) =>
-                      const Center(child: CircularProgressIndicator()),
-                  errorWidget: (context, url, error) => const Icon(Icons.error),
-                ),
-              )),
+                    aspectRatio: 1,
+                    child: CachedNetworkImage(
+                      imageUrl: product.image,
+                      placeholder: (context, url) =>
+                          const Center(child: CircularProgressIndicator()),
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
+                    ),
+                  )),
               Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.fromLTRB(4, 8, 4, 0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFb43e69),
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Text(
+                          '${product.price.truncate().toString()} ₽/ч',
+                          style: const TextStyle(
+                            fontFamily: 'PoiretOne',
+                            color: Color(0xFFFFFFFF),
+                            overflow: TextOverflow.ellipsis,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                    ),
                     Text(
                       product.title,
+                      maxLines: 1,
+                      softWrap: false,
                       style: const TextStyle(
                         fontFamily: 'PoiretOne',
-                        overflow: TextOverflow.ellipsis,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 28,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    Text(
-                      product.description,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        fontFamily: 'PoiretOne',
-                        fontWeight: FontWeight.normal,
-                        color: Color(0xBB000000),
-                        fontSize: 14,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    Text(
-                      '${product.price.truncate().toString()} руб/ч',
-                      style: const TextStyle(
-                        fontFamily: 'PoiretOne',
-                        overflow: TextOverflow.ellipsis,
+                        overflow: TextOverflow.fade,
                         fontWeight: FontWeight.bold,
                         fontSize: 20,
                       ),
                     ),
                   ],
                 ),
-              )
+              ),
             ],
           ),
         ));
   }
 }
-
-// Navigator.of(context).push(MaterialPageRoute(
-// builder: (context) =>
-// ProductPage(productDescription: product)));

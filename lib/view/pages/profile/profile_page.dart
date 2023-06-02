@@ -1,12 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:provider/provider.dart';
 
 import '../../../app.dart';
 import '../../../model/client_api/user_repository.dart';
 import '../../../model/data/user.dart';
-import '../../../viewmodel/user_model.dart';
+
 import '../../widgets/order_card.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -36,7 +35,6 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFB6CFD8),
       appBar: AppBar(
         leadingWidth: 80,
         leading: TextButton(
@@ -56,7 +54,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 context, MaterialPageRoute(builder: (context) => App()));
           },
         ),
-        backgroundColor: const Color(0xFF2280BA),
+        backgroundColor: const Color(0xFF3EB489),
         toolbarHeight: 40,
       ),
       body: RefreshIndicator(
@@ -74,39 +72,67 @@ class _ProfilePageState extends State<ProfilePage> {
                   color: const Color(0xFF2280BA),
                 );
               }
+              var orders = snapshot.data?.orders;
+              orders?.sort((b, a) => a.id.compareTo(b.id));
               return CustomScrollView(
                 scrollDirection: Axis.vertical,
                 slivers: [
+                  const SliverToBoxAdapter(
+                    child: SizedBox(
+                      height: 20,
+                    ),
+                  ),
+                  SliverToBoxAdapter(
+                    child: Image.asset(
+                      "./assets/images/ball.png",
+                      color: const Color(0xFF3EB489),
+                      height: 80,
+                    ),
+                  ),
                   SliverToBoxAdapter(
                       child: Padding(
-                          padding: const EdgeInsets.fromLTRB(16, 16, 0, 0),
-                          child: Text("Здравствуйте, ${snapshot.data!.name}",
-                              style: const TextStyle(
-                                color: Color(0xFF3C2C9E),
-                                fontFamily: 'PoiretOne',
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
-                              )))),
-                  SliverToBoxAdapter(
-                      child: Padding(
-                          padding: const EdgeInsets.fromLTRB(16, 16, 0, 0),
-                          child: Text(
-                            "Ваш номер ${snapshot.data!.phoneNumber}",
-                            style: const TextStyle(
-                              color: Color(0xFF3C2C9E),
-                              fontFamily: 'PoiretOne',
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                            ),
+                          padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+                          child: Center(
+                            child: Text("Здравствуйте, ${snapshot.data!.name}",
+                                style: const TextStyle(
+                                  fontFamily: 'PoiretOne',
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                )),
                           ))),
+                  SliverToBoxAdapter(
+                      child: Center(
+                    child: Padding(
+                        padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+                        child: Text(
+                          snapshot.data!.phoneNumber,
+                          style: const TextStyle(
+                            fontFamily: 'PoiretOne',
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          ),
+                        )),
+                  )),
+                  const SliverToBoxAdapter(
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
+                      child: Text(
+                        "Ваши заказы",
+                        style: TextStyle(
+                          fontFamily: 'PoiretOne',
+                          fontWeight: FontWeight.bold,
+                          fontSize: 24,
+                        ),
+                      ),
+                    ),
+                  ),
                   SliverList(
                     delegate: SliverChildBuilderDelegate(
                         childCount: snapshot.data!.orders.length,
                         (context, index) {
                       return Padding(
                           padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
-                          child:
-                              OrderCard(order: snapshot.data!.orders[index]));
+                          child: OrderCard(order: orders![index]));
                     }),
                   )
                 ],

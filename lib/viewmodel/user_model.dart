@@ -36,9 +36,13 @@ class UserModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> clearOrder() async {
+    await getIt.get<UserRepository>().clearOrder();
+    notifyListeners();
+  }
+
   Future<Order> getActiveOrder() async {
     Future<Order> order = getIt.get<UserRepository>().getActiveOrder();
-
     return order;
   }
 
@@ -71,5 +75,12 @@ class UserModel extends ChangeNotifier {
         .changeProductSize(productId, size, newSize);
     notifyListeners();
     return product;
+  }
+
+  Future<void> clear(List<Product> products) async {
+    for (Product product in products) {
+      removeProduct(product.description.id, product.size);
+    }
+    notifyListeners();
   }
 }

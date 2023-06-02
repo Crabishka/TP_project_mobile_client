@@ -1,4 +1,3 @@
-
 import 'package:sportique/model/data/product.dart';
 
 class Order {
@@ -7,8 +6,6 @@ class Order {
   final DateTime date;
   final double sum;
   final OrderStatus status;
-
-
 
   Order(
       {required this.id,
@@ -30,21 +27,17 @@ class Order {
         status: OrderStatus.values.firstWhere((element) =>
             element.toString().split('.').last == json['orderStatus']));
   }
-
-
-
 }
 
 enum OrderStatus {
-  ACTIVE,
-  FITTING,
+  CARTING,
   WAITING_FOR_RECEIVING,
+  FITTING,
+  ACTIVE,
+  WAITING_FOR_PAYMENT,
   FINISHED,
   CANCELED_BY_USER,
   CANCELED_BY_EMPLOYEE,
-  CARTING,
-  WAITING_FOR_PAYMENT
-
 }
 
 extension OrderStatusExtension on OrderStatus {

@@ -24,6 +24,7 @@ class UserRepository {
     urlForChangeProduct = "$mainUrl/users/change";
     urlForMakeOrder = "$mainUrl/users/active";
     urlForCancelOrder = "$mainUrl/users/cancel";
+    urlForClearOrder = "$mainUrl/users/cancel_cart";
   }
 
   String mainUrl = "";
@@ -36,6 +37,7 @@ class UserRepository {
   String urlForChangeProduct = "";
   String urlForMakeOrder = "";
   String urlForCancelOrder = "";
+  String urlForClearOrder = "";
 
   Future<User> getUser() async {
     try {
@@ -112,7 +114,7 @@ class UserRepository {
   Future<void> addProduct(int productId, double size, DateTime date) async {
     try {
       Order order = await getActiveOrder();
-      if (order.products.length == 4)  throw ('max count');
+      if (order.products.length == 4) throw ('max count');
       if (order.status != OrderStatus.CARTING) throw ('have active');
     } catch (e) {
       if (e != 'Cant get active order') {
@@ -135,8 +137,9 @@ class UserRepository {
     var response = await http.post(url,
         headers: {'Content-Type': 'application/json', 'Authorization': token});
     if (response.statusCode == 200) {
+    } else if (response.statusCode == 409) {
+      throw ('no free');
     } else {
-      print('Ошибка HTTP: ${response.statusCode}');
       throw ('access denied');
     }
   }
@@ -226,6 +229,22 @@ class UserRepository {
       throw ('access denied');
     }
     var url = Uri.parse(urlForCancelOrder);
+    var response = await http.put(url,
+        headers: {'Content-Type': 'application/json', 'Authorization': token});
+    if (response.statusCode == 200) {
+    } else {
+      throw ('${response.statusCode}');
+    }
+  }
+
+  Future<void> clearOrder() async {
+    String? token = await TokenHelper().getUserToken();
+    if (token == null ||
+        token.isEmpty ||
+        getIt.get<TokenHelper>().isTokenExpired(token)) {
+      throw ('access denied');
+    }
+    var url = Uri.parse(urlForClearOrder);
     var response = await http.put(url,
         headers: {'Content-Type': 'application/json', 'Authorization': token});
     if (response.statusCode == 200) {

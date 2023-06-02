@@ -51,7 +51,6 @@ dependencies:
   google_language_fonts: ^2.0.0
 
 
-
   flutter_native_splash: ^2.2.4
 flutter_native_splash:
   color: "70D0DD"
@@ -89,12 +88,16 @@ flutter:
     - family: Urbanist
       fonts:
         - asset: fonts/urbanist/Urbanist-Black.ttf
+    - family: MyIcon
+      fonts:
+        - asset: assets/icons/tshirt.png
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
   assets:
     - assets/images/
+    - assets/icons/
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

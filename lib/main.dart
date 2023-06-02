@@ -17,8 +17,11 @@ import 'model/client_api/product_description_repository.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 
 import 'model/client_api/user_repository.dart';
+import 'dart:io';
+
 
 void main() async {
+  HttpOverrides.global = MyHttpOverrides();
   GetIt getIt = GetIt.instance;
   getIt.registerSingleton<AppData>(AppData());
   getIt.registerSingleton<TokenHelper>(TokenHelper());
@@ -52,6 +55,14 @@ void main() async {
   ));
 }
 
+class MyHttpOverrides extends HttpOverrides{
+  @override
+  HttpClient createHttpClient(SecurityContext? context){
+    return super.createHttpClient(context)
+      ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
+  }
+}
+
 class MyApp extends StatefulWidget {
   MyApp({super.key});
 
@@ -70,15 +81,16 @@ class _MyAppState extends State<MyApp> {
   }
 
   GetIt getIt = GetIt.instance;
-
   @override
   void initState() {
     super.initState();
     getIt.get<AnalyticsService>().init();
     _initIsFirst();
+
   }
 
   bool _isFirst = false;
+
 
   @override
   Widget build(BuildContext context) {

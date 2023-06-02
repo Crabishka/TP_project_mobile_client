@@ -24,6 +24,7 @@ class FirebaseRemoteConfigService {
         ),
       );
       getIsChange();
+      getTitleColor();
       await firebaseRemoteConfig.fetchAndActivate();
     } on FirebaseException catch (e, st) {
       developer.log(
@@ -40,5 +41,10 @@ class FirebaseRemoteConfigService {
     return isChange;
   }
 
+  String getTitleColor() {
+    String titleColor = firebaseRemoteConfig.getString("titleColor");
+    getIt.get<AppData>().setTitleColor(titleColor);
+    return titleColor;
+  }
 
 }
