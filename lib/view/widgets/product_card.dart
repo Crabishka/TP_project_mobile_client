@@ -13,61 +13,65 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-        elevation: 4,
+        elevation: 0,
         color: const Color(0xFFEFFBFD),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        child: Container(
-          padding: EdgeInsets.all(20),
-          child: Row(
+        child: InkWell(
+          onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) =>
+                    ProductPage(productDescription: product)));
+          },
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Expanded(
-                  child: Container(
-                      padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
-                      child: ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
-                          child: CachedNetworkImage(
-                            imageUrl: product.image,
-                            placeholder: (context, url) =>
-                                const Center(child: CircularProgressIndicator()),
-                            errorWidget: (context, url, error) =>
-                                const Icon(Icons.error),
-                          )))),
-              Expanded(
+              ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                  child: AspectRatio(
+                    aspectRatio: 1,
+                    child: CachedNetworkImage(
+                      imageUrl: product.image,
+                      placeholder: (context, url) =>
+                          const Center(child: CircularProgressIndicator()),
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
+                    ),
+                  )),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(4, 8, 4, 0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFb43e69),
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Text(
+                          '${product.price.truncate().toString()} ₽/ч',
+                          style: const TextStyle(
+                            fontFamily: 'PoiretOne',
+                            color: Color(0xFFFFFFFF),
+                            overflow: TextOverflow.ellipsis,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                    ),
                     Text(
                       product.title,
+                      maxLines: 1,
+                      softWrap: false,
                       style: const TextStyle(
                         fontFamily: 'PoiretOne',
+                        overflow: TextOverflow.fade,
                         fontWeight: FontWeight.bold,
-                        fontSize: 32,
+                        fontSize: 20,
                       ),
-                    ),
-                    Text(
-                      product.description,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        fontFamily: 'PoiretOne',
-                        fontSize: 16,
-                      ),
-                    ),
-                    Text(
-                      '${product.price} руб./час',
-                      style: const TextStyle(
-                        fontFamily: 'PoiretOne',
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => ProductPage(
-                                productDescription: product)));
-                      },
-                      child: const Text('К товару'),
                     ),
                   ],
                 ),

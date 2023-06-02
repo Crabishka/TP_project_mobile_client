@@ -67,7 +67,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
           ),
           if (_pageIndex == datas.length - 1)
             Padding(
-              padding: EdgeInsets.fromLTRB(0, 0, 0, 20),
+              padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
               child: SizedBox(
                 height: 60,
                 width: 60,
@@ -77,7 +77,8 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                         MaterialPageRoute(builder: (context) => App()));
                   },
                   style: ElevatedButton.styleFrom(
-                    shape: CircleBorder(),
+                    backgroundColor: const Color(0xFF3EB489),
+                    shape: const CircleBorder(),
                   ),
                   child: Icon(Icons.arrow_forward),
                 ),
@@ -104,9 +105,9 @@ class DotIndicator extends StatelessWidget {
       height: 20,
       width: 20,
       decoration: BoxDecoration(
-          color: isActive ? Color(0xFF2482BC) : Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(12)),
-          border: Border.all(color: Color(0xFF2482BC), width: 1)),
+          color: isActive ? const Color(0xFF2482BC) : Colors.white,
+          borderRadius: const BorderRadius.all(Radius.circular(12)),
+          border: Border.all(color: const Color(0xFF2482BC), width: 1)),
     );
   }
 }
