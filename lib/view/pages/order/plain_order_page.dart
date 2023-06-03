@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:sportique/view/widgets/date_show.dart';
 
 import '../../../model/data/order.dart';
 import '../../../viewmodel/custom/ColorCustom.dart';
@@ -31,8 +32,7 @@ class PlainOrderPage extends StatelessWidget {
                     child: Text(
                       "Корзина",
                       style: TextStyle(
-                          color : ColorCustom().titleColor,
-                          fontFamily: 'PoiretOne',
+                          color: ColorCustom().titleColor,
                           fontWeight: FontWeight.bold,
                           fontSize: 32),
                     ),
@@ -50,13 +50,9 @@ class PlainOrderPage extends StatelessWidget {
                   ),
                 ),
                 SliverToBoxAdapter(
-                  child: Text(
-                    "Ваш заказ на ${DateFormat('dd-MMM').format(order.date)}",
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                        fontFamily: 'PoiretOne',
-                        fontWeight: FontWeight.bold,
-                        fontSize: 24),
+                  child: DateShow(
+                    dateTime: order.date,
+                    height: 24,
                   ),
                 ),
                 SliverToBoxAdapter(
@@ -64,9 +60,7 @@ class PlainOrderPage extends StatelessWidget {
                     order.status.getStatusText(),
                     textAlign: TextAlign.center,
                     style: const TextStyle(
-                        fontFamily: 'PoiretOne',
-                        fontWeight: FontWeight.bold,
-                        fontSize: 24),
+                        fontWeight: FontWeight.bold, fontSize: 24),
                   ),
                 ),
                 SliverToBoxAdapter(

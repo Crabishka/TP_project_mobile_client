@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:sportique/view/widgets/date_show.dart';
 import 'package:sportique/view/widgets/progress_order_bar.dart';
-
 
 import '../../../firebase/analytics_service.dart';
 import '../../../model/data/order.dart';
@@ -43,7 +43,6 @@ class _OrderPageCartingState extends State<OrderPageCarting> {
                   "Корзина",
                   style: TextStyle(
                       color: ColorCustom().titleColor,
-                      fontFamily: 'PoiretOne',
                       fontWeight: FontWeight.bold,
                       fontSize: 32),
                 ),
@@ -63,13 +62,7 @@ class _OrderPageCartingState extends State<OrderPageCarting> {
                 padding: const EdgeInsets.all(16.0),
                 child: Row(
                   children: [
-                    Text(
-                      "Ваш заказ на ${DateFormat('dd-MMM').format(widget.order.date)}",
-                      style: const TextStyle(
-                          fontFamily: 'PoiretOne',
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20),
-                    ),
+                    DateShow(dateTime: widget.order.date, height: 16),
                     Flexible(child: Container()),
                     InkWell(
                       onTap: () {
@@ -78,7 +71,7 @@ class _OrderPageCartingState extends State<OrderPageCarting> {
                       },
                       child: const Text(
                         "Очистить",
-                        style: TextStyle(fontFamily: 'PoiretOne', fontSize: 20),
+                        style: TextStyle(fontSize: 16),
                       ),
                     )
                   ],
@@ -102,9 +95,8 @@ class _OrderPageCartingState extends State<OrderPageCarting> {
                   'Сумма заказа',
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
-                    fontFamily: 'PoiretOne',
                     fontWeight: FontWeight.bold,
-                    fontSize: 24,
+                    fontSize: 20,
                   ),
                 ),
               ),
@@ -118,8 +110,7 @@ class _OrderPageCartingState extends State<OrderPageCarting> {
                       "Количество товаров ",
                       style: TextStyle(
                         color: Colors.black,
-                        fontFamily: 'PoiretOne',
-                        fontSize: 20,
+                        fontSize: 16,
                       ),
                     ),
                     Flexible(child: Container()),
@@ -127,8 +118,7 @@ class _OrderPageCartingState extends State<OrderPageCarting> {
                       "${widget.order.products.length} шт.",
                       style: const TextStyle(
                         color: Colors.black,
-                        fontFamily: 'PoiretOne',
-                        fontSize: 20,
+                        fontSize: 16,
                       ),
                     ),
                   ],
@@ -149,8 +139,7 @@ class _OrderPageCartingState extends State<OrderPageCarting> {
                       "Общая стоимость ",
                       style: TextStyle(
                         color: Colors.black,
-                        fontFamily: 'PoiretOne',
-                        fontSize: 20,
+                        fontSize: 16,
                       ),
                     ),
                     Flexible(child: Container()),
@@ -158,8 +147,7 @@ class _OrderPageCartingState extends State<OrderPageCarting> {
                       "${widget.order.sum.truncate().toString()} руб/час",
                       style: const TextStyle(
                         color: Colors.black,
-                        fontFamily: 'PoiretOne',
-                        fontSize: 20,
+                        fontSize: 16,
                       ),
                     ),
                   ],
@@ -191,8 +179,6 @@ class _OrderPageCartingState extends State<OrderPageCarting> {
                 },
                 child: const Text("Заказать",
                     style: TextStyle(
-
-                      fontFamily: 'PoiretOne',
                       fontWeight: FontWeight.bold,
                       fontSize: 24,
                     )),
@@ -203,6 +189,4 @@ class _OrderPageCartingState extends State<OrderPageCarting> {
       ]),
     ));
   }
-
-
 }

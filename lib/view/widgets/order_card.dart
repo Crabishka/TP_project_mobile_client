@@ -25,28 +25,25 @@ class OrderCard extends StatelessWidget {
                   "Стоимость: ${order.sum.truncate()} руб/час",
                   textAlign: TextAlign.left,
                   style: const TextStyle(
-                    fontFamily: 'PoiretOne',
                     fontWeight: FontWeight.bold,
-                    fontSize: 20,
+                    fontSize: 16,
                   ),
                 )),
             Container(
                 padding: const EdgeInsets.fromLTRB(8, 8, 0, 0),
-                child: Text("Дата:  ${DateFormat('dd-MMM').format(order.date)}",
+                child: Text("Дата: ${DateFormat('dd-MM-yyyy').format(order.date)}",
                     textAlign: TextAlign.left,
                     style: const TextStyle(
-                      fontFamily: 'PoiretOne',
                       fontWeight: FontWeight.bold,
-                      fontSize: 20,
+                      fontSize: 16,
                     ))),
             Container(
                 padding: const EdgeInsets.fromLTRB(8, 8, 0, 0),
                 child: Text(order.status.getStatusText(),
                     textAlign: TextAlign.left,
                     style: const TextStyle(
-                      fontFamily: 'PoiretOne',
                       fontWeight: FontWeight.bold,
-                      fontSize: 20,
+                      fontSize: 16,
                     ))),
             Container(
               height: (MediaQuery.of(context).size.width - 7 * 4) / 4,
@@ -73,11 +70,11 @@ class OrderCard extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(4))),
                   onPressed: () {
-                    Provider.of<UserModel>(context, listen: false).cancelOrder();
+                    Provider.of<UserModel>(context, listen: false)
+                        .cancelOrder();
                   },
                   child: const Text("Отменить",
                       style: TextStyle(
-                        fontFamily: 'PoiretOne',
                         fontWeight: FontWeight.bold,
                         fontSize: 20,
                       )),

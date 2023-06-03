@@ -53,7 +53,7 @@ class ProductCard extends StatelessWidget {
                         child: Text(
                           '${product.price.truncate().toString()} ₽/ч',
                           style: const TextStyle(
-                            fontFamily: 'PoiretOne',
+                            fontFamily: 'Mont',
                             color: Color(0xFFFFFFFF),
                             overflow: TextOverflow.ellipsis,
                             fontWeight: FontWeight.bold,
@@ -67,10 +67,10 @@ class ProductCard extends StatelessWidget {
                       maxLines: 1,
                       softWrap: false,
                       style: const TextStyle(
-                        fontFamily: 'PoiretOne',
+                        fontFamily: 'Mont',
                         overflow: TextOverflow.fade,
                         fontWeight: FontWeight.bold,
-                        fontSize: 20,
+                        fontSize: 16,
                       ),
                     ),
                   ],

@@ -8,6 +8,7 @@ import '../../../firebase/analytics_service.dart';
 import '../../../model/data/order.dart';
 import '../../../viewmodel/custom/ColorCustom.dart';
 import '../../../viewmodel/user_model.dart';
+import '../../widgets/date_show.dart';
 import '../../widgets/product_little_card.dart';
 import '../../widgets/progress_order_bar.dart';
 
@@ -42,7 +43,6 @@ class _OrderPageReadyToGetState extends State<OrderPageReadyToGet> {
                     "Корзина",
                     style: TextStyle(
                         color: ColorCustom().titleColor,
-                        fontFamily: 'PoiretOne',
                         fontWeight: FontWeight.bold,
                         fontSize: 32),
                   ),
@@ -63,32 +63,25 @@ class _OrderPageReadyToGetState extends State<OrderPageReadyToGet> {
                 ),
               ),
               SliverToBoxAdapter(
-                child: Text(
-                  "Ваш заказ на ${DateFormat('dd-MMM').format(widget.order.date)}",
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                      fontFamily: 'PoiretOne',
-                      fontWeight: FontWeight.bold,
-                      fontSize: 24),
-                ),
-              ),
+                  child: DateShow(dateTime: widget.order.date, height: 24)),
               SliverToBoxAdapter(
                 child: Text(
                   widget.order.status.getStatusText(),
                   textAlign: TextAlign.center,
                   style: const TextStyle(
-                      fontFamily: 'PoiretOne',
-                      fontWeight: FontWeight.bold,
-                      fontSize: 24),
+                      fontWeight: FontWeight.bold, fontSize: 24),
                 ),
               ),
               SliverToBoxAdapter(
                   child: Padding(
-                padding: const EdgeInsets.fromLTRB(50, 20, 50, 0),
-                child: QrImageView(
-                  padding: const EdgeInsets.all(30),
-                  data: widget.order.id.toString(),
-                  backgroundColor: Colors.white,
+                padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
+                child: Center(
+                  child: QrImageView(
+                    padding: const EdgeInsets.all(30),
+                    size: 300,
+                    data: widget.order.id.toString(),
+                    backgroundColor: Colors.white,
+                  ),
                 ),
               )),
               const SliverToBoxAdapter(
@@ -129,8 +122,6 @@ class _OrderPageReadyToGetState extends State<OrderPageReadyToGet> {
                 },
                 child: const Text("Отменить",
                     style: TextStyle(
-                      color: Colors.cyanAccent,
-                      fontFamily: 'PoiretOne',
                       fontWeight: FontWeight.bold,
                       fontSize: 24,
                     )),

@@ -44,15 +44,14 @@ class _AuthFormPageState extends State<AuthFormPage> {
               const Text(
                 "Добро пожаловать в Sportique",
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontSize: 20,
-                    fontFamily: 'PoiretOne',
-                    fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               const Text(
                 "Войдите или зарегистрируйтесь, чтобы продолжить",
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 16, fontFamily: 'PoiretOne'),
+                style: TextStyle(
+                  fontSize: 16,
+                ),
               ),
               Form(
                   key: _formKey,
@@ -69,7 +68,6 @@ class _AuthFormPageState extends State<AuthFormPage> {
                             decoration: const InputDecoration(
                                 prefixIcon: Icon(Icons.phone_iphone_sharp),
                                 labelStyle: TextStyle(
-                                    fontFamily: 'PoiretOne',
                                     color: const Color(0xFF3EB489),
                                     fontSize: 20),
                                 labelText: 'Номер Телефона',
@@ -114,9 +112,7 @@ class _AuthFormPageState extends State<AuthFormPage> {
                                     },
                                     icon: Icon(Icons.remove_red_eye_outlined)),
                                 labelStyle: const TextStyle(
-                                    fontFamily: 'PoiretOne',
-                                    color: Color(0xFF3EB489),
-                                    fontSize: 20),
+                                    color: Color(0xFF3EB489), fontSize: 20),
                                 labelText: 'Пароль',
                                 border: const OutlineInputBorder(
                                   borderRadius:
@@ -142,6 +138,7 @@ class _AuthFormPageState extends State<AuthFormPage> {
                         ),
                         Center(
                           child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
                               ElevatedButton(
                                 style: ElevatedButton.styleFrom(
@@ -169,14 +166,11 @@ class _AuthFormPageState extends State<AuthFormPage> {
                                   }
                                 },
                                 child: Container(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.6,
                                   child: const Text(
                                     'Войти',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       fontSize: 24,
-                                      fontFamily: 'PoiretOne',
                                     ),
                                   ),
                                 ),
@@ -184,13 +178,14 @@ class _AuthFormPageState extends State<AuthFormPage> {
                               const SizedBox(
                                 height: 8,
                               ),
-                              const Text(
-                                "Нет аккаута?",
-                                style: TextStyle(
-                                    fontFamily: 'PoiretOne',
-                                    fontSize: 16,
-                                    color: Color(0xAA000000),
-                                    fontWeight: FontWeight.bold),
+                              const Center(
+                                child: Text(
+                                  "Нет аккаута?",
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      color: Color(0xAA000000),
+                                      fontWeight: FontWeight.bold),
+                                ),
                               ),
                               const SizedBox(
                                 height: 8,
@@ -209,14 +204,11 @@ class _AuthFormPageState extends State<AuthFormPage> {
                                           builder: (context) => RegFormPage()));
                                 },
                                 child: Container(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.6,
                                   child: const Text(
                                     'Зарегистрироваться',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       fontSize: 24,
-                                      fontFamily: 'PoiretOne',
                                     ),
                                   ),
                                 ),

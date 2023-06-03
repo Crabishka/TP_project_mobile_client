@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 
 import 'package:get_it/get_it.dart';
 import 'package:sportique/model/data/order.dart';
+import 'package:sportique/view/widgets/date_show.dart';
 
 import '../../../app.dart';
 import '../../../firebase/analytics_service.dart';
@@ -55,9 +56,9 @@ class _ProductPageState extends State<ProductPage> {
                     child: Text(
                       productDescription.title,
                       style: const TextStyle(
-                          fontSize: 36,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'PoiretOne'),
+                        fontSize: 36,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                   const SizedBox(
@@ -82,7 +83,6 @@ class _ProductPageState extends State<ProductPage> {
                         "${productDescription.price.truncate().toString()} руб/час",
                         textAlign: TextAlign.center,
                         style: const TextStyle(
-                          fontFamily: 'PoiretOne',
                           fontWeight: FontWeight.bold,
                           fontSize: 24,
                         )),
@@ -100,10 +100,8 @@ class _ProductPageState extends State<ProductPage> {
                     padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
                     child: Text(
                       "Размеры",
-                      style: TextStyle(
-                          fontSize: 24,
-                          fontFamily: 'PoiretOne',
-                          fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                     ),
                   ),
                   Padding(
@@ -115,10 +113,8 @@ class _ProductPageState extends State<ProductPage> {
                     padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
                     child: Text(
                       "О товаре",
-                      style: TextStyle(
-                          fontSize: 24,
-                          fontFamily: 'PoiretOne',
-                          fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                     ),
                   ),
                   Padding(
@@ -126,7 +122,8 @@ class _ProductPageState extends State<ProductPage> {
                     child: Text(
                       productDescription.description,
                       style: const TextStyle(
-                          fontSize: 20, fontFamily: 'PoiretOne'),
+                        fontSize: 20,
+                      ),
                     ),
                   ),
                   const SizedBox(
@@ -166,12 +163,11 @@ class _ProductPageState extends State<ProductPage> {
                       child: Text(
                           Provider.of<AppData>(context).getDate() == null
                               ? "Выбрать дату"
-                              : " ${DateFormat('dd-MMM').format(Provider.of<AppData>(context).getDate()!)}",
+                              : " ${DateShow(dateTime: Provider.of<AppData>(context).getDate()!).getRuDate(Provider.of<AppData>(context).getDate()!)}",
                           textAlign: TextAlign.center,
                           style: const TextStyle(
-                            fontFamily: 'PoiretOne',
                             fontWeight: FontWeight.bold,
-                            fontSize: 20,
+                            fontSize: 16,
                           )),
                     ),
                     const SizedBox(
@@ -241,9 +237,8 @@ class _ProductPageState extends State<ProductPage> {
                       child: const Text("Заказать",
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            fontFamily: 'PoiretOne',
                             fontWeight: FontWeight.bold,
-                            fontSize: 20,
+                            fontSize: 16,
                           )),
                     ),
                   ],
@@ -363,9 +358,7 @@ class _ProductPageState extends State<ProductPage> {
                             child: Text(
                               '${key}',
                               style: const TextStyle(
-                                  fontFamily: 'PoiretOne',
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16),
+                                  fontWeight: FontWeight.bold, fontSize: 16),
                             ),
                           ),
                         ),
@@ -378,6 +371,6 @@ class _ProductPageState extends State<ProductPage> {
       );
     }
     return const Text("Выберите дату для получения размеров на этот день",
-        style: TextStyle(fontFamily: 'PoiretOne', fontSize: 20));
+        style: TextStyle(fontSize: 20));
   }
 }

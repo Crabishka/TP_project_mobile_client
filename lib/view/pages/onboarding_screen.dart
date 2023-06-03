@@ -152,7 +152,7 @@ class OnBoardContent extends StatelessWidget {
           textAlign: TextAlign.center,
           style: const TextStyle(
               fontSize: 28,
-              fontFamily: "PoiretOne",
+
               fontWeight: FontWeight.w900),
         ),
         const Spacer()

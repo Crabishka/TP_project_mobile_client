@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:sportique/model/data/user.dart';
+import 'package:sportique/view/widgets/date_show.dart';
 import 'package:sportique/viewmodel/custom/ColorCustom.dart';
 import 'package:sportique/viewmodel/internal/app_data.dart';
 
@@ -70,7 +71,6 @@ class _CatalogPageState extends State<CatalogPage> {
                         child: Text(
                           "Каталог",
                           style: TextStyle(
-                              fontFamily: 'PoiretOne',
                               color: ColorCustom().titleColor,
                               fontWeight: FontWeight.bold,
                               fontSize: 32),
@@ -84,7 +84,7 @@ class _CatalogPageState extends State<CatalogPage> {
                     ),
                     SliverToBoxAdapter(
                       child: Padding(
-                        padding: const EdgeInsets.fromLTRB(50, 0, 50, 0),
+                        padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
                         child: FutureBuilder<Order>(
                           future:
                               Provider.of<UserModel>(context).getActiveOrder(),
@@ -104,14 +104,7 @@ class _CatalogPageState extends State<CatalogPage> {
                                       height: 20,
                                     ),
                                     Center(
-                                      child: Text(
-                                        "Ваш заказ на ${DateFormat('dd-MMM').format(snapshot.data!.date)}",
-                                        textAlign: TextAlign.center,
-                                        style: const TextStyle(
-                                            fontFamily: 'PoiretOne',
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 20),
-                                      ),
+                                      child: DateShow(dateTime: snapshot.data!.date),
                                     ),
                                     const SizedBox(
                                       height: 20,
@@ -119,6 +112,7 @@ class _CatalogPageState extends State<CatalogPage> {
                                     QrImageView(
                                       padding: const EdgeInsets.all(30),
                                       data: snapshot.data!.id.toString(),
+                                      size: 300,
                                       backgroundColor: Colors.white,
                                     ),
                                     const SizedBox(

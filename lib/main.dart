@@ -1,6 +1,7 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/date_symbol_data_file.dart';
 import 'package:sportique/app.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:get_it/get_it.dart';
@@ -18,7 +19,6 @@ import 'package:firebase_remote_config/firebase_remote_config.dart';
 
 import 'model/client_api/user_repository.dart';
 import 'dart:io';
-
 
 void main() async {
   HttpOverrides.global = MyHttpOverrides();
@@ -55,11 +55,12 @@ void main() async {
   ));
 }
 
-class MyHttpOverrides extends HttpOverrides{
+class MyHttpOverrides extends HttpOverrides {
   @override
-  HttpClient createHttpClient(SecurityContext? context){
+  HttpClient createHttpClient(SecurityContext? context) {
     return super.createHttpClient(context)
-      ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
   }
 }
 
@@ -81,16 +82,15 @@ class _MyAppState extends State<MyApp> {
   }
 
   GetIt getIt = GetIt.instance;
+
   @override
   void initState() {
     super.initState();
     getIt.get<AnalyticsService>().init();
     _initIsFirst();
-
   }
 
   bool _isFirst = false;
-
 
   @override
   Widget build(BuildContext context) {
@@ -98,6 +98,7 @@ class _MyAppState extends State<MyApp> {
         debugShowCheckedModeBanner: false,
         title: 'Sportique',
         theme: ThemeData(
+          fontFamily: 'Mont',
           primarySwatch: Colors.blue,
         ),
         home: _isFirst ? OnBoardingScreen() : App());

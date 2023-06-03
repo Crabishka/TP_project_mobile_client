@@ -56,7 +56,7 @@ class _RegFormPageState extends State<RegFormPage> {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           fontSize: 20,
-                          fontFamily: 'PoiretOne',
+
                           fontWeight: FontWeight.bold),
                     ),
                   ),
@@ -71,7 +71,7 @@ class _RegFormPageState extends State<RegFormPage> {
                       decoration: const InputDecoration(
                           prefixIcon: Icon(Icons.phone_iphone_sharp),
                           labelStyle: TextStyle(
-                              fontFamily: 'PoiretOne',
+
                               color: Color(0xFF3EB489),
                               fontSize: 20),
                           labelText: 'Телефон',
@@ -111,7 +111,7 @@ class _RegFormPageState extends State<RegFormPage> {
                       decoration: const InputDecoration(
                           prefixIcon: Icon(Icons.person),
                           labelStyle: TextStyle(
-                              fontFamily: 'PoiretOne',
+
                               color: Color(0xFF3EB489),
                               fontSize: 20),
                           labelText: 'Имя',
@@ -152,7 +152,7 @@ class _RegFormPageState extends State<RegFormPage> {
                               },
                               icon: Icon(Icons.remove_red_eye_outlined)),
                           labelStyle: const TextStyle(
-                              fontFamily: 'PoiretOne',
+
                               color: const Color(0xFF3EB489),
                               fontSize: 20),
                           labelText: 'Пароль',
@@ -197,7 +197,7 @@ class _RegFormPageState extends State<RegFormPage> {
                               },
                               icon: Icon(Icons.remove_red_eye_outlined)),
                           labelStyle: const TextStyle(
-                              fontFamily: 'PoiretOne',
+
                               color: const Color(0xFF3EB489),
                               fontSize: 20),
                           labelText: 'Повторите Пароль',
@@ -251,7 +251,7 @@ class _RegFormPageState extends State<RegFormPage> {
                         'Зарегистрироваться',
                         style: TextStyle(
                           fontSize: 24,
-                          fontFamily: 'PoiretOne',
+
                         ),
                       ),
                     ),

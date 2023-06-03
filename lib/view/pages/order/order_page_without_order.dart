@@ -29,21 +29,20 @@ class _OrderPageWithoutOrderState extends State<OrderPageWithoutOrder> {
                   "Корзина",
                   style: TextStyle(
                       color: ColorCustom().titleColor,
-                      fontFamily: 'PoiretOne',
                       fontWeight: FontWeight.bold,
                       fontSize: 32),
                 ),
               ),
               const Spacer(),
               Image.asset("./assets/images/bike.png"),
-              const Text(
-                "Вы пока не выбрали ни одного товара. \n"
-                " Перейдите на страницу каталога.",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontSize: 20,
-                    fontFamily: 'PoiretOne',
-                    fontWeight: FontWeight.bold),
+              const Padding(
+                padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
+                child: Text(
+                  "Вы пока не выбрали ни одного товара. "
+                  " Перейдите на страницу каталога.",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
               ),
               const SizedBox(
                 height: 8,
@@ -60,8 +59,6 @@ class _OrderPageWithoutOrderState extends State<OrderPageWithoutOrder> {
                   padding: EdgeInsets.all(10),
                   child: Text("В каталог",
                       style: TextStyle(
-                        color: Colors.cyanAccent,
-                        fontFamily: 'PoiretOne',
                         fontWeight: FontWeight.bold,
                         fontSize: 28,
                       )),
