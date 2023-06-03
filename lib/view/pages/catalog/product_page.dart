@@ -299,6 +299,7 @@ class _ProductPageState extends State<ProductPage> {
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? pickedDate = await showDatePicker(
+      locale: Locale('ru'),
       context: context,
       initialDate: DateTime.now(),
       firstDate: DateTime.now(),

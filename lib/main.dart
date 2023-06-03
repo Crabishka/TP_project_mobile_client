@@ -1,6 +1,7 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/date_symbol_data_file.dart';
 import 'package:sportique/app.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -95,6 +96,14 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        localizationsDelegates: const [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: const [
+          Locale('ru'),
+        ],
         debugShowCheckedModeBanner: false,
         title: 'Sportique',
         theme: ThemeData(
