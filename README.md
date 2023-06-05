@@ -1,3 +1,3 @@
-# sportique
+# Sportique
 
-A new mobile app for Sportique
+A mobile app for Sportique
